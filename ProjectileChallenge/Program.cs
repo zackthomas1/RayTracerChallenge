@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using RayTracer;
 
@@ -83,8 +84,8 @@ namespace ProjectileChallenge
 
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
-            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\Render";
-            string fileName = "projectileChallenge01";
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string fileName = "projectileChallenge02";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, canvas);
 

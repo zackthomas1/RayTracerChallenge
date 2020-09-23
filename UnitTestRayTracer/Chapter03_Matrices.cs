@@ -41,6 +41,7 @@ namespace UnitTestRayTracer
             Assert.Equal(0f, matrix[2, 0]);
             Assert.Equal(1f, matrix[2, 1]);
             Assert.Equal(1f, matrix[2, 2]);
+
         }
 
         [Fact]

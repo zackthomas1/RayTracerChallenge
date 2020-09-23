@@ -1,0 +1,218 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace RayTracer
+{
+    public class Color
+    {
+        public float red;
+        public float green;
+        public float blue;
+
+        ///public static Color white = new Color(1, 1, 1); 
+
+        public Color(float red = 0.0f, float green = 0.0f, float blue = 0.0f)
+        {
+            this.red = red;
+            this.green = green; 
+            this.blue = blue;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Color color &&
+                   red == color.red &&
+                   green == color.green &&
+                   blue == color.blue;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(red, green, blue);
+        }
+
+        public override string ToString()
+        {
+            return $"({red},{green},{blue})";
+        }
+
+        public static Color operator +(Color c1, Color c2)
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = c1.red + c2.red;
+            returnColor.green = c1.green + c2.green;
+            returnColor.blue = c1.blue + c2.blue;
+
+            return returnColor;
+        }
+
+        public static Color operator -(Color c1, Color c2)
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = c1.red - c2.red;
+            returnColor.green = c1.green - c2.green;
+            returnColor.blue = c1.blue - c2.blue;
+
+            return returnColor;
+        }
+
+        public static Color operator *(Color c1, float scalar)
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = c1.red * scalar;
+            returnColor.green = c1.green * scalar;
+            returnColor.blue = c1.blue * scalar;
+
+            return returnColor;
+        }
+
+        public static Color operator *(float scalar, Color c1)
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = c1.red * scalar;
+            returnColor.green = c1.green * scalar;
+            returnColor.blue = c1.blue * scalar;
+
+            return returnColor;
+        }
+
+        public static Color operator *(Color c1, Color c2)
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = c1.red * c2.red;
+            returnColor.green = c1.green * c2.green;
+            returnColor.blue = c1.blue * c2.blue;
+
+            return returnColor;
+        }
+
+        public static bool operator ==(Color c1, Color c2)
+        {
+            if (Utilities.FloatEquality(c1.red, c2.red) &&
+                Utilities.FloatEquality(c1.green, c2.green) &&
+                Utilities.FloatEquality(c1.blue, c2.blue))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        public static bool operator !=(Color c1, Color c2)
+        {
+            if (Utilities.FloatEquality(c1.red, c2.red) &&
+                Utilities.FloatEquality(c1.green, c2.green) &&
+                Utilities.FloatEquality(c1.blue, c2.blue))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Sets color values to input parameters (red, green, blue)
+        /// </summary>
+        /// <param name="red"></param>
+        /// <param name="green"></param>
+        /// <param name="blue"></param>
+        /// <returns></returns>
+        public static Color SetColor(float red, float green, float blue)
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = red;
+            returnColor.green = green;
+            returnColor.blue = blue;
+
+            return returnColor;
+        }
+
+        /// <summary>
+        /// Sets color to black (0, 0, 0)
+        /// </summary>
+        /// <returns></returns>
+        public static Color Black()
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = 0f;
+            returnColor.green = 0f;
+            returnColor.blue = 0f;
+
+            return returnColor; 
+        }
+
+        /// <summary>
+        /// Sets color to white (1, 1, 1)
+        /// </summary>
+        /// <returns></returns>
+        public static Color White()
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = 1f;
+            returnColor.green = 1f;
+            returnColor.blue = 1f;
+
+            return returnColor;
+        }
+
+        /// <summary>
+        /// Sets color to red (1, 0, 0)
+        /// </summary>
+        /// <returns></returns>
+        public static Color Red()
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = 1f;
+            returnColor.green = 0f;
+            returnColor.blue = 0f;
+
+            return returnColor;
+        }
+
+        /// <summary>
+        /// Sets color to green (0, 1, 0)
+        /// </summary>
+        /// <returns></returns>
+        public static Color Green()
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = 0f;
+            returnColor.green = 1f;
+            returnColor.blue = 0f;
+
+            return returnColor;
+        }
+
+        /// <summary>
+        /// Sets color to blue (0, 0, 1)
+        /// </summary>
+        /// <returns></returns>
+        public static Color Blue()
+        {
+            Color returnColor = new Color();
+
+            returnColor.red = 0f;
+            returnColor.green = 0f;
+            returnColor.blue = 1f;
+
+            return returnColor;
+        }
+
+    }
+}
