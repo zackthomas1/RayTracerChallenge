@@ -194,7 +194,7 @@ namespace RayTracer
         }
 
         /// <summary>
-        /// Uses Phong light model to caculate specular lighting on object
+        /// Uses Phong light model to calculate surface color.
         /// </summary>
         /// <param name="material"></param>
         /// <param name="light"></param>

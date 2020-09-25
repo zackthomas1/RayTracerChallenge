@@ -17,44 +17,53 @@ namespace RayTracer
 
         public override string ToString()
         {
-            return "Intersect Object: " + rayObject.ID + " t: " + this.t.ToString();       
+            return "Intersect Object: " + rayObject.ID + " t: " + t.ToString();       
         }
 
         /// <summary>
-        /// Use to manually create a list of intersections.
+        /// Sorts a list of Intersect class variables into non-decending order(increasing).
         /// </summary>
         /// <param name="i1"></param>
         /// <param name="i2"></param>
         /// <returns></returns>
-        public static List<Intersection> Intersections(Intersection i1, Intersection i2)
+        public static List<Intersection> Sort(List<Intersection> intersections)
         {
-            return new List<Intersection>() {i1, i2}; 
+            
+            for(int currentIndex = 1; currentIndex < intersections.Count; currentIndex++)
+            {
+                Intersection key = intersections[currentIndex];
+                int previousIndex = currentIndex - 1;
+
+                while (previousIndex >= 0 && intersections[previousIndex].t > key.t)
+                {
+                    intersections[previousIndex + 1] = intersections[previousIndex];
+                    previousIndex = previousIndex - 1;
+                }
+                intersections[previousIndex + 1] = key;
+            }
+
+            return intersections;
         }
 
         /// <summary>
-        /// Determines which Ray-RayObject intersection is the Hit intersection. 
-        /// it. Which has the lowest 't' value above 0.
+        /// Determines which Ray-RayObject intersection is the hit intersection.(aka. Which has the lowest 't' value above 0.)
+        /// Uses Sort method from Intersection class to arrange list in non-decending order
         /// </summary>
         /// <param name="intersections"></param>
         /// <returns></returns>
         public static Intersection Hit(List<Intersection> intersections)
         {
-            float lowT = 0;
-            Intersection hit = null;
+            List<Intersection> sortedIntersections = Intersection.Sort(intersections);
 
-            foreach (Intersection intersect in intersections)
+            for (int index = 0; index < sortedIntersections.Count; index++)
             {
-                if (lowT == 0 && intersect.t > 0)
+                if (sortedIntersections[index].t > 0)
                 {
-                    hit = intersect;
-                    lowT = intersect.t;
-                }else if(intersect.t < lowT && intersect.t > 0)
-                {
-                    hit = intersect;
-                    lowT = intersect.t;
+                    return sortedIntersections[index]; 
                 }
             }
-            return hit;
+
+            return null;
         }
 
 

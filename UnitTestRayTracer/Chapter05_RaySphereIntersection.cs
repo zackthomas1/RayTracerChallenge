@@ -110,17 +110,23 @@ namespace UnitTestRayTracer
         }
 
         [Fact]
-        public void IntersectionList()
+        public void SortIntersections()
         {
             Sphere sphere = new Sphere();
-            Intersection i1 = new Intersection(1, sphere);
-            Intersection i2 = new Intersection(2, sphere);
+            Intersection i1 = new Intersection(5, sphere);
+            Intersection i2 = new Intersection(7, sphere);
+            Intersection i3 = new Intersection(-3, sphere);
+            Intersection i4 = new Intersection(2, sphere);
 
-            List<Intersection> xs = Intersection.Intersections(i1, i2);
+            List<Intersection> intersectionsList = new List<Intersection>() {i1, i2, i3, i4 };
 
-            Assert.Equal(2, xs.Count);
-            Assert.Equal(sphere, xs[0].rayObject );
-            Assert.Equal(sphere, xs[1].rayObject);
+            List<Intersection> xs = Intersection.Sort(intersectionsList);
+
+            Assert.Equal(4, xs.Count);
+            Assert.True(xs[0] == i3);
+            Assert.True(xs[1] == i4);
+            Assert.True(xs[2] == i1);
+            Assert.True(xs[3] == i2);
         }
 
         [Fact]
@@ -129,7 +135,9 @@ namespace UnitTestRayTracer
             Sphere s = new Sphere();
             Intersection i1 = new Intersection(1, s);
             Intersection i2 = new Intersection(2, s);
-            List<Intersection> xs = Intersection.Intersections(i1, i2);
+
+            List<Intersection> intersectionsList = new List<Intersection>() { i1, i2 };
+            List<Intersection> xs = Intersection.Sort(intersectionsList);
 
             Intersection i = Intersection.Hit(xs);
 
@@ -142,7 +150,9 @@ namespace UnitTestRayTracer
             Sphere s = new Sphere();
             Intersection i1 = new Intersection(-1, s);
             Intersection i2 = new Intersection(2, s);
-            List<Intersection> xs = Intersection.Intersections(i1, i2);
+
+            List<Intersection> xs = new List<Intersection>() { i1, i2 };
+            xs = Intersection.Sort(xs);
 
             Intersection i = Intersection.Hit(xs);
 
@@ -155,7 +165,9 @@ namespace UnitTestRayTracer
             Sphere s = new Sphere();
             Intersection i1 = new Intersection(-1, s);
             Intersection i2 = new Intersection(-2, s);
-            List<Intersection> xs = Intersection.Intersections(i1, i2);
+
+            List<Intersection> xs = new List<Intersection>() { i1, i2 };
+            xs = Intersection.Sort(xs);
 
             Intersection i = Intersection.Hit(xs);
 
