@@ -10,7 +10,12 @@ namespace RayTracer
         public float green;
         public float blue;
 
-        ///public static Color white = new Color(1, 1, 1); 
+        //
+        public static readonly Color Black = new Color(0, 0, 0);
+        public static readonly Color White = new Color(1, 1, 1);
+        public static readonly Color Red = new Color(1, 0, 0);
+        public static readonly Color Green = new Color(0, 1, 0);
+        public static readonly Color Blue = new Color(0, 0, 1);
 
         public Color(float red = 0.0f, float green = 0.0f, float blue = 0.0f)
         {
@@ -135,81 +140,6 @@ namespace RayTracer
             returnColor.red = red;
             returnColor.green = green;
             returnColor.blue = blue;
-
-            return returnColor;
-        }
-
-        /// <summary>
-        /// Sets color to black (0, 0, 0)
-        /// </summary>
-        /// <returns></returns>
-        public static Color Black()
-        {
-            Color returnColor = new Color();
-
-            returnColor.red = 0f;
-            returnColor.green = 0f;
-            returnColor.blue = 0f;
-
-            return returnColor; 
-        }
-
-        /// <summary>
-        /// Sets color to white (1, 1, 1)
-        /// </summary>
-        /// <returns></returns>
-        public static Color White()
-        {
-            Color returnColor = new Color();
-
-            returnColor.red = 1f;
-            returnColor.green = 1f;
-            returnColor.blue = 1f;
-
-            return returnColor;
-        }
-
-        /// <summary>
-        /// Sets color to red (1, 0, 0)
-        /// </summary>
-        /// <returns></returns>
-        public static Color Red()
-        {
-            Color returnColor = new Color();
-
-            returnColor.red = 1f;
-            returnColor.green = 0f;
-            returnColor.blue = 0f;
-
-            return returnColor;
-        }
-
-        /// <summary>
-        /// Sets color to green (0, 1, 0)
-        /// </summary>
-        /// <returns></returns>
-        public static Color Green()
-        {
-            Color returnColor = new Color();
-
-            returnColor.red = 0f;
-            returnColor.green = 1f;
-            returnColor.blue = 0f;
-
-            return returnColor;
-        }
-
-        /// <summary>
-        /// Sets color to blue (0, 0, 1)
-        /// </summary>
-        /// <returns></returns>
-        public static Color Blue()
-        {
-            Color returnColor = new Color();
-
-            returnColor.red = 0f;
-            returnColor.green = 0f;
-            returnColor.blue = 1f;
 
             return returnColor;
         }

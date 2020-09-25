@@ -68,7 +68,7 @@ namespace ProjectileChallenge
                 // Checks if projectile is within a valid range to be drawn
                 if ((int)projectilePosition.y - 2 > 0 && (int)projectilePosition.y + 2 < canvas.height && (int)projectilePosition.x - 2 > 0 && (int)projectilePosition.x + 2< canvas.width)
                 {
-                    drawCross((int)projectilePosition.x, canvas.height - (int)projectilePosition.y, canvas, Color.Red());
+                    drawCross((int)projectilePosition.x, canvas.height - (int)projectilePosition.y, canvas, Color.Red);
                     //canvas.SetPixelColor((int)projectilePosition.x, canvas.height - (int)projectilePosition.y, Color.Red());
                     Console.WriteLine("Cross position Drawn");
                 }

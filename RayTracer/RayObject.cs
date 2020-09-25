@@ -74,9 +74,9 @@ namespace RayTracer
         public Color Lighting(Material material, Light light, Point point,
                             Vector3 eyeV, Vector3 normalV)
         {
-            Color ambient = Color.White(); 
-            Color diffuse = Color.White(); 
-            Color specular = Color.White();
+            Color ambient = Color.White; 
+            Color diffuse = Color.White; 
+            Color specular = Color.White;
 
             // Combine the surface color with the light's color/intensity
             Color effect_color = material.mColor * light.Insensity;
@@ -94,8 +94,8 @@ namespace RayTracer
 
             if (lighDotNormal < 0)
             {
-                diffuse = Color.Black();
-                specular = Color.Black();
+                diffuse = Color.Black;
+                specular = Color.Black;
             }
             else
             {
@@ -110,7 +110,7 @@ namespace RayTracer
 
                 if (reflectDotEye <= 0)
                 {
-                    specular = Color.Black();
+                    specular = Color.Black;
                 }
                 else
                 {

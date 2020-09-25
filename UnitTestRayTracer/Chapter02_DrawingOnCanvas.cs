@@ -121,7 +121,7 @@ namespace UnitTestRayTracer
         {
             Color c1 = new Color(0.5f, 0.8f, 0.35f);
 
-            c1 = Color.Black();
+            c1 = Color.Black;
 
             Color answer = new Color(0f, 0f, 0f);
 
@@ -134,7 +134,7 @@ namespace UnitTestRayTracer
         {
             Color c1 = new Color(0.5f, 0.8f, 0.35f);
 
-            c1 = Color.White();
+            c1 = Color.White;
 
             Color answer = new Color(1f, 1f, 1f);
 
@@ -147,7 +147,7 @@ namespace UnitTestRayTracer
         {
             Color c1 = new Color(0.5f, 0.8f, 0.35f);
 
-            c1 = Color.Red();
+            c1 = Color.Red;
 
             Color answer = new Color(1f, 0f, 0f);
 
@@ -160,7 +160,7 @@ namespace UnitTestRayTracer
         {
             Color c1 = new Color(0.5f, 0.8f, 0.35f);
 
-            c1 = Color.Green();
+            c1 = Color.Green;
 
             Color answer = new Color(0f, 1f, 0f);
 
@@ -173,7 +173,7 @@ namespace UnitTestRayTracer
         {
             Color c1 = new Color(0.5f, 0.8f, 0.35f);
 
-            c1 = Color.Blue();
+            c1 = Color.Blue;
 
             Color answer = new Color(0f, 0f, 1f);
 
@@ -239,7 +239,7 @@ namespace UnitTestRayTracer
         {
             Canvas canvas = new Canvas(1920, 1080);
 
-            canvas.FillCanvas(Color.Green());
+            canvas.FillCanvas(Color.Green);
 
             Color answer = new Color(0f, 1f, 0f);
 
@@ -264,11 +264,11 @@ namespace UnitTestRayTracer
         {
             Canvas canvas = new Canvas(1920, 1080);
 
-            canvas.SetPixelColor(50,200, Color.Red());
-            canvas.canvas[500, 654] = Color.Blue();
+            canvas.SetPixelColor(50,200, Color.Red);
+            canvas.canvas[500, 654] = Color.Blue;
 
-            Assert.Equal(Color.Red(), canvas.canvas[50, 200]);
-            Assert.Equal(Color.Blue(), canvas.GetPixelColor(500, 654));
+            Assert.Equal(Color.Red, canvas.canvas[50, 200]);
+            Assert.Equal(Color.Blue, canvas.GetPixelColor(500, 654));
         }
 
         [Fact]
@@ -276,13 +276,13 @@ namespace UnitTestRayTracer
         {
             Canvas canvas = new Canvas(1920,1080);
 
-            canvas.FillCanvas(Color.Green());
-            canvas.SetPixelColor(50, 200, Color.Red());
-            canvas.canvas[500, 654] = Color.Blue();
+            canvas.FillCanvas(Color.Green);
+            canvas.SetPixelColor(50, 200, Color.Red);
+            canvas.canvas[500, 654] = Color.Blue;
 
-            Assert.Equal(Color.Green(), canvas.canvas[51, 200]);
-            Assert.Equal(Color.Red(), canvas.canvas[50, 200]);
-            Assert.Equal(Color.Blue(), canvas.GetPixelColor(500, 654));
+            Assert.Equal(Color.Green, canvas.canvas[51, 200]);
+            Assert.Equal(Color.Red, canvas.canvas[50, 200]);
+            Assert.Equal(Color.Blue, canvas.GetPixelColor(500, 654));
         }
 
         [Fact]
@@ -294,9 +294,9 @@ namespace UnitTestRayTracer
 
             string fileDirectoryComplete = filePath + "\\" + fileName;
 
-            canvas.FillCanvas(Color.Blue());
-            canvas.SetPixelColor(9, 4, Color.Red());
-            canvas.canvas[3, 2] = Color.Green();
+            canvas.FillCanvas(Color.Blue);
+            canvas.SetPixelColor(9, 4, Color.Red);
+            canvas.canvas[3, 2] = Color.Green;
 
             Save.PPM(fileDirectoryComplete, canvas);
 
@@ -317,7 +317,7 @@ namespace UnitTestRayTracer
 
             string fileDirectoryComplete = filePath + "\\" + fileName;
 
-            canvas.FillCanvas(Color.Blue());
+            canvas.FillCanvas(Color.Blue);
 
             Save.PPM(fileDirectoryComplete, canvas);
 
@@ -341,9 +341,9 @@ namespace UnitTestRayTracer
 
             string fileDirectoryComplete = filePath + "\\" + fileName;
 
-            canvas.FillCanvas(Color.Blue());
-            canvas.SetPixelColor(9, 4, Color.Red());
-            canvas.canvas[3, 2] = Color.Green();
+            canvas.FillCanvas(Color.Blue);
+            canvas.SetPixelColor(9, 4, Color.Red);
+            canvas.canvas[3, 2] = Color.Green;
 
             Save.PPM(fileDirectoryComplete, canvas);
 

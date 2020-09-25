@@ -7,7 +7,7 @@ namespace RayTracer
     public class Material
     {
 
-        Color color = Color.White();
+        Color color = Color.White;
         float ambient = 0.1f;
         float diffuse = 0.9f;
         float specular = 0.9f;
@@ -94,7 +94,7 @@ namespace RayTracer
         /// </summary>
         public Material()
         {
-            color = RayTracer.Color.White();
+            color = Color.White;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;

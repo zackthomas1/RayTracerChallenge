@@ -27,7 +27,7 @@ namespace RayTracer
             {
                 for (int y = 0; y < height; y++)
                 {
-                    canvas[x, y] = Color.Black();
+                    canvas[x, y] = Color.Black;
                 }
             }
         }

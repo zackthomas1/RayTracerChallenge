@@ -21,7 +21,7 @@ namespace Chapter05Challenge
             Canvas canvas = new Canvas(canvasPixels, canvasPixels);
             float pixelSize = wallSize / canvasPixels;
             float canvasMidPoint = wallSize / 2;
-            Color color = Color.Red();
+            Color color = Color.Red;
            
             // Create Sphere in scene
             Sphere sphere = new Sphere();
@@ -51,7 +51,7 @@ namespace Chapter05Challenge
                     {
                         if (Math.Abs(xs[0].t - xs[1].t) < .5f)
                         {
-                            canvas.SetPixelColor(x, y, Color.Blue());
+                            canvas.SetPixelColor(x, y, Color.Blue);
                         }
                         else
                         {

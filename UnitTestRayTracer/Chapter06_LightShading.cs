@@ -109,7 +109,7 @@ namespace UnitTestRayTracer
         public void DefaultMaterial()
         {
             Material m = new Material();
-            Assert.True(Color.White() == m.mColor);
+            Assert.True(Color.White == m.mColor);
             Assert.Equal(0.1f, m.Ambient);
             Assert.Equal(0.9f, m.Diffuse);
             Assert.Equal(0.9f, m.Specular);
@@ -123,7 +123,7 @@ namespace UnitTestRayTracer
             Material m = s.material;
 
             Material answer = new Material();
-            Material wrong = new Material(Color.Red());
+            Material wrong = new Material(Color.Red);
 
             Assert.True(answer == m);
             Assert.False(wrong == m);
@@ -132,11 +132,11 @@ namespace UnitTestRayTracer
         [Fact]
         public void SphereWithCostumeMaterial()
         {
-            Sphere s = new Sphere(new Material(Color.Red()));
+            Sphere s = new Sphere(new Material(Color.Red));
             Material m = s.material;
             m.Ambient = 1.0f;
 
-            Material answer = new Material(color: Color.Red(), ambient: 1.0f);
+            Material answer = new Material(color: Color.Red, ambient: 1.0f);
             Material wrong = new Material();
 
             Assert.True(answer == m);
@@ -153,7 +153,7 @@ namespace UnitTestRayTracer
 
             Vector3 eyeV = new Vector3(0, 0, -1);
             Vector3 normalV = new Vector3(0, 0, -1);
-            Light light = new Light(Color.White(), new Point(0, 0, -10));
+            Light light = new Light(Color.White, new Point(0, 0, -10));
 
             Color result = sphere.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.9f, 1.9f, 1.9f);
@@ -171,7 +171,7 @@ namespace UnitTestRayTracer
 
             Vector3 eyeV = new Vector3(0, (float)(Math.Sqrt(2)/2), (float)(Math.Sqrt(2) / 2));
             Vector3 normalV = new Vector3(0, 0, -1);
-            Light light = new Light(Color.White(), new Point(0, 0, -10));
+            Light light = new Light(Color.White, new Point(0, 0, -10));
 
             Color result = sphere.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.0f, 1.0f, 1.0f);
@@ -189,7 +189,7 @@ namespace UnitTestRayTracer
 
             Vector3 eyeV = new Vector3(0, 0, -1);
             Vector3 normalV = new Vector3(0, 0, -1);
-            Light light = new Light(Color.White(), new Point(0, 10, -10));
+            Light light = new Light(Color.White, new Point(0, 10, -10));
 
             Color result = sphere.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(0.7364f, 0.7364f, 0.7364f);
@@ -207,7 +207,7 @@ namespace UnitTestRayTracer
 
             Vector3 eyeV = new Vector3(0, -(float)(Math.Sqrt(2) / 2), -(float)(Math.Sqrt(2) / 2));
             Vector3 normalV = new Vector3(0, 0, -1);
-            Light light = new Light(Color.White(), new Point(0, 10, -10));
+            Light light = new Light(Color.White, new Point(0, 10, -10));
 
             Color result = sphere.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.6364f, 1.6364f, 1.6364f);
@@ -225,7 +225,7 @@ namespace UnitTestRayTracer
 
             Vector3 eyeV = new Vector3(0, 0, -1);
             Vector3 normalV = new Vector3(0, 0, -1);
-            Light light = new Light(Color.White(), new Point(0, 0, 10));
+            Light light = new Light(Color.White, new Point(0, 0, 10));
 
             Color result = sphere.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(0.1f, 0.1f, 0.1f);

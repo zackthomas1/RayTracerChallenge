@@ -43,9 +43,9 @@ namespace RayTracer
 
             //string fileDirectoryComplete = filePath + "\\" + fileName;
 
-            //canvas.FillCanvas(Color.Blue());
-            //canvas.SetPixelColor(9, 4, Color.Red());
-            //canvas.canvas[3, 2] = Color.Green();
+            //canvas.FillCanvas(Color.Blue);
+            //canvas.SetPixelColor(9, 4, Color.Red);
+            //canvas.canvas[3, 2] = Color.Green;
 
             //Console.WriteLine("Writting File");
             //Save.PPM(fileDirectoryComplete, canvas);
@@ -266,12 +266,12 @@ namespace RayTracer
             //-----------------------------------------------------------------------------
 
             //Sphere s1 = new Sphere();
-            //s1.material.mColor = Color.Blue(); 
+            //s1.material.mColor = Color.Blue; 
             //Console.WriteLine(s1.material.ToString());
 
             //Console.WriteLine();
 
-            //Material m2 = new Material(Color.Red());
+            //Material m2 = new Material(Color.Red);
             //Sphere s2 = new Sphere(m2);
             //Console.WriteLine(s2.material.ToString());
 
@@ -293,7 +293,7 @@ namespace RayTracer
 
             Vector3 normalV = new Vector3(0, 0, -1);
             Vector3 eyeV = new Vector3(0, 0, -1);
-            Light light = new Light(Color.White(), new Point(0, 0, -10));
+            Light light = new Light(Color.White, new Point(0, 0, -10));
 
             Console.WriteLine("Light: " + light.ToString());
 

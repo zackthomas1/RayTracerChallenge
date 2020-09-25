@@ -12,7 +12,7 @@ namespace ClockChallenge
             {
                 for (int column = y - 20; column < y + 20; column++)
                 {
-                    canvas.SetPixelColor(row, column, Color.Blue()); 
+                    canvas.SetPixelColor(row, column, Color.Blue); 
                 }
             }
 

@@ -30,7 +30,7 @@ namespace Chapter06Challenge
 
             // Add light source
             Point lightPosition = new Point(30, 10, -10);
-            Color lightColor = Color.White();
+            Color lightColor = Color.White;
             Light light = new Light(lightColor, lightPosition);
 
             // Apply Transforms 
