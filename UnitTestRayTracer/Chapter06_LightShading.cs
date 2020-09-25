@@ -155,7 +155,7 @@ namespace UnitTestRayTracer
             Vector3 normalV = new Vector3(0, 0, -1);
             Light light = new Light(Color.White, new Point(0, 0, -10));
 
-            Color result = sphere.Lighting(m, light, position, eyeV, normalV);
+            Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.9f, 1.9f, 1.9f);
 
             Assert.Equal(answer, result); 
@@ -173,7 +173,7 @@ namespace UnitTestRayTracer
             Vector3 normalV = new Vector3(0, 0, -1);
             Light light = new Light(Color.White, new Point(0, 0, -10));
 
-            Color result = sphere.Lighting(m, light, position, eyeV, normalV);
+            Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.0f, 1.0f, 1.0f);
 
             Assert.Equal(answer, result);
@@ -191,7 +191,7 @@ namespace UnitTestRayTracer
             Vector3 normalV = new Vector3(0, 0, -1);
             Light light = new Light(Color.White, new Point(0, 10, -10));
 
-            Color result = sphere.Lighting(m, light, position, eyeV, normalV);
+            Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(0.7364f, 0.7364f, 0.7364f);
 
             Assert.True(answer == result);
@@ -209,7 +209,7 @@ namespace UnitTestRayTracer
             Vector3 normalV = new Vector3(0, 0, -1);
             Light light = new Light(Color.White, new Point(0, 10, -10));
 
-            Color result = sphere.Lighting(m, light, position, eyeV, normalV);
+            Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.6364f, 1.6364f, 1.6364f);
 
             Assert.True(answer == result);
@@ -227,7 +227,7 @@ namespace UnitTestRayTracer
             Vector3 normalV = new Vector3(0, 0, -1);
             Light light = new Light(Color.White, new Point(0, 0, 10));
 
-            Color result = sphere.Lighting(m, light, position, eyeV, normalV);
+            Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(0.1f, 0.1f, 0.1f);
 
             Assert.True(answer == result);

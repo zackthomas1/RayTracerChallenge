@@ -297,7 +297,7 @@ namespace RayTracer
 
             Console.WriteLine("Light: " + light.ToString());
 
-            Color result = sphere.Lighting(m, light, position, eyeV, normalV);
+            Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.9f, 1.9f, 1.9f);
 
             Console.WriteLine();

@@ -26,8 +26,6 @@ namespace Chapter06Challenge
             Sphere sphere = new Sphere(m1);
             sphere.position = new Point(0.5f, -0.25f, 0);
 
-
-
             // Add light source
             Point lightPosition = new Point(30, 10, -10);
             Color lightColor = Color.White;
@@ -57,7 +55,7 @@ namespace Chapter06Challenge
                         Vector3 normal = sphere.GetNormal(point);
                         Vector3 eyeV = -r.direction;
 
-                        Color phongColor = sphere.Lighting(hit.rayObject.material, light, point, eyeV, normal);
+                        Color phongColor = sphere.material.Lighting(hit.rayObject.material, light, point, eyeV, normal);
                         if (Math.Abs(xs[0].t - xs[1].t) < .5f)
                         {
                             phongColor = phongColor * new Color(0.1f, 2.5f, 0.1f);

@@ -9,17 +9,22 @@ namespace RayTracer
 
         public int width { get; set; }
         public int height { get; set; }
-        
         public Color[,] canvas { get; set; }
 
         public Canvas(int width = 640 ,int height = 480)
         {
             this.width = width;
             this.height = height;
-            CreateCanvas();
+            CreateCanvas(Color.Black);
+        }
+        public Canvas(Color color, int width = 640, int height = 480)
+        {
+            this.width = width;
+            this.height = height;
+            CreateCanvas(color);
         }
 
-        public void CreateCanvas()
+        public void CreateCanvas(Color color)
         {
             canvas = new Color[width, height]; 
             
@@ -27,7 +32,7 @@ namespace RayTracer
             {
                 for (int y = 0; y < height; y++)
                 {
-                    canvas[x, y] = Color.Black;
+                    canvas[x, y] = color;
                 }
             }
         }
