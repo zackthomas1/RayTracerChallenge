@@ -201,7 +201,7 @@ namespace UnitTestRayTracer
         {
             Sphere s = new Sphere();
             Matrix4 identity = new Matrix4();
-            Assert.True(identity == s.transformMatrix); 
+            Assert.True(identity == s.TransformMatrix); 
         }
 
         [Fact]
@@ -209,8 +209,8 @@ namespace UnitTestRayTracer
         {
             Sphere s = new Sphere();
             Matrix4 translate = Matrix4.TranslateMatrix(2, 3, 4); ;
-            s.SetTranform(translate);
-            Assert.True(translate == s.transformMatrix);
+            s.TransformMatrix = translate;
+            Assert.True(translate == s.TransformMatrix);
         }
 
         [Fact]

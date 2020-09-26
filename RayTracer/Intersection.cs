@@ -63,7 +63,7 @@ namespace RayTracer
                 }
             }
 
-            return null;
+            return null; // If no intersection with a t-value greater than zero is found returns null
         }
 
 

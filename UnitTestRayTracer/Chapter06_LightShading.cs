@@ -60,7 +60,7 @@ namespace UnitTestRayTracer
         public void NormalTranlatedSphere()
         {
             Sphere s = new Sphere();
-            s.transformMatrix = s.transformMatrix.Translate(0, 1, 0);
+            s.TransformMatrix = s.TransformMatrix.Translate(0, 1, 0);
 
             Vector3 normal = s.GetNormal(new Point(0, 1.70711f, -0.70711f));
             Vector3 answer = new Vector3(0, 0.70711f, -0.70711f);
@@ -73,7 +73,7 @@ namespace UnitTestRayTracer
         public void NormalTransformedSphere()
         {
             Sphere s = new Sphere();
-            s.transformMatrix = s.transformMatrix.Scale(1, 0.5f, 1).Rotate_Z(Math.PI / 5);
+            s.TransformMatrix = s.TransformMatrix.Scale(1, 0.5f, 1).Rotate_Z(Math.PI / 5);
 
             Vector3 normal = s.GetNormal(new Point(0, (float)Math.Sqrt(2) / 2, (float)-(Math.Sqrt(2) / 2)));
             Vector3 answer = new Vector3(0, 0.97014f, -0.24254f);

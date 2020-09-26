@@ -24,7 +24,7 @@ namespace Chapter06Challenge
             // Create Sphere in scene
             Material m1 = new Material(Color.SetColor(1, 0.2f, 1), specular: 50);
             Sphere sphere = new Sphere(m1);
-            sphere.position = new Point(0.5f, -0.25f, 0);
+            sphere.Position = new Point(0.5f, -0.25f, 0);
 
             // Add light source
             Point lightPosition = new Point(30, 10, -10);

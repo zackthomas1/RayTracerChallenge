@@ -29,7 +29,7 @@ namespace Chapter05Challenge
             // Apply Transforms 
             //sphere.transformMatrix = Matrix4.TranslateMatrix(0,-0.75f,0) * Matrix4.ScaleMatrix(1, 0.5f, 1);
             //sphere.transformMatrix = Matrix4.ScaleMatrix(0.5f, 1, 1) * Matrix4.RotateMatrix_Y(Math.PI / 6);
-            sphere.transformMatrix = Matrix4.ShearMatrix(1, 0, 0, 0, 0, 0) * Matrix4.ScaleMatrix(.5f, 1, 1); 
+            sphere.TransformMatrix = Matrix4.ShearMatrix(1, 0, 0, 0, 0, 0) * Matrix4.ScaleMatrix(.5f, 1, 1); 
 
 
             for (int y = 0; y < canvasPixels; y++)
