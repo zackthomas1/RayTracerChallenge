@@ -26,5 +26,24 @@ namespace UnitTestRayTracer
             Assert.True(s1 == sceneDefault.Objects[0]);
             Assert.True(s2 == sceneDefault.Objects[1]);
         }
+
+        [Fact]
+        public void IntersectWorldwithRay()
+        {
+            Scene scene = new Scene();
+            Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
+
+            List<Intersection> xs = scene.Intersections(ray);
+
+            Assert.Equal(4, xs.Count);
+            Assert.Equal(4, xs[0].t);
+            Assert.Equal(4.5f, xs[1].t);
+            Assert.Equal(5.5f, xs[2].t);
+            Assert.Equal(6, xs[3].t);
+
+        }
+
+
+
     }
 }

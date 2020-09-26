@@ -42,12 +42,27 @@ namespace RayTracer
 
             Material m1 = new Material(new Color(0.8f, 1.0f, 0.6f), diffuse: 0.7f, specular: 0.2f);
             Sphere unitSphere = new Sphere(m1, radius: 1.0f);
-            Sphere halfUnitSphere = new Sphere(radius: 0.5f);
-
+            Sphere halfUnitSphere = new Sphere(radius: 1.0f);
+            halfUnitSphere.TransformMatrix = Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
+            Console.WriteLine(halfUnitSphere.TransformMatrix.ToString());
+           
             objects.Add(unitSphere);
             objects.Add(halfUnitSphere);
         }
 
+        public List<Intersection> Intersections(Ray ray)
+        {
 
+            List<Intersection> result = new List<Intersection>();
+
+            foreach (RayObject obj in objects)
+            {
+                List<Intersection> objIntersects = obj.Intersect(ray);
+                result.AddRange(objIntersects);
+            }
+
+            result = Intersection.Sort(result);
+            return result;
+        }
     }
 }

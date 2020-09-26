@@ -97,5 +97,15 @@ namespace RayTracer
         // Methods
         public abstract List<Intersection> Intersect(Ray ray);
 
+        /// <summary>
+        /// Takes the input ray applies RayObjects tranformMatrix. 
+        /// Taking transformations on the object and putting them on the ray.
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
+        virtual protected Ray RayToObjectSpace(Ray ray)
+        {
+            return ray * transformMatrix.Invert();
+        }
     }
 }

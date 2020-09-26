@@ -286,27 +286,35 @@ namespace RayTracer
             //Console.WriteLine(light02.ToString());
 
             //----------------------------------------------------------------------------
-            Sphere sphere = new Sphere();
+            //Sphere sphere = new Sphere();
 
-            Material m = new Material();
-            Point position = new Point(0, 0, 0);
+            //Material m = new Material();
+            //Point position = new Point(0, 0, 0);
 
-            Vector3 normalV = new Vector3(0, 0, -1);
-            Vector3 eyeV = new Vector3(0, 0, -1);
-            Light light = new Light(Color.White, new Point(0, 0, -10));
+            //Vector3 normalV = new Vector3(0, 0, -1);
+            //Vector3 eyeV = new Vector3(0, 0, -1);
+            //Light light = new Light(Color.White, new Point(0, 0, -10));
 
-            Console.WriteLine("Light: " + light.ToString());
+            //Console.WriteLine("Light: " + light.ToString());
 
-            Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
-            Color answer = new Color(1.9f, 1.9f, 1.9f);
+            //Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
+            //Color answer = new Color(1.9f, 1.9f, 1.9f);
 
-            Console.WriteLine();
+            //Console.WriteLine();
 
-            Console.WriteLine("Result: " + result.ToString());
-            Console.WriteLine("Answer: " + answer.ToString());
+            //Console.WriteLine("Result: " + result.ToString());
+            //Console.WriteLine("Answer: " + answer.ToString());
+            //----------------------------------------------------------------------------
 
+            Scene scene = new Scene();
+            Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
 
+            List<Intersection> xs = scene.Intersections(ray);
 
+            foreach (Intersection intersect in xs)
+            {
+                Console.WriteLine(intersect.ToString());
+            }
         }
     }
 }

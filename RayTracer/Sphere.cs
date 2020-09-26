@@ -89,11 +89,16 @@ namespace RayTracer
 
             List<Intersection> intersectionPoints = new List<Intersection>();
 
-            // The vector from the sphere's center, to the ray origin.
-            Vector3 sphereToRay = ray.origin - this.Position; // Sphere centered at the origin (0, 0, 0).
+            // Takes the input ray and applies all object transfomations.
+            Ray transRay = RayToObjectSpace(ray); 
+            //Ray transRay = ray.ApplyObjectTransform(this); // alt method
 
-            double a = Tuple.Dot(ray.direction, ray.direction);
-            double b = 2 * Tuple.Dot(ray.direction, sphereToRay);
+
+            // The vector from the sphere's center, to the ray origin.
+            Vector3 sphereToRay = transRay.origin - this.Position; // Sphere centered at the origin (0, 0, 0).
+
+            double a = Tuple.Dot(transRay.direction, transRay.direction);
+            double b = 2 * Tuple.Dot(transRay.direction, sphereToRay);
             double c = Tuple.Dot(sphereToRay, sphereToRay) - 1.0f;
 
             double discriminant = (b * b) - 4 * a * c;     

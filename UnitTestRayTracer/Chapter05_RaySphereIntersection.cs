@@ -197,7 +197,7 @@ namespace UnitTestRayTracer
         }
 
         [Fact]
-        public void SphereDefualtTransform()
+        public void SphereDefaultTransform()
         {
             Sphere s = new Sphere();
             Matrix4 identity = new Matrix4();
@@ -205,7 +205,7 @@ namespace UnitTestRayTracer
         }
 
         [Fact]
-        public void ChangingSphereTransform()
+        public void ChangeSphereTransform()
         {
             Sphere s = new Sphere();
             Matrix4 translate = Matrix4.TranslateMatrix(2, 3, 4); ;
@@ -214,15 +214,15 @@ namespace UnitTestRayTracer
         }
 
         [Fact]
-        public void ChangingSphereScale()
+        public void ChangeSphereScale()
         {
             Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1)); 
             Sphere s = new Sphere();
             s.TransformMatrix = Matrix4.ScaleMatrix(2, 2, 2);
 
-            Ray scaleRay = ray.ApplyObjectTransform(s);
+            //Ray scaleRay = ray.ApplyObjectTransform(s); //Updated Intersect method to apply object tranformation to ray within method
 
-            List<Intersection> xs = s.Intersect(scaleRay);
+            List<Intersection> xs = s.Intersect(ray);
 
             Assert.Equal(2, xs.Count);
             Assert.Equal(3.0f, xs[0].t);
@@ -230,7 +230,7 @@ namespace UnitTestRayTracer
         }
 
         [Fact]
-        public void InsectTranslatedSphere()
+        public void intersectTranslatedSphere()
         {
             Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
             Sphere s = new Sphere();

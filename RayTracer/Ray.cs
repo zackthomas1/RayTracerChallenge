@@ -62,6 +62,7 @@ namespace RayTracer
             return temp;
         }
 
+        // Considering deleting this method and using only RayToObjectSpace method in RayObject class
         /// <summary>
         /// Takes a RayObject's tranformMatrix inverts it and 
         /// returns a new ray with an update origin position Point
