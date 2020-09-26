@@ -7,6 +7,7 @@ namespace RayTracer
     public class Vector3 : Tuple
     {
 
+        // Constructors
         Vector3() : base(0.0f, 0.0f, 0.0f, 0.0f)
         {
 
@@ -17,6 +18,7 @@ namespace RayTracer
 
         }
 
+        // Class overloads
         public static Vector3 operator +(Vector3 v1, Vector3 v2)
         {
             Vector3 v3 = new Vector3();
@@ -96,6 +98,7 @@ namespace RayTracer
             return v2;
         }
 
+        // Methods
         /// <summary>
         /// Calculates magnitude of a vector
         /// (ie. the length of the vector)

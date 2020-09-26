@@ -7,7 +7,7 @@ namespace RayTracer
 {
     public class Sphere : RayObject
     {
-        //Instance Variables
+        // Instance Variables
         float radius;
 
         // Get/Set methods

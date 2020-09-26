@@ -6,11 +6,18 @@ namespace RayTracer
 {
     public class Utilities
     {
-
+        // Instance Variables
         public static float Epsilon = 0.0001f;
-
         public const double PI = Math.PI;
 
+        // Methods
+        /// <summary>
+        /// Determines if the value of two floats are with in a given tolerence 
+        /// to be considered equal
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static bool FloatEquality(double a, double b)
         {
             if (Math.Abs(a - b) < Epsilon)

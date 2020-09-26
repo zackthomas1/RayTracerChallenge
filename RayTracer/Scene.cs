@@ -8,26 +8,30 @@ namespace RayTracer
 {
     public class Scene
     {
+        // Instance Variables
         List<Light> lights = new List<Light>();
         List<RayObject> objects = new List<RayObject>();
 
+        // Get/Set methods
         public List<Light> Lights
         {
             get { return lights; }
             set { lights = value;  }
         }
+
         public List<RayObject> Objects
         {
             get { return objects; }
             set { objects = value; }
-
         }
 
+        // Constructors
         public Scene()
         {
             DefaultScene();
         }
 
+        // Methods
         /// <summary>
         /// Sets up a defual matching book describtion (pg. 92)
         /// </summary>
@@ -43,7 +47,6 @@ namespace RayTracer
             objects.Add(unitSphere);
             objects.Add(halfUnitSphere);
         }
-
 
 
     }

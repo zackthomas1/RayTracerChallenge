@@ -7,6 +7,7 @@ namespace RayTracer
 {
     public class Save
     {
+        // Methods
         /// <summary>
         /// Generates a ppm image file
         /// </summary>

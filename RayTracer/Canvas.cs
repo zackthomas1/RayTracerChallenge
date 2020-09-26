@@ -6,11 +6,14 @@ namespace RayTracer
 {
     public class Canvas
     {
-
+        // Instance Variables
         public int width { get; set; }
         public int height { get; set; }
         public Color[,] canvas { get; set; }
 
+        // Get/Set methods
+
+        // Constructors
         public Canvas(int width = 640 ,int height = 480)
         {
             this.width = width;
@@ -24,6 +27,13 @@ namespace RayTracer
             CreateCanvas(color);
         }
 
+        // Class overloads
+
+        // Methods
+        /// <summary>
+        /// Colors the Canvas a single color
+        /// </summary>
+        /// <param name="color"></param>
         public void CreateCanvas(Color color)
         {
             canvas = new Color[width, height]; 

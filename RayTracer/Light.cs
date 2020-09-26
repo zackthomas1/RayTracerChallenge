@@ -6,12 +6,13 @@ namespace RayTracer
 {
     public class Light
     {
+        // Instance Variables
         protected static int currentID = 0;
         protected int id;
-
         Color intensity;
         Point position;
 
+        // Get/Set methods
         public Color Insensity
         {
             get { return intensity; }
@@ -33,8 +34,7 @@ namespace RayTracer
             private set { id = value; }
         }
 
-
-
+        // Constructors
         public Light()
         {
             id = currentID++; 
@@ -52,6 +52,7 @@ namespace RayTracer
             this.position = position; 
         }
 
+        // Class overloads
         public override string ToString()
         {
             return "Light " + id.ToString() + ": "+ "\n" +
@@ -59,6 +60,7 @@ namespace RayTracer
                     "    " + "Position -> " + Position.ToString() + "\n";
         }
 
+        // Methods
 
     }
 }

@@ -6,20 +6,26 @@ namespace RayTracer
 {
     public class Intersection
     {
+        // Instance Variables
         public float t;
-        public RayObject rayObject; 
+        public RayObject rayObject;
 
+        // Get/Set methods
+
+        // Constructors
         public Intersection(float t, RayObject rayObject)
         {
             this.t = t;
             this.rayObject = rayObject; 
         }
 
+        // Class overloads
         public override string ToString()
         {
             return "Intersect Object: " + rayObject.ID + " t: " + t.ToString();       
         }
 
+        // Methods
         /// <summary>
         /// Sorts a list of Intersect class variables into non-decending order(increasing).
         /// </summary>

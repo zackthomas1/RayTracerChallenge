@@ -6,13 +6,14 @@ namespace RayTracer
 {
     public class Material
     {
-
+        //Instance Variables
         Color color = Color.White;
         float ambient = 0.1f;
         float diffuse = 0.9f;
         float specular = 0.9f;
         float shininess = 200.0f;
 
+        // Get/Set methods
         public Color mColor
         {
             get { return color; }
@@ -87,7 +88,7 @@ namespace RayTracer
             }
         }
 
-
+        // Constructors
         /// <summary>
         /// Default Material settings constructor
         /// </summary>
@@ -121,6 +122,16 @@ namespace RayTracer
             Shininess = shininess;
         }
 
+        // Class overloads
+        public override string ToString()
+        {
+            return "Color -> " + color + "\n" +
+                   "Ambient -> " + ambient + "\n" +
+                   "Diffuse -> " + diffuse + "\n" +
+                   "Specular -> " + specular + "\n" +
+                   "Shininess -> " + shininess;
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Material material &&
@@ -150,15 +161,6 @@ namespace RayTracer
             hash.Add(Specular);
             hash.Add(Shininess);
             return hash.ToHashCode();
-        }
-
-        public override string ToString()
-        {
-            return "Color -> " + color + "\n" +
-                   "Ambient -> " + ambient + "\n" +
-                   "Diffuse -> " + diffuse + "\n" +
-                   "Specular -> " + specular + "\n" +
-                   "Shininess -> " + shininess;
         }
 
         public static bool operator ==(Material m1, Material m2)
@@ -193,6 +195,7 @@ namespace RayTracer
             }
         }
 
+        // Methods
         /// <summary>
         /// Uses Phong light model to calculate surface color.
         /// </summary>

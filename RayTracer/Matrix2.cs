@@ -6,9 +6,18 @@ namespace RayTracer
 {
     public class Matrix2
     {
+        // Instance Variables
         int size = 2;
         float[,] matrix;
 
+        // Get/Set methods
+        public float this[int r, int c]
+        {
+            get { return matrix[r, c]; }
+            set { matrix[r, c] = value; }
+        }
+
+        // Constructors
         public Matrix2(float m00 = 1.0f, float m01 = 0.0f,
                        float m10 = 0.0f, float m11 = 1.0f)
         {
@@ -19,24 +28,7 @@ namespace RayTracer
 
         }
 
-        public float this[int r, int c]
-        {
-            get { return matrix[r, c]; }
-            set { matrix[r, c] = value; }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Matrix2 matrix &&
-                   size == matrix.size &&
-                   EqualityComparer<float[,]>.Default.Equals(this.matrix, matrix.matrix);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(size, matrix);
-        }
-
+        // Class overloads
         public override string ToString()
         {
             string returnString = "";
@@ -49,10 +41,22 @@ namespace RayTracer
                     returnString += this[rowIndex, columnIndex] + " ";
                     returnString += "|";
                 }
-                returnString += "\n"; 
+                returnString += "\n";
             }
 
             return returnString;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Matrix2 matrix &&
+                   size == matrix.size &&
+                   EqualityComparer<float[,]>.Default.Equals(this.matrix, matrix.matrix);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(size, matrix);
         }
 
         public static bool operator ==(Matrix2 m1, Matrix2 m2)
@@ -112,6 +116,11 @@ namespace RayTracer
             return returnMatrix;
         }
 
+        // Methods
+        /// <summary>
+        /// Returns a Matrix2 with rows and column position reversed from input Matrix2
+        /// </summary>
+        /// <returns></returns>
         public Matrix2 Transpose()
         {
             Matrix2 returnMatrix = new Matrix2(); 

@@ -6,9 +6,18 @@ namespace RayTracer
 {
     public class Matrix3
     {
+        // Instance Variables
         int size = 3;
         float[,] matrix;
 
+        // Get/Set methods
+        public float this[int r, int c]
+        {
+            get { return matrix[r, c]; }
+            set { matrix[r, c] = value; }
+        }
+
+        // Constructors
         public Matrix3(float m00 = 1.0f, float m01 = 0.0f, float m02 = 0.0f,
                        float m10 = 0.0f, float m11 = 1.0f, float m12 = 0.0f,
                        float m20 = 0.0f, float m21 = 0.0f, float m22 = 1.0f)
@@ -20,24 +29,7 @@ namespace RayTracer
             matrix[2, 0] = m20; matrix[2, 1] = m21; matrix[2, 2] = m22;
         }
 
-        public float this[int r, int c]
-        {
-            get { return matrix[r, c]; }
-            set { matrix[r, c] = value; }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Matrix3 matrix &&
-                   size == matrix.size &&
-                   EqualityComparer<float[,]>.Default.Equals(this.matrix, matrix.matrix);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(size, matrix);
-        }
-
+        // Class overloads
         public override string ToString()
         {
             string returnString = "";
@@ -54,6 +46,18 @@ namespace RayTracer
             }
 
             return returnString;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Matrix3 matrix &&
+                   size == matrix.size &&
+                   EqualityComparer<float[,]>.Default.Equals(this.matrix, matrix.matrix);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(size, matrix);
         }
 
         public static bool operator ==(Matrix3 m1, Matrix3 m2)
@@ -109,6 +113,11 @@ namespace RayTracer
             return returnMatrix;
         }
 
+        // Methods
+        /// <summary>
+        /// Returns a Matrix3 with rows and column position reversed from input Matrix3
+        /// </summary>
+        /// <returns></returns>
         public Matrix3 Transpose()
         {
             Matrix3 returnMatrix = new Matrix3();
@@ -124,6 +133,12 @@ namespace RayTracer
             return returnMatrix;
         }
 
+        /// <summary>
+        /// Give a row and column position returns a submatrix of type Matrix2
+        /// </summary>
+        /// <param name="rowDel"></param>
+        /// <param name="columnDel"></param>
+        /// <returns></returns>
         public Matrix2 SubMatrix(int rowDel, int columnDel)
         {
             Matrix2 subMatrix = new Matrix2();
@@ -179,6 +194,10 @@ namespace RayTracer
             return cofactor;
         }
 
+        /// <summary>
+        /// Calculates the determinate of a Matrix3 returning a float value
+        /// </summary>
+        /// <returns></returns>
         public float Determinate()
         {
             float firstColCofactor = this.Cofactor(0, 0); 

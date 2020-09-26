@@ -6,15 +6,20 @@ namespace RayTracer
 {
     public class Ray
     {
+        // Instance Variables
         public Point origin;
-        public Vector3 direction; 
+        public Vector3 direction;
 
+        // Get/Set methods
+
+        // Constructors
         public Ray(Point origin, Vector3 direction)
         {
             this.origin = origin;
             this.direction = direction;
         }
 
+        // Class overloads
         public override string ToString()
         {
             return "Origin:" + origin.ToString() + " -> " + "Direction:" + direction.ToString(); 
@@ -30,6 +35,7 @@ namespace RayTracer
             return temp;
         }
 
+        // Methods
         /// <summary>
         /// Updates ray's origin position Point 
         /// by adding direction vector multiplied by t (time)

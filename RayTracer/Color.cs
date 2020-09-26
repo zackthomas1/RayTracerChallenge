@@ -6,22 +6,32 @@ namespace RayTracer
 {
     public class Color
     {
+        // Instance Variables
         public float red;
         public float green;
         public float blue;
 
-        //
+        // Get/Set methods
+
+        // readonly variables for standard default color values
         public static readonly Color Black = new Color(0, 0, 0);
         public static readonly Color White = new Color(1, 1, 1);
         public static readonly Color Red = new Color(1, 0, 0);
         public static readonly Color Green = new Color(0, 1, 0);
         public static readonly Color Blue = new Color(0, 0, 1);
 
+        // Constructors
         public Color(float red = 0.0f, float green = 0.0f, float blue = 0.0f)
         {
             this.red = red;
             this.green = green; 
             this.blue = blue;
+        }
+
+        // Class overloads
+        public override string ToString()
+        {
+            return $"({red},{green},{blue})";
         }
 
         public override bool Equals(object obj)
@@ -35,11 +45,6 @@ namespace RayTracer
         public override int GetHashCode()
         {
             return HashCode.Combine(red, green, blue);
-        }
-
-        public override string ToString()
-        {
-            return $"({red},{green},{blue})";
         }
 
         public static Color operator +(Color c1, Color c2)
@@ -126,6 +131,7 @@ namespace RayTracer
             }
         }
 
+        // Methods
         /// <summary>
         /// Sets color values to input parameters (red, green, blue)
         /// </summary>

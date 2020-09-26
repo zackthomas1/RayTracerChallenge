@@ -6,9 +6,18 @@ namespace RayTracer
 {
     public class Matrix4
     {
+        // Instance Variables
         int size = 4;
-        float[,] matrix; 
+        float[,] matrix;
 
+        // Get/Set methods
+        public float this[int r, int c]
+        {
+            get { return matrix[r, c]; }
+            set { matrix[r, c] = value; }
+        }
+
+        // Constructors
         public Matrix4(float m00 = 1.0f, float m01 = 0.0f, float m02 = 0.0f, float m03 = 0.0f,
                        float m10 = 0.0f, float m11 = 1.0f, float m12 = 0.0f, float m13 = 0.0f,
                        float m20 = 0.0f, float m21 = 0.0f, float m22 = 1.0f, float m23 = 0.0f,
@@ -22,24 +31,7 @@ namespace RayTracer
             matrix[3, 0] = m30; matrix[3, 1] = m31; matrix[3, 2] = m32; matrix[3, 3] = m33;
         }
 
-        public float this[int r, int c]
-        {
-            get { return matrix[r, c]; }
-            set { matrix[r, c] = value; }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Matrix4 matrix &&
-                   size == matrix.size &&
-                   EqualityComparer<float[,]>.Default.Equals(this.matrix, matrix.matrix);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(size, matrix);
-        }
-
+        // Class overloads
         public override string ToString()
         {
             string returnString = "";
@@ -56,6 +48,18 @@ namespace RayTracer
             }
 
             return returnString;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Matrix4 matrix &&
+                   size == matrix.size &&
+                   EqualityComparer<float[,]>.Default.Equals(this.matrix, matrix.matrix);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(size, matrix);
         }
 
         public static bool operator ==(Matrix4 m1, Matrix4 m2)
@@ -112,6 +116,7 @@ namespace RayTracer
             return returnMatrix;
         }
 
+        // Methods
         /// <summary>
         /// Switches the rows and column values
         /// </summary>
@@ -131,6 +136,12 @@ namespace RayTracer
             return returnMatrix;
         }
 
+        /// <summary>
+        /// Give a row and column position returns a submatrix of type Matrix3
+        /// </summary>
+        /// <param name="rowDel"></param>
+        /// <param name="columnDel"></param>
+        /// <returns></returns>
         public Matrix3 SubMatrix(int rowDel, int columnDel)
         {
             Matrix3 subMatrix = new Matrix3();
@@ -187,6 +198,10 @@ namespace RayTracer
             return cofactor;
         }
 
+        /// <summary>
+        /// Calculates the determinate of a Matrix4 returning a float value
+        /// </summary>
+        /// <returns></returns>
         public float Determinate()
         {
             float firstColCofactor = this.Cofactor(0, 0);
@@ -218,6 +233,8 @@ namespace RayTracer
             return returnMatrix;
         }
 
+        // Translate Methods
+        //------------------------------------------------------------------
         public static Matrix4 TranslateMatrix(float x, float y, float z)
         {
             Matrix4 translationMatrix = new Matrix4();
@@ -236,6 +253,8 @@ namespace RayTracer
             return this;
         }
 
+        // Scale Methods
+        //------------------------------------------------------------------
         public static Matrix4 ScaleMatrix(float x, float y, float z)
         {
             Matrix4 translationMatrix = new Matrix4();
@@ -254,6 +273,10 @@ namespace RayTracer
             return this;
         }
 
+        // Rotate Methods
+        //------------------------------------------------------------------
+            // Rotate X Methods
+            //---------------------------------------------------------------
         public static Matrix4 RotateMatrix_X(double radian) 
         {
             Matrix4 rotationMatrix = new Matrix4();
@@ -282,6 +305,8 @@ namespace RayTracer
             return this;
         }
 
+            // Rotate Y Methods
+            //---------------------------------------------------------------
         public static Matrix4 RotateMatrix_Y(double radian)
         {
             Matrix4 rotationMatrix = new Matrix4();
@@ -310,6 +335,8 @@ namespace RayTracer
             return this;
         }
 
+            // Rotate Z Methods
+            //---------------------------------------------------------------
         public static Matrix4 RotateMatrix_Z(double radian)
         {
             Matrix4 rotationMatrix = new Matrix4();
@@ -338,6 +365,8 @@ namespace RayTracer
             return this;
         }
 
+            // Rotate Total Methods
+            //---------------------------------------------------------------
         public static Matrix4 RotateMatrix(double xRadian, double yRadian, double zRadian)
         {
 
@@ -365,6 +394,8 @@ namespace RayTracer
             return this;
         }
 
+        // Shear Methods
+        //------------------------------------------------------------------
         public static Matrix4 ShearMatrix(float Xy, float Xz, float Yx, float Yz, float Zx, float Zy)
         {
             Matrix4 shearMatrix = new Matrix4();

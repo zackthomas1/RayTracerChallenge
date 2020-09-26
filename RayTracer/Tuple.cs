@@ -7,12 +7,13 @@ namespace RayTracer
 {
     public class Tuple
     {
-
+        // Instance Variables
         public float x;
         public float y;
         public float z;
-        public float w; 
+        public float w;
 
+        // Constructors
         public Tuple(float x = 0.0f,
                      float y = 0.0f,
                      float z = 0.0f,
@@ -24,6 +25,7 @@ namespace RayTracer
             this.w = w;
         }
 
+        // Class overloads
         public override string ToString()
         {
             return $"({this.x},{this.y},{this.z},{this.w})";
@@ -143,6 +145,7 @@ namespace RayTracer
             }
         }
 
+        // Methods
         /// <summary>
         /// Returns the dot product of two vector as a float.
         /// </summary>

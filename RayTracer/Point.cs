@@ -7,7 +7,7 @@ namespace RayTracer
     public class Point : Tuple
     {
 
-
+        // Constructors
         Point() : base(0.0f, 0.0f, 0.0f, 1.0f)
         {
 
@@ -18,7 +18,7 @@ namespace RayTracer
 
         }
 
-
+        // Class overloads
         public static Point operator +(Point p1, Vector3 v2)
         {
             Point p3 = new Point();
@@ -85,6 +85,7 @@ namespace RayTracer
 
             return result;
         }
+
         public static Point operator *(Point p1, Matrix4 m1)
         {
             Point result = new Point();
