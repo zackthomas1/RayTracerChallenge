@@ -29,10 +29,10 @@ namespace UnitTestRayTracer
         {
             Ray ray01 = new Ray(new Point(2, 3, 4), new Vector3(1, 0, 0));
 
-            Assert.Equal(ray01.Position(0), new Point(2,3,4));
-            Assert.Equal(ray01.Position(1), new Point(3, 3, 4));
-            Assert.Equal(ray01.Position(-1), new Point(1, 3, 4));
-            Assert.Equal(ray01.Position(2.5f), new Point(4.5f, 3, 4));
+            Assert.Equal(ray01.GetPointPosition(0), new Point(2,3,4));
+            Assert.Equal(ray01.GetPointPosition(1), new Point(3, 3, 4));
+            Assert.Equal(ray01.GetPointPosition(-1), new Point(1, 3, 4));
+            Assert.Equal(ray01.GetPointPosition(2.5f), new Point(4.5f, 3, 4));
         } 
 
         [Fact]
@@ -179,7 +179,7 @@ namespace UnitTestRayTracer
         {
             Ray r1 = new Ray(new Point(1, 2, 3), new Vector3(0, 1, 0));
             Matrix4 translate = Matrix4.TranslateMatrix(3, 4, 5);
-            Ray r2 = r1.transform(translate);
+            Ray r2 = r1.Transform(translate);
 
             Assert.Equal(new Point(4,6,8),r2.origin);
             Assert.Equal(r1.direction, r2.direction);
@@ -190,7 +190,7 @@ namespace UnitTestRayTracer
         {
             Ray r1 = new Ray(new Point(1, 2, 3), new Vector3(0, 1, 0));
             Matrix4 translate = Matrix4.ScaleMatrix(2, 3, 4);
-            Ray r2 = r1.transform(translate);
+            Ray r2 = r1.Transform(translate);
 
             Assert.Equal(new Point(2, 6, 12), r2.origin);
             Assert.Equal(new Vector3(0, 3, 0), r2.direction);

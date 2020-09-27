@@ -51,7 +51,7 @@ namespace Chapter06Challenge
                         Intersection hit = Intersection.Hit(xs);
                         Console.WriteLine("Hit: " + hit.ToString());
 
-                        Point point = r.Position(hit.t);
+                        Point point = r.GetPointPosition(hit.t);
                         Vector3 normal = sphere.GetNormal(point);
                         Vector3 eyeV = -r.direction;
 

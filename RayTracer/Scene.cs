@@ -31,6 +31,25 @@ namespace RayTracer
             DefaultScene();
         }
 
+        //
+        public override string ToString()
+        {
+            String result = "";
+
+            foreach(Light light in lights)
+            {
+                result += light.ToString() + " ";
+            }
+            result += "\nObjects: \n";
+            foreach (RayObject obj in objects)
+            {
+                result += "    " + obj.ToString() + "\n"; 
+            }
+
+            return result;
+            
+        }
+
         // Methods
         /// <summary>
         /// Sets up a defual matching book describtion (pg. 92)
@@ -44,12 +63,19 @@ namespace RayTracer
             Sphere unitSphere = new Sphere(m1, radius: 1.0f);
             Sphere halfUnitSphere = new Sphere(radius: 1.0f);
             halfUnitSphere.TransformMatrix = Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
-            Console.WriteLine(halfUnitSphere.TransformMatrix.ToString());
+            
+            //Console.WriteLine(halfUnitSphere.TransformMatrix.ToString());
            
             objects.Add(unitSphere);
             objects.Add(halfUnitSphere);
         }
 
+        /// <summary>
+        /// Finds intersections with a ray and every object in a scene.
+        /// aka intersect_world
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
         public List<Intersection> Intersections(Ray ray)
         {
 
@@ -64,5 +90,73 @@ namespace RayTracer
             result = Intersection.Sort(result);
             return result;
         }
+    
+        /// <summary>
+        /// Add a Rayobject to scene
+        /// </summary>
+        /// <param name="rayObject"></param>
+        public void AddObject(RayObject rayObject)
+        {
+            this.objects.Add(rayObject);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="light"></param>
+        public void AddLight(Light light)
+        {
+            this.lights.Add(light);
+        }
+
+        /// <summary>
+        /// Finds color value at given intersection encapsulated in Computation class parameter
+        /// </summary>
+        /// <param name="comp"></param>
+        /// <returns></returns>
+        public Color ShadeHit(Computation comp)
+        {
+            //Material mat = comp.rayObject.material;
+
+            Color totalColor = new Color(0,0,0);
+
+            foreach(Light light in lights)
+            {
+                Color hitColor = comp.rayObject.material.Lighting(comp.rayObject.material, light, 
+                                                                  comp.point, comp.eyeV, 
+                                                                  comp.normalV);
+                totalColor += hitColor;
+            }
+            
+            return totalColor;
+        }
+
+        /// <summary>
+        /// Finds color value given a Ray and Scene
+        /// Use this method for outside calls to find color value.
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="ray"></param>
+        /// <returns></returns>
+        public Color ColorAt(Ray ray)
+        {
+            Color resultColor = Color.Black;
+            Scene scene = this;
+
+            // Potentially sorting list of intersections twice
+            List<Intersection> intersections = scene.Intersections(ray);
+            
+            Intersection hit = Intersection.Hit(intersections);
+            if (hit == null)
+            {
+                return resultColor;
+            }
+
+            Computation comp = new Computation(hit, ray);
+            resultColor = ShadeHit(comp);
+
+            return resultColor;
+        }
+    
     }
 }

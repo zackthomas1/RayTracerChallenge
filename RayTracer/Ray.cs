@@ -37,13 +37,12 @@ namespace RayTracer
 
         // Methods
         /// <summary>
-        /// Updates ray's origin position Point 
-        /// by adding direction vector multiplied by t (time)
+        /// Gets the point position of a ray at a given t value.
         /// (aka. iterations of direction)
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public Point Position(float t)
+        public Point GetPointPosition(float t)
         {
             return origin + (direction * t); 
         }
@@ -54,7 +53,7 @@ namespace RayTracer
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public Ray transform(Matrix4 matrix)
+        public Ray Transform(Matrix4 matrix)
         {
             Ray temp = this;
             temp = temp * matrix;

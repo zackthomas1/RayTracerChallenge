@@ -123,7 +123,7 @@ namespace RayTracer
         /// </summary>
         /// <param name="worldPoint"></param>
         /// <returns></returns>
-        public Vector3 GetNormal(Point worldPoint)
+        public override Vector3 GetNormal(Point worldPoint)
         {
             Point objectPoint = this.TransformMatrix.Invert() * worldPoint;
             Vector3 objectNormal = objectPoint - new Point(0, 0, 0);

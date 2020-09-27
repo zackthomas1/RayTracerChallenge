@@ -286,6 +286,7 @@ namespace RayTracer
             //Console.WriteLine(light02.ToString());
 
             //----------------------------------------------------------------------------
+
             //Sphere sphere = new Sphere();
 
             //Material m = new Material();
@@ -304,17 +305,49 @@ namespace RayTracer
 
             //Console.WriteLine("Result: " + result.ToString());
             //Console.WriteLine("Answer: " + answer.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Scene scene = new Scene();
+            //Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
+            //Sphere s3 = new Sphere();
+            //s3.TransformMatrix.Translate(1f, 0f, -1f).Scale(1.25f,1.25f,1.25f);
+            //scene.AddObject(s3);
+
+            //Console.WriteLine(scene.ToString());
+
+            //List<Intersection> xs = scene.Intersections(ray);
+
+            //foreach (Intersection intersect in xs)
+            //{
+            //    Console.WriteLine(intersect.ToString());
+            //}
+
+            //----------------------------------------------------------------------------
+
+            //Scene scene = new Scene();
+            //Light l2 = new Light(new Color(0.5f, 0.75f, 1), new Point(0, 0.25f, 0));
+            //Ray ray = new Ray(new Point(0, 0, 0), new Vector3(0, 0, 1));
+            //RayObject shape = scene.Objects[0];
+            //Intersection i = new Intersection(4, shape);
+
+            //scene.AddLight(l2);
+
+            //Computation comp = new Computation(i, ray);
+
+            //Color color = scene.ShadeHit(comp);
+
+            //Console.WriteLine(color.ToString());
+
             //----------------------------------------------------------------------------
 
             Scene scene = new Scene();
             Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
 
-            List<Intersection> xs = scene.Intersections(ray);
+            Color color = scene.ColorAt(ray);
+            Color answer = new Color(0.8066f, 0.47583f, 0.2855f);
 
-            foreach (Intersection intersect in xs)
-            {
-                Console.WriteLine(intersect.ToString());
-            }
+            Console.WriteLine(color.ToString());
         }
     }
 }

@@ -7,7 +7,7 @@ namespace RayTracer
     public class Intersection
     {
         // Instance Variables
-        public float t;
+        public float t; // Stores the t-value for where the object intersection occured along the ray
         public RayObject rayObject;
 
         // Get/Set methods
@@ -70,6 +70,34 @@ namespace RayTracer
             }
 
             return null; // If no intersection with a t-value greater than zero is found returns null
+        }
+
+        // Methods
+        /// <summary>
+        /// Given an Intersection and a Ray 
+        /// evaluates for eye vector, normal vector, insection point, 
+        /// and if ray is inside of object
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="r"></param>
+        public static Computation PrepareComputations(Intersection i,Ray r)
+        {
+            Computation comp = new Computation();
+            comp.t = i.t;
+            comp.rayObject = i.rayObject;
+            comp.point = r.GetPointPosition(i.t);
+            comp.eyeV = -r.direction;
+            comp.normalV = comp.rayObject.GetNormal(comp.point);
+
+            if (Vector3.Dot(comp.eyeV, comp.normalV) < 0)
+            {
+                comp.inside = true;
+                comp.normalV = -comp.normalV;
+            }
+            else
+                comp.inside = false;
+
+            return comp;
         }
 
 

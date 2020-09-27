@@ -107,5 +107,14 @@ namespace RayTracer
         {
             return ray * transformMatrix.Invert();
         }
+
+        /// <summary>
+        /// Given a position in world-coordinates finds the normal 
+        /// of rayObject to that given point. 
+        /// </summary>
+        /// <param name="worldPoint"></param>
+        /// <returns></returns>
+        public abstract Vector3 GetNormal(Point worldPoint);
+     
     }
 }
