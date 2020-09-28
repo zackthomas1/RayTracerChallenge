@@ -72,11 +72,11 @@ namespace RayTracer
             return null; // If no intersection with a t-value greater than zero is found returns null
         }
 
-        // Methods
         /// <summary>
         /// Given an Intersection and a Ray 
         /// evaluates for eye vector, normal vector, insection point, 
-        /// and if ray is inside of object
+        /// and if ray is inside of object.
+        /// This is the same as calling the Computation class constructor with Intersection and Ray parameter
         /// </summary>
         /// <param name="i"></param>
         /// <param name="r"></param>

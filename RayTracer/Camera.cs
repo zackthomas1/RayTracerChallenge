@@ -134,7 +134,9 @@ namespace RayTracer
         }
 
         /// <summary>
-        /// 
+        /// For a given pixel coordinate in a Canvas class image = plan 
+        /// returns a ray with an origin at the camera and direction that passes 
+        /// through pixel coordinate
         /// </summary>
         /// <param name="pX"></param>
         /// <param name="pY"></param>
@@ -160,6 +162,11 @@ namespace RayTracer
             return new Ray(origin, direction);
         }
 
+        /// <summary>
+        /// Main render call
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <returns></returns>
         public Canvas Render(Scene scene)
         {
             Canvas image = new Canvas(hsize, vsize);

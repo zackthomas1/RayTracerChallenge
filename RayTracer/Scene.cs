@@ -87,7 +87,6 @@ namespace RayTracer
                 result.AddRange(objIntersects);
             }
 
-            result = Intersection.Sort(result);
             return result;
         }
     
@@ -143,7 +142,6 @@ namespace RayTracer
             Color resultColor = Color.Black;
             Scene scene = this;
 
-            // Potentially sorting list of intersections twice
             List<Intersection> intersections = scene.Intersections(ray);
             
             Intersection hit = Intersection.Hit(intersections);

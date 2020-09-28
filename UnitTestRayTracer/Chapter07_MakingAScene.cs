@@ -33,7 +33,7 @@ namespace UnitTestRayTracer
             Scene scene = new Scene();
             Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
 
-            List<Intersection> xs = scene.Intersections(ray);
+            List<Intersection> xs = Intersection.Sort(scene.Intersections(ray));
 
             Assert.Equal(4, xs.Count);
             Assert.Equal(4, xs[0].t);
