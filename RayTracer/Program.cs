@@ -341,13 +341,80 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
-            Scene scene = new Scene();
-            Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
+            //Scene scene = new Scene();
+            //Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
 
-            Color color = scene.ColorAt(ray);
-            Color answer = new Color(0.8066f, 0.47583f, 0.2855f);
+            //Color color = scene.ColorAt(ray);
+            //Color answer = new Color(0.8066f, 0.47583f, 0.2855f);
 
-            Console.WriteLine(color.ToString());
+            //Console.WriteLine(color.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Point from = new Point(0, 0, 0);
+            //Point to = new Point(0, 0, -1);
+            //Vector3 up = new Vector3(0, 1, 0);
+            //Camera cam = new Camera();
+            //Matrix4 t = cam.viewTransform(from, to, up);
+            //Matrix4 identity = new Matrix4();
+
+            //Console.WriteLine(t.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Point from = new Point(0, 0, 0);
+            //Point to = new Point(0, 0, 1);
+            //Vector3 up = new Vector3(0, 1, 0);
+            //Camera cam = new Camera();
+            //Matrix4 trans = cam.viewTransform(from, to, up);
+            //Matrix4 answer = Matrix4.ScaleMatrix(-1, 1, -1);
+
+            //Console.WriteLine(trans.ToString());
+            //Console.WriteLine(answer.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Point from = new Point(0, 0, 8);
+            //Point to = new Point(0, 0, 0);
+            //Vector3 up = new Vector3(0, 1, 0);
+            //Camera cam = new Camera();
+            //Matrix4 trans = cam.ViewTransform(from, to, up);
+            //Matrix4 answer = Matrix4.TranslateMatrix(0, 0, -8);
+
+            //Console.WriteLine("Trans:\n" + trans.ToString());
+            //Console.WriteLine("Answer:\n" + answer.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Point from = new Point(1, 3, 2);
+            //Point to = new Point(4, -2, 8);
+            //Vector3 up = new Vector3(1, 1, 0);
+
+            //Camera cam = new Camera();
+
+            //Matrix4 trans = cam.ViewTransform(from, to, up);
+            //Matrix4 answer = new Matrix4(-0.50709f, 0.50709f, 0.67612f, -2.36643f,
+            //                             0.76772f, 0.60609f, 0.12122f, -2.82843f,
+            //                             -0.35857f, 0.59761f, -0.71714f, 0.00000f,
+            //                             0.00000f, 0.00000f, 0.00000f, 1.00000f);
+
+            //Console.WriteLine("Trans:\n" + trans.ToString());
+            //Console.WriteLine("Answer:\n" + answer.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Camera cam = new Camera(125, 200, (float)Math.PI / 2);
+            //Console.WriteLine(cam.PSize.ToString());
+
+            //----------------------------------------------------------------------------
+
+            Camera cam = new Camera(201, 101, (float)Math.PI / 2);
+            cam.Transform = Matrix4.RotateMatrix_Y((float)Math.PI / 4) * Matrix4.TranslateMatrix(0, -2, 5);
+
+            Ray r = cam.RayForPixel(100, 50);
+
+           Console.WriteLine(r.origin.ToString());
+            Console.WriteLine(r.direction.ToString());
         }
     }
 }

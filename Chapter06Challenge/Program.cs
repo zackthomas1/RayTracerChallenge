@@ -8,7 +8,8 @@ namespace Chapter06Challenge
 {
     class Program
     {
-        static void Main(string[] args)
+
+        public static void Chapter06()
         {
             // Define projection plane
             Point rayOrigin = new Point(0, 0, -5);
@@ -78,6 +79,79 @@ namespace Chapter06Challenge
             Console.WriteLine("Done: Program complete.");
             Console.ReadKey();
 
+        }
+
+        public static void Chapter07()
+        {
+            // Define scene objects
+            Sphere floor = new Sphere();
+            floor.TransformMatrix = Matrix4.ScaleMatrix(10, 0.01f, 10);
+            floor.material = new Material();
+            floor.material.mColor = new Color(1, 0.9f, 0.9f);
+            floor.material.Specular = 0;
+
+            Sphere leftWall = new Sphere();
+            leftWall.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 5) * Matrix4.RotateMatrix_Y(-(float)Math.PI / 4) *
+                                        Matrix4.RotateMatrix_X((float)Math.PI/2) * Matrix4.ScaleMatrix(10, 0.01f, 10);
+            leftWall.material = floor.material;
+
+            Sphere rightWall = new Sphere();
+            rightWall.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 5) * Matrix4.RotateMatrix_Y((float)Math.PI / 4) *
+                                        Matrix4.RotateMatrix_X((float)Math.PI/2) * Matrix4.ScaleMatrix(10, 0.01f, 10);
+            rightWall.material = floor.material;
+
+            Sphere middle = new Sphere();
+            middle.TransformMatrix = Matrix4.TranslateMatrix(-0.5f, 1, 0.5f);
+            middle.material = new Material();
+            middle.material.mColor = new Color(0.1f, 1, 0.5f);
+            middle.material.Diffuse = 0.7f;
+            middle.material.Specular = 0.3f;
+
+            Sphere right = new Sphere();
+            right.TransformMatrix = Matrix4.TranslateMatrix(1.5f, 0.5f, -0.5f) * Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
+            right.material = new Material();
+            right.material.mColor = new Color(0.5f, 1, 0.1f);
+            right.material.Diffuse = 0.7f;
+            right.material.Specular = 0.3f;
+
+            Sphere left = new Sphere();
+            left.TransformMatrix = Matrix4.TranslateMatrix(-1.5f, 0.33f, -0.75f) * Matrix4.ScaleMatrix(0.33f, 0.33f, 0.33f);
+            left.material = new Material();
+            left.material.mColor = new Color(1.0f, 0.8f, 0.1f);
+            left.material.Diffuse = 0.7f;
+            left.material.Specular = 0.3f;
+
+            // Create Scene
+            Scene scene = new Scene();
+            scene.Lights[0] = new Light(Color.White, new Point(-10, 10, -10));
+
+            List<RayObject> sceneObjects = new List<RayObject>() { floor, leftWall, rightWall, middle, right, left };
+            scene.Objects = sceneObjects;
+
+            // Create Camera
+            Camera cam = new Camera(900, 500, (float)Math.PI / 3);
+            cam.Transform = cam.ViewTransform(new Point(0, 1.5f, -5),
+                                              new Point(0, 1, 0),
+                                              new Vector3(0, 1, 0));
+            Canvas image = cam.Render(scene); // Outputs image
+
+
+
+            // Save Canvas to ppm
+            Console.WriteLine("\nSaving PPM file");
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string fileName = "Chapter07Challenge_01";
+            string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
+            Save.PPM(fileDirectoryComplete, image);
+
+            Console.WriteLine("Done: Program complete.");
+            Console.ReadKey();
+        }
+
+
+        static void Main(string[] args)
+        {
+            Chapter07();
         }
     }
 }

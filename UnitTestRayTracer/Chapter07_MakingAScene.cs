@@ -116,5 +116,189 @@ namespace UnitTestRayTracer
             Assert.True(answer == color);
         }
 
+        [Fact]
+        public void RayMissColor()
+        {
+            Scene scene = new Scene();
+            Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 1, 0));
+
+            Color color = scene.ColorAt(ray);
+            Color answer = new Color(0, 0, 0);
+
+            Assert.True(answer == color);
+        }
+
+        [Fact]
+        public void RayHitColor()
+        {
+            Scene scene = new Scene();
+            Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
+
+            Color color = scene.ColorAt(ray);
+            Color answer = new Color(0.38066f, 0.47583f, 0.2855f);
+
+            Assert.True(answer == color);
+        }
+
+        [Fact]
+        public void BehindRayColor()
+        {
+            Scene scene = new Scene();
+
+            Material mat = new Material(Color.White, ambient: 1.0f);
+
+            RayObject outer = scene.Objects[0];
+            RayObject inner = scene.Objects[1];
+            outer.material = mat;
+            inner.material = mat;
+
+            Ray r = new Ray(new Point(0, 0, 0.75f), new Vector3(0, 0, -1f));
+
+            Color color = scene.ColorAt(r);
+
+            Assert.True(inner.material.mColor == color);
+        }
+
+        [Fact]
+        public void DefaultOrientation()
+        {
+            Point from = new Point(0, 0, 0);
+            Point to = new Point(0, 0, -1);
+            Vector3 up = new Vector3(0, 1, 0);
+            Camera cam = new Camera();
+            Matrix4 t = cam.ViewTransform(from, to, up);
+            Matrix4 identity = new Matrix4();
+
+            Assert.True(identity == t);
+        }
+
+        [Fact]
+        public void PositiveDirection()
+        {
+            Point from = new Point(0, 0, 0);
+            Point to = new Point(0, 0, 1);
+            Vector3 up = new Vector3(0, 1, 0);
+
+            Camera cam = new Camera();
+
+            Matrix4 trans = cam.ViewTransform(from, to, up);
+            Matrix4 answer = Matrix4.ScaleMatrix(-1, 1, -1);
+
+            Assert.True(answer == trans);
+        }
+
+        [Fact]
+        public void ViewTransformMovesWorld()
+        {
+            Point from = new Point(0, 0, 8);
+            Point to = new Point(0, 0, 0);
+            Vector3 up = new Vector3(0, 1, 0);
+
+            Camera cam = new Camera();
+
+            Matrix4 trans = cam.ViewTransform(from, to, up);
+            Matrix4 answer = Matrix4.TranslateMatrix(0, 0, -8);
+
+            Assert.True(answer == trans);
+        }
+
+        // Not sure about this test got close but not exact
+        [Fact]
+        public void ArbitraryViewTransform()
+        {
+            Point from = new Point(1, 3, 2);
+            Point to = new Point(4, -2, 8);
+            Vector3 up = new Vector3(1, 1, 0);
+
+            Camera cam = new Camera();
+
+            Matrix4 trans = cam.ViewTransform(from, to, up);
+            Matrix4 answer = new Matrix4(-0.50709f, 0.50709f, 0.67612f, -2.36643f,
+                                         0.76772f, 0.60609f, 0.12122f, -2.82843f,
+                                         -0.35857f, 0.59761f, -0.71714f, 0.00000f,
+                                         0.00000f, 0.00000f, 0.00000f, 1.00000f);
+
+            Assert.True(answer == trans);
+        }
+
+        [Fact]
+        public void ConstructCamera()
+        {
+            int hsize = 160;
+            int vsize = 120;
+            float fieldOfView = (float)(Math.PI / 2);
+
+            Camera camera = new Camera(hsize, vsize, fieldOfView);
+
+            Assert.Equal(160, camera.Hsize);
+            Assert.Equal(120, camera.Vsize);
+            Assert.Equal((float)Math.PI / 2, camera.FieldOfView);
+            Assert.True(new Matrix4() == camera.Transform);
+
+        }
+
+        [Fact]
+        public void PixelSizeHorizontalCanvas()
+        {
+            Camera cam = new Camera(200, 125, (float)Math.PI / 2);
+            Assert.Equal(0.01f, cam.PSize);
+        }
+
+        [Fact]
+        public void PixelSizeVerticalCanvas()
+        {
+            Camera cam = new Camera(125, 200, (float)Math.PI / 2);
+            Assert.Equal(0.01f, cam.PSize);
+        }
+
+        [Fact]
+        public void RayCenterCanvas()
+        {
+            Camera cam = new Camera(201, 101, (float)Math.PI / 2);
+            Ray r = cam.RayForPixel(100, 50);
+            
+            Assert.Equal(new Point(0, 0, 0), r.origin);
+            Assert.True(new Vector3(0, 0, -1) == r.direction); 
+        }
+
+        [Fact]
+        public void RayCornerCanvas()
+        {
+            Camera cam = new Camera(201, 101, (float)Math.PI / 2);
+            Ray r = cam.RayForPixel(0, 0);
+
+            Assert.Equal(new Point(0, 0, 0), r.origin);
+            Assert.True(new Vector3(0.66519f, 0.33259f, -0.66851f) == r.direction);
+        }
+
+        [Fact]
+        public void RayCamTransform()
+        {
+            Camera cam = new Camera(201, 101, (float)Math.PI / 2);
+            cam.Transform = Matrix4.RotateMatrix_Y((float)Math.PI / 4) * Matrix4.TranslateMatrix(0, -2, 5); 
+
+            Ray r = cam.RayForPixel(100, 50);
+
+            Assert.True(new Point(0, 2, -5) == r.origin);
+            Assert.True(new Vector3((float)(Math.Sqrt(2)/2), 0, -(float)(Math.Sqrt(2) / 2)) == r.direction);
+        }
+
+        [Fact]
+        public void RenderWorldCamera()
+        {
+            Scene scene = new Scene();
+            Camera cam = new Camera(11, 11, (float)Math.PI / 2);
+            Point from = new Point(0, 0, -5);
+            Point to = new Point(0, 0, 0);
+            Vector3 up = new Vector3(0, 1, 0);
+            cam.Transform = cam.ViewTransform(from, to, up);
+            Canvas image = cam.Render(scene);
+
+            Assert.True(image.GetPixelColor(5, 5) == new Color(0.38066f, 0.47583f, 0.2855f)); 
+        }
+
+
+
+
     }
 }

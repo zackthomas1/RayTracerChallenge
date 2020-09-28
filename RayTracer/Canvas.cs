@@ -9,7 +9,7 @@ namespace RayTracer
         // Instance Variables
         public int width { get; set; }
         public int height { get; set; }
-        public Color[,] canvas { get; set; }
+        public Color[,] imagePlane { get; set; }
 
         // Get/Set methods
 
@@ -36,13 +36,13 @@ namespace RayTracer
         /// <param name="color"></param>
         public void CreateCanvas(Color color)
         {
-            canvas = new Color[width, height]; 
+            imagePlane = new Color[width, height]; 
             
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    canvas[x, y] = color;
+                    imagePlane[x, y] = color;
                 }
             }
         }
@@ -73,11 +73,11 @@ namespace RayTracer
         /// <param name="c1"></param>
         public void FillCanvas(Color c1)
         {
-            for (int x = 0; x < canvas.GetLength(0); x++)
+            for (int x = 0; x < imagePlane.GetLength(0); x++)
             {
-                for (int y = 0; y < canvas.GetLength(1); y++)
+                for (int y = 0; y < imagePlane.GetLength(1); y++)
                 {
-                    canvas[x, y] = c1;
+                    imagePlane[x, y] = c1;
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace RayTracer
         /// <param name="c1"></param>
         public void SetPixelColor(int x, int y, Color c1)
         {
-            canvas[x, y] = c1; 
+            imagePlane[x, y] = c1; 
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace RayTracer
         /// <returns></returns>
         public Color GetPixelColor(int x, int y)
         {
-            return canvas[x, y];
+            return imagePlane[x, y];
         }
 
     }

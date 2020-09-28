@@ -224,11 +224,11 @@ namespace UnitTestRayTracer
             {
                 for (int y = 0; y < canvas.height; y++)
                 {
-                    if (canvas.canvas[x, y] != answer)
+                    if (canvas.imagePlane[x, y] != answer)
                         pass = false;
-                    Assert.Equal(0, canvas.canvas[x, y].red);
-                    Assert.Equal(0, canvas.canvas[x, y].green);
-                    Assert.Equal(0, canvas.canvas[x, y].blue);
+                    Assert.Equal(0, canvas.imagePlane[x, y].red);
+                    Assert.Equal(0, canvas.imagePlane[x, y].green);
+                    Assert.Equal(0, canvas.imagePlane[x, y].blue);
                 }
             }
             Assert.True(pass);
@@ -249,11 +249,11 @@ namespace UnitTestRayTracer
             {
                 for (int y = 0; y < canvas.height; y++)
                 {
-                    if (canvas.canvas[x, y] != answer)
+                    if (canvas.imagePlane[x, y] != answer)
                         pass = false;
-                    Assert.Equal(0, canvas.canvas[x, y].red);
-                    Assert.Equal(1, canvas.canvas[x, y].green);
-                    Assert.Equal(0, canvas.canvas[x, y].blue);
+                    Assert.Equal(0, canvas.imagePlane[x, y].red);
+                    Assert.Equal(1, canvas.imagePlane[x, y].green);
+                    Assert.Equal(0, canvas.imagePlane[x, y].blue);
                 }
             }
             Assert.True(pass); 
@@ -265,9 +265,9 @@ namespace UnitTestRayTracer
             Canvas canvas = new Canvas(1920, 1080);
 
             canvas.SetPixelColor(50,200, Color.Red);
-            canvas.canvas[500, 654] = Color.Blue;
+            canvas.imagePlane[500, 654] = Color.Blue;
 
-            Assert.Equal(Color.Red, canvas.canvas[50, 200]);
+            Assert.Equal(Color.Red, canvas.imagePlane[50, 200]);
             Assert.Equal(Color.Blue, canvas.GetPixelColor(500, 654));
         }
 
@@ -278,10 +278,10 @@ namespace UnitTestRayTracer
 
             canvas.FillCanvas(Color.Green);
             canvas.SetPixelColor(50, 200, Color.Red);
-            canvas.canvas[500, 654] = Color.Blue;
+            canvas.imagePlane[500, 654] = Color.Blue;
 
-            Assert.Equal(Color.Green, canvas.canvas[51, 200]);
-            Assert.Equal(Color.Red, canvas.canvas[50, 200]);
+            Assert.Equal(Color.Green, canvas.imagePlane[51, 200]);
+            Assert.Equal(Color.Red, canvas.imagePlane[50, 200]);
             Assert.Equal(Color.Blue, canvas.GetPixelColor(500, 654));
         }
 
@@ -296,7 +296,7 @@ namespace UnitTestRayTracer
 
             canvas.FillCanvas(Color.Blue);
             canvas.SetPixelColor(9, 4, Color.Red);
-            canvas.canvas[3, 2] = Color.Green;
+            canvas.imagePlane[3, 2] = Color.Green;
 
             Save.PPM(fileDirectoryComplete, canvas);
 
@@ -343,7 +343,7 @@ namespace UnitTestRayTracer
 
             canvas.FillCanvas(Color.Blue);
             canvas.SetPixelColor(9, 4, Color.Red);
-            canvas.canvas[3, 2] = Color.Green;
+            canvas.imagePlane[3, 2] = Color.Green;
 
             Save.PPM(fileDirectoryComplete, canvas);
 

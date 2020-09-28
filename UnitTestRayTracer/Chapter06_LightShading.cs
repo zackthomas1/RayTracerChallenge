@@ -146,7 +146,7 @@ namespace UnitTestRayTracer
         [Fact]
         public void LightingEyeBetweenLightandSurface()
         {
-            Sphere sphere = new Sphere(); 
+            Sphere sphere = new Sphere();
 
             Material m = new Material();
             Point position = new Point(0, 0, 0);
@@ -158,7 +158,7 @@ namespace UnitTestRayTracer
             Color result = sphere.material.Lighting(m, light, position, eyeV, normalV);
             Color answer = new Color(1.9f, 1.9f, 1.9f);
 
-            Assert.Equal(answer, result); 
+            Assert.Equal(answer, result);
         }
 
         [Fact]
@@ -169,7 +169,7 @@ namespace UnitTestRayTracer
             Material m = new Material();
             Point position = new Point(0, 0, 0);
 
-            Vector3 eyeV = new Vector3(0, (float)(Math.Sqrt(2)/2), (float)(Math.Sqrt(2) / 2));
+            Vector3 eyeV = new Vector3(0, (float)(Math.Sqrt(2) / 2), (float)(Math.Sqrt(2) / 2));
             Vector3 normalV = new Vector3(0, 0, -1);
             Light light = new Light(Color.White, new Point(0, 0, -10));
 
@@ -231,50 +231,6 @@ namespace UnitTestRayTracer
             Color answer = new Color(0.1f, 0.1f, 0.1f);
 
             Assert.True(answer == result);
-        }
-
-        [Fact]
-        public void RayMissColor()
-        {
-            Scene scene = new Scene();
-            Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 1, 0));
-
-            Color color = scene.ColorAt(ray);
-            Color answer = new Color(0, 0, 0);
-
-            Assert.True(answer == color);
-        }
-
-        [Fact]
-        public void RayHitColor()
-        {
-            Scene scene = new Scene();
-            Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
-
-            Color color = scene.ColorAt(ray);
-            Color answer = new Color(0.38066f, 0.47583f, 0.2855f);
-
-            Assert.True(answer == color);
-        }
-
-        [Fact]
-        public void BehindRayColor()
-        {
-            Scene scene = new Scene();
-
-            Material mat = new Material(Color.White, ambient: 1.0f);
-
-            RayObject outer = scene.Objects[0];
-            RayObject inner = scene.Objects[1];
-            outer.material = mat;
-            inner.material = mat;
-
-            Ray r = new Ray(new Point(0, 0, 0.75f), new Vector3(0, 0, -1f));
-
-            Color color = scene.ColorAt(r);
-
-            Assert.True(inner.material.mColor == color);
-
         }
 
     }
