@@ -56,7 +56,7 @@ namespace Chapter06Challenge
                         Vector3 normal = sphere.GetNormal(point);
                         Vector3 eyeV = -r.direction;
 
-                        Color phongColor = sphere.material.Lighting(hit.rayObject.material, light, point, eyeV, normal);
+                        Color phongColor = sphere.material.Lighting(hit.rayObject.material, light, point, eyeV, normal, false);
                         if (Math.Abs(xs[0].t - xs[1].t) < .5f)
                         {
                             phongColor = phongColor * new Color(0.1f, 2.5f, 0.1f);
@@ -124,7 +124,7 @@ namespace Chapter06Challenge
             // Create Scene
             Scene scene = new Scene();
             Light l1 = new Light(new Color(0.5f, 0.5f, 0.5f), new Point(-10, 10, -10));
-            Light l2 = new Light(new Color(0.5f, 0.5f, 0.75f), new Point(10, 10, -10));
+            Light l2 = new Light(new Color(0.5f, 0.5f, 0.5f), new Point(10, 10, -10));
             List<Light> lights = new List<Light>() { l1, l2 };
             scene.Lights = lights; 
 
@@ -132,7 +132,7 @@ namespace Chapter06Challenge
             scene.Objects = sceneObjects;
 
             // Create Camera
-            Camera cam = new Camera(1920/4, 1080/4, (float)Math.PI / 3);
+            Camera cam = new Camera(1920/2, 1080/2, (float)Math.PI / 3);
             cam.Transform = cam.ViewTransform(new Point(0, 1.5f, -5),
                                               new Point(0, 1, 0),
                                               new Vector3(0, 1, 0));
@@ -143,7 +143,7 @@ namespace Chapter06Challenge
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter07Challenge_03";
+            string fileName = "Chapter07Challenge_04";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 

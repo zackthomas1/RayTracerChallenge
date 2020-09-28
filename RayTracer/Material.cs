@@ -205,7 +205,7 @@ namespace RayTracer
         /// <param name="eyeV"></param>
         /// <param name="normalV"></param>
         public Color Lighting(Material material, Light light, Point point,
-                              Vector3 eyeV, Vector3 normalV)
+                              Vector3 eyeV, Vector3 normalV, bool inShadow) // CONSIDER removing material from parameter list. Already getting data from self
         {
             Color ambient = Color.White;
             Color diffuse = Color.White;
@@ -219,6 +219,11 @@ namespace RayTracer
 
             // Compute the ambient contribution 
             ambient = effect_color * material.Ambient;
+
+            // If in shadow just return the ambient color skip diffuse and specular calculations.
+            if (inShadow)
+                return ambient;
+
 
             // lighDotNormal represents the cosine of the angle between the
             // light vector and the normal vector. A negative number means the 
@@ -261,6 +266,7 @@ namespace RayTracer
 
             // Add the three contributions together to get the final shading 
             return ambient + diffuse + specular;
+
 
         }
 

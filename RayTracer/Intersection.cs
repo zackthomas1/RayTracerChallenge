@@ -97,6 +97,8 @@ namespace RayTracer
             else
                 comp.inside = false;
 
+            comp.overPoint = comp.point + comp.normalV * Utilities.shadowPointEpsilon;
+
             return comp;
         }
 

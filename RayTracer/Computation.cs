@@ -13,6 +13,7 @@ namespace RayTracer
         public Vector3 eyeV { get; set; } // 
         public Vector3 normalV { get; set; } // 
         public bool inside { get; set; } // If ray originates from inside of object 
+        public Point overPoint { get; set; }
 
         // Get/Set methods
 
@@ -33,6 +34,8 @@ namespace RayTracer
             this.normalV = normalV;
             this.inside = inside;
 
+            overPoint = point + normalV * Utilities.shadowPointEpsilon;
+
         }
 
         public Computation(Intersection i, Ray r)
@@ -52,6 +55,8 @@ namespace RayTracer
             }
             else
                 inside = false;
+
+            overPoint = point + normalV * Utilities.shadowPointEpsilon;
         }
 
     }

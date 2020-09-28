@@ -9,6 +9,7 @@ namespace RayTracer
         // Instance Variables
         public static float Epsilon = 0.0001f;
         public const double PI = Math.PI;
+        public static float shadowPointEpsilon = 0.0025f;
 
         // Methods
         /// <summary>

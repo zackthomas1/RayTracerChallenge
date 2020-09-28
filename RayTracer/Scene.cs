@@ -116,14 +116,16 @@ namespace RayTracer
         public Color ShadeHit(Computation comp)
         {
             //Material mat = comp.rayObject.material;
+            Scene scene = this;
 
             Color totalColor = new Color(0,0,0);
 
             foreach(Light light in lights)
             {
+                bool isInShadow = scene.IsShadowed(comp.overPoint, light);
                 Color hitColor = comp.rayObject.material.Lighting(comp.rayObject.material, light, 
-                                                                  comp.point, comp.eyeV, 
-                                                                  comp.normalV);
+                                                                  comp.overPoint, comp.eyeV, 
+                                                                  comp.normalV, isInShadow);
                 totalColor += hitColor;
             }
             
@@ -154,6 +156,34 @@ namespace RayTracer
             resultColor = ShadeHit(comp);
 
             return resultColor;
+        }
+
+        //Consider moving to light class
+        /// <summary>
+        /// Determines if a point is in shadow
+        /// </summary>
+        /// <param name="light"></param>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public bool IsShadowed(Point point, Light light)
+        {
+            // this needs to work for every light in the scene
+            Scene scene = this;
+
+            Vector3 pointToLight = light.Position - point;
+            float distance = pointToLight.Magnitude();
+            Vector3 direction = pointToLight.Normalized();
+
+            Ray ray = new Ray(point, direction);
+
+            List<Intersection> intersects = scene.Intersections(ray);
+            Intersection hit = Intersection.Hit(intersects);
+            
+            //Do we have a hit and is it within the distance to the light?
+            if (hit != null && hit.t < distance)
+                return true;
+            else
+                return false; 
         }
     
     }
