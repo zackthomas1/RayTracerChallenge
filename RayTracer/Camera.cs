@@ -82,13 +82,29 @@ namespace RayTracer
         /// <returns></returns>
         public Matrix4 ViewTransform(Point from, Point to, Vector3 up)
         {
-            Vector3 foward = (to - from).Normalize();
-            
+            Vector3 forward = (to - from).Normalize();
+            if (float.IsNaN(forward.x) || float.IsNaN(forward.y) || float.IsNaN(forward.z))
+            {
+                throw new ArithmeticException("ERROR: forward vector in Camera viewTransform contains Nan value");
+            }
+
             Vector3 upNormalized = up.Normalized();
+            if (float.IsNaN(upNormalized.x) || float.IsNaN(upNormalized.y) || float.IsNaN(upNormalized.z))
+            {
+                throw new ArithmeticException("ERROR: upNormalized vector in Camera viewTransform contains Nan value");
+            }
 
-            Vector3 left = Vector3.Cross(foward, upNormalized);
+            Vector3 left = Vector3.Cross(forward, upNormalized);
+            if (float.IsNaN(left.x) || float.IsNaN(left.y) || float.IsNaN(left.z))
+            {
+                throw new ArithmeticException("ERROR: left vector in Camera viewTransform contains Nan value");
+            }
 
-            Vector3 trueUp = Vector3.Cross(left, foward);
+            Vector3 trueUp = Vector3.Cross(left, forward);
+            if (float.IsNaN(trueUp.x) || float.IsNaN(trueUp.y) || float.IsNaN(trueUp.z))
+            {
+                throw new ArithmeticException("ERROR: trueUp vector in Camera viewTransform contains Nan value");
+            }
 
             //Console.WriteLine("left:" + left.ToString());
             //Console.WriteLine("true up:" + trueUp.ToString());
@@ -96,7 +112,7 @@ namespace RayTracer
 
             Matrix4 orientationTransformation = new Matrix4(left.x, left.y, left.z, 0,
                                                             trueUp.x, trueUp.y, trueUp.z, 0,
-                                                           -foward.x, -foward.y, -foward.z, 0,
+                                                           -forward.x, -forward.y, -forward.z, 0,
                                                             0, 0, 0, 1);
             Matrix4 orentation = orientationTransformation * Matrix4.TranslateMatrix(-from.x, -from.y, -from.z);
             return orentation;

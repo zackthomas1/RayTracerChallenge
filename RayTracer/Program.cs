@@ -408,13 +408,21 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
-            Camera cam = new Camera(201, 101, (float)Math.PI / 2);
-            cam.Transform = Matrix4.RotateMatrix_Y((float)Math.PI / 4) * Matrix4.TranslateMatrix(0, -2, 5);
+            // Camera cam = new Camera(201, 101, (float)Math.PI / 2);
+            // cam.Transform = Matrix4.RotateMatrix_Y((float)Math.PI / 4) * Matrix4.TranslateMatrix(0, -2, 5);
 
-            Ray r = cam.RayForPixel(100, 50);
+            // Ray r = cam.RayForPixel(100, 50);
 
-           Console.WriteLine(r.origin.ToString());
-            Console.WriteLine(r.direction.ToString());
+            //Console.WriteLine(r.origin.ToString());
+            //Console.WriteLine(r.direction.ToString());
+
+            //----------------------------------------------------------------------------
+
+            Plane p = new Plane();
+
+            p.TransformMatrix = Matrix4.RotateMatrix_X(Math.PI / 2);
+            Vector3 normalVector = p.GetNormal(new Point(5, 5, 5));
+            Console.WriteLine(normalVector.ToString());
         }
     }
 }

@@ -93,7 +93,6 @@ namespace RayTracer
             Ray transRay = RayToObjectSpace(ray); 
             //Ray transRay = ray.ApplyObjectTransform(this); // alt method
 
-
             // The vector from the sphere's center, to the ray origin.
             Vector3 sphereToRay = transRay.origin - this.Position; // Sphere centered at the origin (0, 0, 0).
 

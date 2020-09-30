@@ -9,7 +9,7 @@ namespace RayTracer
 {
     public abstract class RayObject
     {
-        //Instance Variables
+        // Instance Variables
         protected static int currentID = 0;
         protected int id;
         Matrix4 transformMatrix = new Matrix4();
@@ -40,11 +40,11 @@ namespace RayTracer
             material = new Material();
         }
 
-        public RayObject(Material material)
-        {
-            id = currentID++;
-            this.material = material;
-        }
+        //public RayObject(Material material)
+        //{
+        //    id = currentID++;
+        //    this.material = material;
+        //}
 
         // Class overloads
         public override string ToString()
@@ -95,7 +95,22 @@ namespace RayTracer
 
 
         // Methods
+        /// <summary>
+        /// Determines if a given ray intersects a given RayObject
+        /// Parent class method. Each child class will implement its own method
+        /// for determining intersection.
+        /// </summary>
+        /// <param name="ray"></param>
+        /// <returns></returns>
         public abstract List<Intersection> Intersect(Ray ray);
+
+        /// <summary>
+        /// Given a position in world-coordinates finds the normal 
+        /// of rayObject to that given point. 
+        /// </summary>
+        /// <param name="worldPoint"></param>
+        /// <returns></returns>
+        public abstract Vector3 GetNormal(Point worldPoint);
 
         /// <summary>
         /// Takes the input ray applies RayObjects tranformMatrix. 
@@ -107,14 +122,6 @@ namespace RayTracer
         {
             return ray * transformMatrix.Invert();
         }
-
-        /// <summary>
-        /// Given a position in world-coordinates finds the normal 
-        /// of rayObject to that given point. 
-        /// </summary>
-        /// <param name="worldPoint"></param>
-        /// <returns></returns>
-        public abstract Vector3 GetNormal(Point worldPoint);
      
     }
 }

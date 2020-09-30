@@ -108,7 +108,7 @@ namespace Chapter06Challenge
             middle.material.Specular = 0.3f;
 
             Sphere right = new Sphere();
-            right.TransformMatrix = Matrix4.TranslateMatrix(1.5f, 0.5f, -0.5f) * Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
+            right.TransformMatrix = Matrix4.TranslateMatrix(1.5f, 1.0f, -0.5f) * Matrix4.ScaleMatrix(0.75f, 0.25f, 0.75f);
             right.material = new Material();
             right.material.mColor = new Color(0.5f, 1, 0.1f);
             right.material.Diffuse = 0.4f;
@@ -124,7 +124,7 @@ namespace Chapter06Challenge
             // Create Scene
             Scene scene = new Scene();
             Light l1 = new Light(new Color(0.5f, 0.5f, 0.5f), new Point(-10, 10, -10));
-            Light l2 = new Light(new Color(0.5f, 0.5f, 0.5f), new Point(10, 10, -10));
+            Light l2 = new Light(new Color(0.65f, 0.65f, 0.65f), new Point(10, 10, -10));
             List<Light> lights = new List<Light>() { l1, l2 };
             scene.Lights = lights; 
 
@@ -143,7 +143,69 @@ namespace Chapter06Challenge
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter07Challenge_04";
+            string fileName = "Chapter07Challenge_05";
+            string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
+            Save.PPM(fileDirectoryComplete, image);
+
+            Console.WriteLine("Done: Program complete.");
+            Console.ReadKey();
+        }
+
+        public static void Chapter08()
+        {
+            Plane floor = new Plane();
+            floor.material = new Material();
+            floor.material.mColor = new Color(1, 0.9f, 0.9f);
+            floor.material.Specular = 0;
+
+            Plane backWall = new Plane();
+            backWall.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 10) * Matrix4.RotateMatrix_X(Math.PI / 2);
+            backWall.material = floor.material;
+
+            Sphere middle = new Sphere();
+            middle.TransformMatrix = Matrix4.TranslateMatrix(-0.5f, 1, 0.5f);
+            middle.material = new Material();
+            middle.material.mColor = new Color(0.1f, 1, 0.5f);
+            middle.material.Diffuse = 0.7f;
+            middle.material.Specular = 0.3f;
+
+            Sphere right = new Sphere();
+            right.TransformMatrix = Matrix4.TranslateMatrix(1.5f, 1.0f, -0.5f) * Matrix4.ScaleMatrix(0.75f, 0.25f, 0.75f);
+            right.material = new Material();
+            right.material.mColor = new Color(0.5f, 1, 0.1f);
+            right.material.Diffuse = 0.4f;
+            right.material.Specular = 0.6f;
+
+            Sphere left = new Sphere();
+            left.TransformMatrix = Matrix4.TranslateMatrix(-1.5f, 0.33f, -0.75f) * Matrix4.ScaleMatrix(0.33f, 0.33f, 0.33f);
+            left.material = new Material();
+            left.material.mColor = new Color(1.0f, 0.8f, 0.1f);
+            left.material.Diffuse = 0.7f;
+            left.material.Specular = 0.1f;
+
+            // Create Scene
+            Scene scene = new Scene();
+            Light l1 = new Light(Color.White * .5f, new Point(-10, 10, -10));
+            Light l2 = new Light(new Color(0.25f, 0.25f, 0.65f), new Point(10, 10, -10));
+            List<Light> lights = new List<Light>() { l1, l2 };
+            scene.Lights = lights;
+
+            List<RayObject> sceneObjects = new List<RayObject>() { floor, backWall, middle, right, left };
+            scene.Objects = sceneObjects;
+
+            // Create Camera
+            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 3);
+            cam.Transform = cam.ViewTransform(new Point(0, 1.5f, -5),
+                                              new Point(0, 1, 0),
+                                              new Vector3(0, 1, 0));
+            Canvas image = cam.Render(scene); // Outputs image
+
+
+
+            // Save Canvas to ppm
+            Console.WriteLine("\nSaving PPM file");
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string fileName = "Chapter08Challenge_01";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 
@@ -154,7 +216,7 @@ namespace Chapter06Challenge
 
         static void Main(string[] args)
         {
-            Chapter07();
+            Chapter08();
         }
     }
 }
