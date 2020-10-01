@@ -6,8 +6,74 @@ using System.IO;
 using Microsoft.VisualBasic;
 namespace Chapter06Challenge
 {
+
     class Program
     {
+
+        public static void Chapter05()
+        {
+            // Define projection plane
+            Point rayOrigin = new Point(0, 0, -5);
+            float wall_Z = 10.0f;
+            float wallSize = 7.0f;
+
+            // Create Canvas
+            int canvasPixels = 900;
+            Canvas canvas = new Canvas(canvasPixels, canvasPixels);
+            float pixelSize = wallSize / canvasPixels;
+            float canvasMidPoint = wallSize / 2;
+            Color color = Color.Red;
+
+            // Create Sphere in scene
+            Sphere sphere = new Sphere();
+
+            // Apply Transforms 
+            //sphere.transformMatrix = Matrix4.TranslateMatrix(0,-0.75f,0) * Matrix4.ScaleMatrix(1, 0.5f, 1);
+            //sphere.transformMatrix = Matrix4.ScaleMatrix(0.5f, 1, 1) * Matrix4.RotateMatrix_Y(Math.PI / 6);
+            sphere.Transform = Matrix4.ShearMatrix(1, 0, 0, 0, 0, 0) * Matrix4.ScaleMatrix(.5f, 1, 1);
+
+
+            for (int y = 0; y < canvasPixels; y++)
+            {
+                float world_Y = canvasMidPoint - pixelSize * y;
+                for (int x = 0; x < canvasPixels; x++)
+                {
+                    float world_X = -canvasMidPoint + pixelSize * x;
+
+                    Point position = new Point(world_X, world_Y, wall_Z);
+                    Ray r = new Ray(rayOrigin, (position - rayOrigin).Normalize());
+                    r = r.ApplyObjectTransform(sphere);
+
+                    List<Intersection> xs = sphere.Intersect(r);
+
+
+                    //Console.WriteLine(Intersection.Hit(xs).t.ToString());
+                    if (Intersection.Hit(xs) != null)
+                    {
+                        if (Math.Abs(xs[0].t - xs[1].t) < .5f)
+                        {
+                            canvas.SetPixelColor(x, y, Color.Blue);
+                        }
+                        else
+                        {
+                            canvas.SetPixelColor(x, y, color);
+                        }
+                    }
+
+                }
+            }
+
+
+            // Save Canvas to ppm
+            Console.WriteLine("\nSaving PPM file");
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string fileName = "Chapter05Challenge_06";
+            string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
+            Save.PPM(fileDirectoryComplete, canvas);
+
+            Console.WriteLine("Done: Program complete.");
+            Console.ReadKey();
+        }
 
         public static void Chapter06()
         {
@@ -56,7 +122,7 @@ namespace Chapter06Challenge
                         Vector3 normal = sphere.GetNormal(point);
                         Vector3 eyeV = -r.direction;
 
-                        Color phongColor = sphere.material.Lighting(hit.rayObject.material, light, point, eyeV, normal, false);
+                        Color phongColor = sphere.material.Lighting(hit.rayObject.material, hit.rayObject, light, point, eyeV, normal, false);
                         if (Math.Abs(xs[0].t - xs[1].t) < .5f)
                         {
                             phongColor = phongColor * new Color(0.1f, 2.5f, 0.1f);
@@ -85,37 +151,37 @@ namespace Chapter06Challenge
         {
             // Define scene objects
             Sphere floor = new Sphere();
-            floor.TransformMatrix = Matrix4.ScaleMatrix(10, 0.01f, 10);
+            floor.Transform = Matrix4.ScaleMatrix(10, 0.01f, 10);
             floor.material = new Material();
             floor.material.mColor = new Color(1, 0.9f, 0.9f);
             floor.material.Specular = 0;
 
             Sphere leftWall = new Sphere();
-            leftWall.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 5) * Matrix4.RotateMatrix_Y(-(float)Math.PI / 4) *
+            leftWall.Transform = Matrix4.TranslateMatrix(0, 0, 5) * Matrix4.RotateMatrix_Y(-(float)Math.PI / 4) *
                                         Matrix4.RotateMatrix_X((float)Math.PI/2) * Matrix4.ScaleMatrix(10, 0.01f, 10);
             leftWall.material = floor.material;
 
             Sphere rightWall = new Sphere();
-            rightWall.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 5) * Matrix4.RotateMatrix_Y((float)Math.PI / 4) *
+            rightWall.Transform = Matrix4.TranslateMatrix(0, 0, 5) * Matrix4.RotateMatrix_Y((float)Math.PI / 4) *
                                         Matrix4.RotateMatrix_X((float)Math.PI/2) * Matrix4.ScaleMatrix(10, 0.01f, 10);
             rightWall.material = floor.material;
 
             Sphere middle = new Sphere();
-            middle.TransformMatrix = Matrix4.TranslateMatrix(-0.5f, 1, 0.5f);
+            middle.Transform = Matrix4.TranslateMatrix(-0.5f, 1, 0.5f);
             middle.material = new Material();
             middle.material.mColor = new Color(0.1f, 1, 0.5f);
             middle.material.Diffuse = 0.7f;
             middle.material.Specular = 0.3f;
 
             Sphere right = new Sphere();
-            right.TransformMatrix = Matrix4.TranslateMatrix(1.5f, 1.0f, -0.5f) * Matrix4.ScaleMatrix(0.75f, 0.25f, 0.75f);
+            right.Transform = Matrix4.TranslateMatrix(1.5f, 1.0f, -0.5f) * Matrix4.ScaleMatrix(0.75f, 0.25f, 0.75f);
             right.material = new Material();
             right.material.mColor = new Color(0.5f, 1, 0.1f);
             right.material.Diffuse = 0.4f;
             right.material.Specular = 0.6f;
 
             Sphere left = new Sphere();
-            left.TransformMatrix = Matrix4.TranslateMatrix(-1.5f, 0.33f, -0.75f) * Matrix4.ScaleMatrix(0.33f, 0.33f, 0.33f);
+            left.Transform = Matrix4.TranslateMatrix(-1.5f, 0.33f, -0.75f) * Matrix4.ScaleMatrix(0.33f, 0.33f, 0.33f);
             left.material = new Material();
             left.material.mColor = new Color(1.0f, 0.8f, 0.1f);
             left.material.Diffuse = 0.7f;
@@ -156,47 +222,86 @@ namespace Chapter06Challenge
             Plane floor = new Plane();
             floor.material = new Material();
             floor.material.mColor = new Color(1, 0.9f, 0.9f);
+            floor.material.Pattern = new CheckerPattern(Color.White, Color.White *.25f);
             floor.material.Specular = 0;
 
             Plane backWall = new Plane();
-            backWall.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 10) * Matrix4.RotateMatrix_X(Math.PI / 2);
-            backWall.material = floor.material;
+            backWall.Transform = Matrix4.TranslateMatrix(0, 0, 10) * Matrix4.RotateMatrix_X(Math.PI / 2);
+            backWall.material.Pattern = new StripedPattern(Color.White, Color.White * .25f);
+            backWall.material.Specular = 0;
+
+            Plane wallRight = new Plane();
+            wallRight.Transform = Matrix4.TranslateMatrix(4, 0, 0) * Matrix4.RotateMatrix(0, 0, Math.PI / 2);
+            wallRight.material = new Material();
+            wallRight.material.mColor = Color.Blue;
+            floor.material.Specular = 0;
+
+            Plane wallLeft = new Plane();
+            wallLeft.Transform = Matrix4.TranslateMatrix(-4, 0, 0) * Matrix4.RotateMatrix(0, 0, Math.PI / 2);
+            wallLeft.material = new Material();
+            wallLeft.material.mColor = Color.Red;
+            wallLeft.material.Pattern = new GradientPattern(Color.Red, Color.Green);
+            floor.material.Specular = 0;
+
 
             Sphere middle = new Sphere();
-            middle.TransformMatrix = Matrix4.TranslateMatrix(-0.5f, 1, 0.5f);
+            middle.Transform = Matrix4.TranslateMatrix(-1.5f, 1, 2.0f);
             middle.material = new Material();
             middle.material.mColor = new Color(0.1f, 1, 0.5f);
+            middle.material.Pattern = new TestPattern();
+            middle.material.Pattern.Transform = Matrix4.ScaleMatrix(.25f, .25f, .25f);
             middle.material.Diffuse = 0.7f;
             middle.material.Specular = 0.3f;
 
+            Sphere middle02 = new Sphere();
+            middle02.Transform = Matrix4.TranslateMatrix(1.5f, 1, 2.0f);
+            middle02.material = new Material();
+            middle02.material.mColor = new Color(0.1f, 1, 0.5f);
+            middle02.material.Pattern = new RingPattern(Color.Purple, Color.Orange);
+            middle02.material.Pattern.Transform = Matrix4.RotateMatrix_Z((float)Math.PI/2)  * Matrix4.ScaleMatrix(0.25f, 0.25f, 0.25f);
+            middle02.material.Diffuse = 0.7f;
+            middle02.material.Specular = 0.3f;
+            
+            Sphere middle03 = new Sphere();
+            middle03.Transform = Matrix4.TranslateMatrix(0, .5f, -1.5f) * Matrix4.ScaleMatrix(.5f, .5f, .5f);
+            middle03.material = new Material();
+            middle03.material.mColor = new Color(0.1f, 1, 0.5f);
+            middle03.material.Pattern = new CheckerPattern(Color.Yellow, Color.Green);
+            middle03.material.Pattern.Transform = Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
+            middle03.material.Diffuse = 0.7f;
+            middle03.material.Specular = 0.3f;
+
             Sphere right = new Sphere();
-            right.TransformMatrix = Matrix4.TranslateMatrix(1.5f, 1.0f, -0.5f) * Matrix4.ScaleMatrix(0.75f, 0.25f, 0.75f);
+            right.Transform = Matrix4.TranslateMatrix(2.0f, 1.0f, -0.5f) * Matrix4.ScaleMatrix(0.85f, 0.25f, 0.85f);
             right.material = new Material();
             right.material.mColor = new Color(0.5f, 1, 0.1f);
+            right.material.Pattern = new StripedPattern(Color.White, Color.White * .25f);
+            right.material.Pattern.Transform = Matrix4.ScaleMatrix(.15f, 1, 1);
             right.material.Diffuse = 0.4f;
             right.material.Specular = 0.6f;
 
             Sphere left = new Sphere();
-            left.TransformMatrix = Matrix4.TranslateMatrix(-1.5f, 0.33f, -0.75f) * Matrix4.ScaleMatrix(0.33f, 0.33f, 0.33f);
+            left.Transform = Matrix4.TranslateMatrix(-2.5f, 0.33f, -0.75f) * Matrix4.ScaleMatrix(0.33f, 0.33f, 0.33f);
             left.material = new Material();
             left.material.mColor = new Color(1.0f, 0.8f, 0.1f);
+            left.material.Pattern = new GradientPattern(Color.Yellow, Color.Blue);
             left.material.Diffuse = 0.7f;
             left.material.Specular = 0.1f;
 
             // Create Scene
             Scene scene = new Scene();
-            Light l1 = new Light(Color.White * .5f, new Point(-10, 10, -10));
-            Light l2 = new Light(new Color(0.25f, 0.25f, 0.65f), new Point(10, 10, -10));
+            Light l1 = new Light(Color.White * .8f, new Point(-3, 10, -10));
+            Light l2 = new Light(new Color(0.5f, 0.5f, 0.65f), new Point(3, 10, -5));
             List<Light> lights = new List<Light>() { l1, l2 };
             scene.Lights = lights;
 
-            List<RayObject> sceneObjects = new List<RayObject>() { floor, backWall, middle, right, left };
+            List<RayObject> sceneObjects = new List<RayObject>() { floor, backWall, wallRight, wallLeft, middle, middle02, middle03, right, left };
             scene.Objects = sceneObjects;
 
             // Create Camera
-            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 3);
-            cam.Transform = cam.ViewTransform(new Point(0, 1.5f, -5),
-                                              new Point(0, 1, 0),
+            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 4);
+            cam.Transform = cam.ViewTransform(new Point(0, 2f, -8),
+                                              new Point(0, 1f, 0),
                                               new Vector3(0, 1, 0));
             Canvas image = cam.Render(scene); // Outputs image
 
@@ -205,7 +310,7 @@ namespace Chapter06Challenge
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter08Challenge_01";
+            string fileName = "Chapter10Challenge_05";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 

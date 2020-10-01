@@ -418,11 +418,65 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
-            Plane p = new Plane();
+            //Plane p = new Plane();
 
-            p.TransformMatrix = Matrix4.RotateMatrix_X(Math.PI / 2);
-            Vector3 normalVector = p.GetNormal(new Point(5, 5, 5));
-            Console.WriteLine(normalVector.ToString());
+            //p.TransformMatrix = Matrix4.RotateMatrix_X(Math.PI / 2);
+            //Vector3 normalVector = p.GetNormal(new Point(5, 5, 5));
+            //Console.WriteLine(normalVector.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Scene scene = new Scene();
+            //scene.Lights[0] = new Light(new Color(1, 1, 1), new Point(0, 0.25f, 0));
+            //Ray ray = new Ray(new Point(0, 0, 0), new Vector3(0, 0, 1));
+            //RayObject shape = scene.Objects[1];
+            //Intersection i = new Intersection(0.5f, shape);
+
+            //Computation comp = new Computation(i, ray);
+
+            //Color color = scene.ShadeHit(comp);
+            //Color answer = new Color(0.90498f, 0.90498f, 0.90498f);
+
+            //Console.WriteLine(color.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Sphere s = new Sphere();
+            ////s.Transform = Matrix4.ScaleMatrix(5, 5, 5);
+
+            //StripedPattern pattern = new StripedPattern(Color.White, Color.Black);
+            //Material material = new Material(pattern, ambient: 1.0f, diffuse: 0.0f, specular: 0.0f);
+
+            //Vector3 eyeV = new Vector3(0, 0, -1);
+            //Vector3 normalV = new Vector3(0, 0, -1);
+
+            //Light light = new Light(Color.White, new Point(0, 0, -10));
+
+            //Color c1 = material.Lighting(material, s, light, new Point(0.9f, 0, 0), eyeV, normalV, false);
+            //Color c2 = material.Lighting(material, s, light, new Point(1.5f, 0, 0), eyeV, normalV, false);
+
+            //Console.WriteLine(c1.ToString());
+            //Console.WriteLine(c2.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Sphere s = new Sphere();
+            //s.Transform = Matrix4.ScaleMatrix(2, 2, 2);
+            //StripedPattern pattern = new StripedPattern(Color.White, Color.Black);
+
+            //Color c = pattern.PatternAtObject(s, new Point(2, 3, 4));
+            //Color answer = new Color(1, 1.5f, 2);
+
+            //Console.WriteLine(c.ToString());
+
+            //----------------------------------------------------------------------------
+
+            CheckerPattern pattern = new CheckerPattern(Color.White, Color.Black);
+
+            Console.WriteLine(pattern.PatternAt(new Point(0, 0, 0)).ToString());
+            Console.WriteLine(pattern.PatternAt(new Point(0.5f, 0, 0)).ToString());
+            Console.WriteLine(pattern.PatternAt(new Point(1.01f, 0, 0)).ToString());
+
         }
     }
 }

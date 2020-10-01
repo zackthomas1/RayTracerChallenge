@@ -71,7 +71,7 @@ namespace RayTracer
         public Ray ApplyObjectTransform(RayObject obj)
         {
             Ray temp = new Ray(new Point(), new Vector3());
-            temp =  this * obj.TransformMatrix.Invert();
+            temp =  this * obj.Transform.Invert();
 
             return temp; 
         }

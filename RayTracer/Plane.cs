@@ -50,7 +50,7 @@ namespace RayTracer
         public override Vector3 GetNormal(Point worldPoint)
         {
             Vector3 objectNormal = new Vector3(0, 1, 0);
-            Vector3 worldNormal = this.TransformMatrix.Invert().Transpose() * objectNormal;
+            Vector3 worldNormal = this.Transform.Invert().Transpose() * objectNormal;
             worldNormal.w = 0;
 
             worldNormal.Normalize();

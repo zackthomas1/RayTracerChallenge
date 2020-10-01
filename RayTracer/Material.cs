@@ -12,6 +12,7 @@ namespace RayTracer
         float diffuse = 0.9f;
         float specular = 0.9f;
         float shininess = 200.0f;
+        Pattern pattern = null; 
 
         // Get/Set methods
         public Color mColor
@@ -88,6 +89,12 @@ namespace RayTracer
             }
         }
 
+        public Pattern Pattern
+        {
+            get { return pattern; }
+            set { pattern = value; }
+        }
+
         // Constructors
         /// <summary>
         /// Default Material settings constructor
@@ -102,7 +109,7 @@ namespace RayTracer
         }
 
         /// <summary>
-        /// Consumer Material settings constructor
+        ///  Define material color parameter constructor
         /// </summary>
         /// <param name="color"></param>
         /// <param name="ambient"></param>
@@ -116,6 +123,19 @@ namespace RayTracer
                         float shininess = 200.0f)
         {
             this.color = color;
+            Ambient = ambient;
+            Diffuse = diffuse;
+            Specular = specular;
+            Shininess = shininess;
+        }
+
+        public Material(Pattern pattern,
+                        float ambient = 0.1f,
+                        float diffuse = 0.9f,
+                        float specular = 0.9f,
+                        float shininess = 200.0f)
+        {
+            this.pattern = pattern;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
@@ -204,15 +224,25 @@ namespace RayTracer
         /// <param name="point"></param>
         /// <param name="eyeV"></param>
         /// <param name="normalV"></param>
-        public Color Lighting(Material material, Light light, Point point,
-                              Vector3 eyeV, Vector3 normalV, bool inShadow) // CONSIDER removing material from parameter list. Already getting data from self
+        public Color Lighting(Material material, RayObject rayObject, Light light, Point point,
+                              Vector3 eyeV, Vector3 normalV, bool inShadow) // CONSIDER removing material from parameter list. Already getting data from self. Also CONSIDER moving RayObject call.
         {
             Color ambient = Color.White;
             Color diffuse = Color.White;
             Color specular = Color.White;
+            
+            Color effect_color;
+            if (pattern != null)
+            {
+                // Combines surface pattern color with light's color/intensity if a pattern exist
+                effect_color = pattern.PatternAtObject(rayObject, point) * light.Insensity;
+            }
+            else
+            {
+                // Combines surface color with light's color/intensity
+                effect_color = material.mColor * light.Insensity;
+            }
 
-            // Combine the surface color with the light's color/intensity
-            Color effect_color = material.mColor * light.Insensity;
 
             // find the directionto the light source 
             Vector3 lightV = (light.Position - point).Normalized();

@@ -12,7 +12,7 @@ namespace RayTracer
         // Instance Variables
         protected static int currentID = 0;
         protected int id;
-        Matrix4 transformMatrix = new Matrix4();
+        Matrix4 transform = new Matrix4();
         Point position;
         public Material material;
 
@@ -22,10 +22,10 @@ namespace RayTracer
             get { return id; }
             private set { id = value; }
         }
-        public Matrix4 TransformMatrix
+        public Matrix4 Transform
         {
-            get { return transformMatrix; }
-            set { transformMatrix = value; }
+            get { return transform; }
+            set { transform = value; }
         }
         public Point Position
         {
@@ -56,17 +56,17 @@ namespace RayTracer
         {
             return obj is RayObject @object &&
                    id == @object.id &&
-                   EqualityComparer<Matrix4>.Default.Equals(transformMatrix, @object.transformMatrix) &&
+                   EqualityComparer<Matrix4>.Default.Equals(transform, @object.transform) &&
                    EqualityComparer<Point>.Default.Equals(position, @object.position) &&
                    EqualityComparer<Material>.Default.Equals(material, @object.material) &&
                    ID == @object.ID &&
-                   EqualityComparer<Matrix4>.Default.Equals(TransformMatrix, @object.TransformMatrix) &&
+                   EqualityComparer<Matrix4>.Default.Equals(Transform, @object.Transform) &&
                    EqualityComparer<Point>.Default.Equals(Position, @object.Position);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(id, transformMatrix, position, material, ID, TransformMatrix, Position);
+            return HashCode.Combine(id, transform, position, material, ID, Transform, Position);
         }
 
         public static bool operator ==(RayObject obj1, RayObject obj2)
@@ -120,7 +120,7 @@ namespace RayTracer
         /// <returns></returns>
         virtual protected Ray RayToObjectSpace(Ray ray)
         {
-            return ray * transformMatrix.Invert();
+            return ray * transform.Invert();
         }
      
     }

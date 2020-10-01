@@ -4,7 +4,6 @@ using RayTracer;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.VisualBasic;
 
 namespace UnitTestRayTracer
 {
@@ -37,7 +36,7 @@ namespace UnitTestRayTracer
         {
             Plane p = new Plane();
 
-            p.TransformMatrix = p.TransformMatrix.Rotate_X(Math.PI / 2);
+            p.Transform = p.Transform.Rotate_X(Math.PI / 2);
             Vector3 normalVector = p.GetNormal(new Point(5, 5, 5));
 
             Vector3 nV1 = p.GetNormal(new Point(0, 0, 0));

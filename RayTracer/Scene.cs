@@ -62,7 +62,7 @@ namespace RayTracer
             Material m1 = new Material(new Color(0.8f, 1.0f, 0.6f), diffuse: 0.7f, specular: 0.2f);
             Sphere unitSphere = new Sphere(m1, radius: 1.0f);
             Sphere halfUnitSphere = new Sphere(radius: 1.0f);
-            halfUnitSphere.TransformMatrix = Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
+            halfUnitSphere.Transform = Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
             
             //Console.WriteLine(halfUnitSphere.TransformMatrix.ToString());
            
@@ -84,7 +84,8 @@ namespace RayTracer
             foreach (RayObject obj in objects)
             {
                 List<Intersection> objIntersects = obj.Intersect(ray);
-                result.AddRange(objIntersects);
+                if (objIntersects != null)
+                    result.AddRange(objIntersects);
             }
 
             return result;
@@ -123,7 +124,7 @@ namespace RayTracer
             foreach(Light light in lights)
             {
                 bool isInShadow = scene.IsShadowed(comp.overPoint, light);
-                Color hitColor = comp.rayObject.material.Lighting(comp.rayObject.material, light, 
+                Color hitColor = comp.rayObject.material.Lighting(comp.rayObject.material, comp.rayObject, light, 
                                                                   comp.overPoint, comp.eyeV, 
                                                                   comp.normalV, isInShadow);
                 totalColor += hitColor;

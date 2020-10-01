@@ -111,7 +111,7 @@ namespace UnitTestRayTracer
             Computation comp = new Computation(i, ray);
 
             Color color = scene.ShadeHit(comp);
-            Color answer = new Color(0.90498f, 0.90498f, 0.90498f);
+            Color answer = new Color(0.90417f, 0.90417f, 0.90417f);
 
             Assert.True(answer == color);
         }

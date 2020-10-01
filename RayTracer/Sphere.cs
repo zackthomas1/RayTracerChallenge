@@ -42,7 +42,7 @@ namespace RayTracer
                    id == sphere.id &&
                    EqualityComparer<Material>.Default.Equals(material, sphere.material) &&
                    ID == sphere.ID &&
-                   EqualityComparer<Matrix4>.Default.Equals(TransformMatrix, sphere.TransformMatrix) &&
+                   EqualityComparer<Matrix4>.Default.Equals(Transform, sphere.Transform) &&
                    EqualityComparer<Point>.Default.Equals(Position, sphere.Position) &&
                    radius == sphere.radius &&
                    Radius == sphere.Radius;
@@ -50,7 +50,7 @@ namespace RayTracer
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), id, material, ID, TransformMatrix, Position, radius, Radius);
+            return HashCode.Combine(base.GetHashCode(), id, material, ID, Transform, Position, radius, Radius);
         }
 
         public static bool operator ==(Sphere s1, Sphere s2)
@@ -124,9 +124,9 @@ namespace RayTracer
         /// <returns></returns>
         public override Vector3 GetNormal(Point worldPoint)
         {
-            Point objectPoint = this.TransformMatrix.Invert() * worldPoint;
+            Point objectPoint = this.Transform.Invert() * worldPoint;
             Vector3 objectNormal = objectPoint - new Point(0, 0, 0);
-            Vector3 worldNormal = this.TransformMatrix.Invert().Transpose() * objectNormal;
+            Vector3 worldNormal = this.Transform.Invert().Transpose() * objectNormal;
             worldNormal.w = 0;
 
             worldNormal.Normalize();

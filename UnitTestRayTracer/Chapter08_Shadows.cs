@@ -15,6 +15,9 @@ namespace UnitTestRayTracer
         [Fact]
         public void LightingShadowSurface()
         {
+            Sphere s = new Sphere();
+            s.Transform = Matrix4.ScaleMatrix(5, 5, 5);
+
             Vector3 eyeV = new Vector3(0, 0, -1);
             Vector3 normalV = new Vector3(0, 0, -1);
             Light light = new Light(Color.White, new Point(0, 0, -10));
@@ -22,7 +25,7 @@ namespace UnitTestRayTracer
             Material m = new Material();
             Point position = new Point(0, 0, 0);
 
-            Color result = m.Lighting(m, light, position, eyeV, normalV, inShadow);
+            Color result = m.Lighting(m, s, light, position, eyeV, normalV, inShadow);
             Color answer = new Color(.1f, 0.1f, 0.1f);
 
             Assert.True(answer == result);
@@ -83,7 +86,7 @@ namespace UnitTestRayTracer
 
             Sphere s1 = new Sphere();
             Sphere s2 = new Sphere();
-            s2.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 10);
+            s2.Transform = Matrix4.TranslateMatrix(0, 0, 10);
             List<RayObject> objects = new List<RayObject>() { s1, s2 };
             scene.AddObject(s1);
             scene.AddObject(s2);
@@ -103,7 +106,7 @@ namespace UnitTestRayTracer
         {
             Ray r = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
             Sphere s = new Sphere();
-            s.TransformMatrix = Matrix4.TranslateMatrix(0, 0, 1);
+            s.Transform = Matrix4.TranslateMatrix(0, 0, 1);
             Intersection i = new Intersection(5, s);
             Computation comps = new Computation(i, r);
 

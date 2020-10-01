@@ -201,7 +201,7 @@ namespace UnitTestRayTracer
         {
             Sphere s = new Sphere();
             Matrix4 identity = new Matrix4();
-            Assert.True(identity == s.TransformMatrix); 
+            Assert.True(identity == s.Transform); 
         }
 
         [Fact]
@@ -209,8 +209,8 @@ namespace UnitTestRayTracer
         {
             Sphere s = new Sphere();
             Matrix4 translate = Matrix4.TranslateMatrix(2, 3, 4); ;
-            s.TransformMatrix = translate;
-            Assert.True(translate == s.TransformMatrix);
+            s.Transform = translate;
+            Assert.True(translate == s.Transform);
         }
 
         [Fact]
@@ -218,7 +218,7 @@ namespace UnitTestRayTracer
         {
             Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1)); 
             Sphere s = new Sphere();
-            s.TransformMatrix = Matrix4.ScaleMatrix(2, 2, 2);
+            s.Transform = Matrix4.ScaleMatrix(2, 2, 2);
 
             //Ray scaleRay = ray.ApplyObjectTransform(s); //Updated Intersect method to apply object tranformation to ray within method
 
@@ -234,7 +234,7 @@ namespace UnitTestRayTracer
         {
             Ray ray = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
             Sphere s = new Sphere();
-            s.TransformMatrix = Matrix4.TranslateMatrix(5, 0, 0);
+            s.Transform = Matrix4.TranslateMatrix(5, 0, 0);
 
             Ray transformRay = ray.ApplyObjectTransform(s);
 
