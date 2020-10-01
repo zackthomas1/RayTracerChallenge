@@ -219,15 +219,19 @@ namespace Chapter06Challenge
 
         public static void Chapter08()
         {
+
             Plane floor = new Plane();
             floor.material = new Material();
             floor.material.mColor = new Color(1, 0.9f, 0.9f);
-            floor.material.Pattern = new CheckerPattern(Color.White, Color.White *.25f);
+            floor.material.Pattern = new CheckerPattern(SolidPattern.White, SolidPattern.White *.25f);
             floor.material.Specular = 0;
 
             Plane backWall = new Plane();
             backWall.Transform = Matrix4.TranslateMatrix(0, 0, 10) * Matrix4.RotateMatrix_X(Math.PI / 2);
-            backWall.material.Pattern = new StripedPattern(Color.White, Color.White * .25f);
+            StripedPattern s01 = new StripedPattern(SolidPattern.White, SolidPattern.Black);
+            StripedPattern s02 = new StripedPattern(SolidPattern.Red, SolidPattern.Green);
+            s02.Transform = Matrix4.RotateMatrix_Y((float)Math.PI / 4);
+            backWall.material.Pattern = new BlendPattern(s01, s02);
             backWall.material.Specular = 0;
 
             Plane wallRight = new Plane();
@@ -240,9 +244,8 @@ namespace Chapter06Challenge
             wallLeft.Transform = Matrix4.TranslateMatrix(-4, 0, 0) * Matrix4.RotateMatrix(0, 0, Math.PI / 2);
             wallLeft.material = new Material();
             wallLeft.material.mColor = Color.Red;
-            wallLeft.material.Pattern = new GradientPattern(Color.Red, Color.Green);
+            wallLeft.material.Pattern = new CheckerPattern(new StripedPattern(SolidPattern.Yellow, SolidPattern.Green), new RingPattern(SolidPattern.White, SolidPattern.Black));
             floor.material.Specular = 0;
-
 
             Sphere middle = new Sphere();
             middle.Transform = Matrix4.TranslateMatrix(-1.5f, 1, 2.0f);
@@ -257,7 +260,7 @@ namespace Chapter06Challenge
             middle02.Transform = Matrix4.TranslateMatrix(1.5f, 1, 2.0f);
             middle02.material = new Material();
             middle02.material.mColor = new Color(0.1f, 1, 0.5f);
-            middle02.material.Pattern = new RingPattern(Color.Purple, Color.Orange);
+            middle02.material.Pattern = new RadialGradient(SolidPattern.Purple, SolidPattern.Orange);
             middle02.material.Pattern.Transform = Matrix4.RotateMatrix_Z((float)Math.PI/2)  * Matrix4.ScaleMatrix(0.25f, 0.25f, 0.25f);
             middle02.material.Diffuse = 0.7f;
             middle02.material.Specular = 0.3f;
@@ -266,7 +269,7 @@ namespace Chapter06Challenge
             middle03.Transform = Matrix4.TranslateMatrix(0, .5f, -1.5f) * Matrix4.ScaleMatrix(.5f, .5f, .5f);
             middle03.material = new Material();
             middle03.material.mColor = new Color(0.1f, 1, 0.5f);
-            middle03.material.Pattern = new CheckerPattern(Color.Yellow, Color.Green);
+            middle03.material.Pattern = new CheckerPattern(SolidPattern.Yellow, SolidPattern.Green);
             middle03.material.Pattern.Transform = Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
             middle03.material.Diffuse = 0.7f;
             middle03.material.Specular = 0.3f;
@@ -275,7 +278,7 @@ namespace Chapter06Challenge
             right.Transform = Matrix4.TranslateMatrix(2.0f, 1.0f, -0.5f) * Matrix4.ScaleMatrix(0.85f, 0.25f, 0.85f);
             right.material = new Material();
             right.material.mColor = new Color(0.5f, 1, 0.1f);
-            right.material.Pattern = new StripedPattern(Color.White, Color.White * .25f);
+            right.material.Pattern = new StripedPattern(SolidPattern.White, SolidPattern.White * .25f);
             right.material.Pattern.Transform = Matrix4.ScaleMatrix(.15f, 1, 1);
             right.material.Diffuse = 0.4f;
             right.material.Specular = 0.6f;
@@ -284,7 +287,7 @@ namespace Chapter06Challenge
             left.Transform = Matrix4.TranslateMatrix(-2.5f, 0.33f, -0.75f) * Matrix4.ScaleMatrix(0.33f, 0.33f, 0.33f);
             left.material = new Material();
             left.material.mColor = new Color(1.0f, 0.8f, 0.1f);
-            left.material.Pattern = new GradientPattern(Color.Yellow, Color.Blue);
+            left.material.Pattern = new GradientPattern(SolidPattern.Yellow, SolidPattern.Blue);
             left.material.Diffuse = 0.7f;
             left.material.Specular = 0.1f;
 
@@ -299,7 +302,7 @@ namespace Chapter06Challenge
             scene.Objects = sceneObjects;
 
             // Create Camera
-            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 4);
+            Camera cam = new Camera(1920 / 6, 1080 / 6, (float)Math.PI / 4);
             cam.Transform = cam.ViewTransform(new Point(0, 2f, -8),
                                               new Point(0, 1f, 0),
                                               new Vector3(0, 1, 0));
@@ -310,7 +313,7 @@ namespace Chapter06Challenge
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter10Challenge_05";
+            string fileName = "Chapter10Challenge_06";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 

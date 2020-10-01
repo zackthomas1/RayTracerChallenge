@@ -10,29 +10,32 @@ namespace RayTracer
         // Constructor
         public GradientPattern() : base()
         {
-            c1 = Color.White;
-            c2 = Color.Black;
+
         }
-        public GradientPattern(Color c1, Color c2) : base()
+        public GradientPattern(Pattern p1, Pattern p2) : base()
         {
-            this.c1 = c1;
-            this.c2 = c2;
+            this.p1 = p1;
+            this.p2 = p2;
         }
 
         // Methods
-        public override Pattern CreatePattern(Color c1, Color c2)
-        {
-            GradientPattern result = new GradientPattern(c1, c2);
-            return result;
-        }
+
+        //public override Pattern CreatePattern(Color c1, Color c2)
+        //{
+        //    GradientPattern result = new GradientPattern(c1, c2);
+        //    return result;
+        //}
 
         public override Color PatternAt(Point point)
         {
-            GradientPattern gradient = this;
-            Color distance = gradient.c2 - gradient.c1;
-            float fraction = point.x - (float)Math.Floor(point.x);
 
-            return gradient.c1 + distance * fraction;
+            Point tp = this.Transform.Invert() * point;
+
+            GradientPattern gradient = this;
+            Color distance = gradient.p2.PatternAt(tp) - gradient.p1.PatternAt(tp);
+            float fraction = tp.x - (float)Math.Floor(tp.x);
+
+            return gradient.p1.PatternAt(tp) + distance * fraction;
         }
 
 

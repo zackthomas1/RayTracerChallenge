@@ -7,8 +7,8 @@ namespace RayTracer
     public abstract class Pattern
     {
         // Instance Variables
-        public Color c1 { get; set; }
-        public Color c2 { get; set; }
+        public Pattern p1 { get; set; }
+        public Pattern p2 { get; set; }
         Matrix4 transform = new Matrix4();
 
         // Get/Set methods
@@ -21,9 +21,10 @@ namespace RayTracer
         // Constructors
         public Pattern()
         {
-            this.c1 = Color.White;
-            this.c2 = Color.Black;
+            this.p1 = SolidPattern.White;
+            this.p2 = SolidPattern.Black;
         }
+
         //public Pattern(Color a, Color b)
         //{
         //    this.a = a;
@@ -35,7 +36,7 @@ namespace RayTracer
         /// Construct a new Pattern
         /// aka stripe_pattern(a,b) method from book
         /// </summary>
-        public abstract Pattern CreatePattern(Color a, Color b);
+        //public abstract Pattern CreatePattern(Color a, Color b);
 
         /// <summary>
         /// Determines color result for a given point in a pattern.
@@ -55,12 +56,12 @@ namespace RayTracer
         /// <returns></returns>
         public Color PatternAtObject(RayObject RayObject, Point pointWorld)
         {
-            Pattern pattern = this;
 
+            // Converts world space to pattern space through objectspace
             Point objectPoint = RayObject.Transform.Invert() * pointWorld;
-            Point patternPoint = pattern.Transform.Invert() * objectPoint;
+            //Point patternPoint = this.Transform.Invert() * objectPoint;
 
-            return pattern.PatternAt(patternPoint);
+            return this.PatternAt(objectPoint);
 
         }
     }

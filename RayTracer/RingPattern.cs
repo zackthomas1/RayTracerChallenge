@@ -6,29 +6,35 @@ namespace RayTracer
 {
     public class RingPattern : Pattern
     {
+        // Constructors
 
         public RingPattern() : base()
         {
 
         }
 
-        public RingPattern(Color c1, Color c2) : base()
+        public RingPattern(Pattern p1, Pattern p2) : base()
         {
-            this.c1 = c1;
-            this.c2 = c2;
+            this.p1 = p1;
+            this.p2 = p2;
         }
-        public override Pattern CreatePattern(Color c1, Color c2)
-        {
-            RingPattern pattern = new RingPattern(c1, c2);
-            return pattern;
-        }
+
+        // Methods 
+
+        //public override Pattern CreatePattern(Color c1, Color c2)
+        //{
+        //    RingPattern pattern = new RingPattern(c1, c2);
+        //    return pattern;
+        //}
 
         public override Color PatternAt(Point point)
         {
-            if (Math.Floor(Math.Sqrt((point.x * point.x) + (point.z * point.z)) % 2) == 0) 
-                return c1; 
+            Point tp = this.Transform.Invert() * point;
+
+            if (Utilities.FloatEquality( Math.Floor(Math.Sqrt((tp.x * tp.x) + (tp.z * tp.z)) % 2), 0))
+                return p1.PatternAt(tp);
             else
-                return c2;
+                return p2.PatternAt(tp);
         }
 
     }

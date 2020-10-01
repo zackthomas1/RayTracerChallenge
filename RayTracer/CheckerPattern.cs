@@ -6,28 +6,35 @@ namespace RayTracer
 {
     public class CheckerPattern : Pattern
     {
+
+        // Constructors
         public CheckerPattern() : base()
         {
 
         }
 
-        public CheckerPattern(Color c1, Color c2) : base()
+        public CheckerPattern(Pattern p1, Pattern p2) : base()
         {
-            this.c1 = c1;
-            this.c2 = c2;
+            this.p1 = p1;
+            this.p2 = p2;
         }
-        public override Pattern CreatePattern(Color c1, Color c2)
-        {
-            RingPattern pattern = new RingPattern(c1, c2);
-            return pattern;
-        }
+
+        // Methods 
+
+        //public override Pattern CreatePattern(Color c1, Color c2)
+        //{
+        //    RingPattern pattern = new RingPattern(c1, c2);
+        //    return pattern;
+        //}
 
         public override Color PatternAt(Point point)
         {
-            if ((Math.Floor(point.x) + Math.Floor(point.y) + Math.Floor(point.z)) % 2 == 0)
-                return c1;
+            Point tp = this.Transform.Invert() * point;
+
+            if (Utilities.FloatEquality((Math.Floor(tp.x) + Math.Floor(tp.y) + Math.Floor(tp.z)) % 2, 0))
+                return p1.PatternAt(tp);
             else
-                return c2;
+                return p2.PatternAt(tp);
         }
     }
 }

@@ -471,11 +471,22 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
-            CheckerPattern pattern = new CheckerPattern(Color.White, Color.Black);
+            //Pattern black = new SolidPattern(Color.Black);
+            //Pattern white = new SolidPattern(Color.White);
+            //CheckerPattern pattern = new CheckerPattern(white, black);
+
+            //Console.WriteLine(pattern.PatternAt(new Point(0, 0, 0)).ToString());
+            //Console.WriteLine(pattern.PatternAt(new Point(0.5f, 0, 0)).ToString());
+            //Console.WriteLine(pattern.PatternAt(new Point(1.01f, 0, 0)).ToString());
+
+            //----------------------------------------------------------------------------
+
+            RingPattern pattern = new RingPattern(SolidPattern.White, SolidPattern.Black);
 
             Console.WriteLine(pattern.PatternAt(new Point(0, 0, 0)).ToString());
-            Console.WriteLine(pattern.PatternAt(new Point(0.5f, 0, 0)).ToString());
-            Console.WriteLine(pattern.PatternAt(new Point(1.01f, 0, 0)).ToString());
+            Console.WriteLine(pattern.PatternAt(new Point(1, 0, 0)).ToString());
+            Console.WriteLine(pattern.PatternAt(new Point(0, 0, 1)).ToString());
+            Console.WriteLine(pattern.PatternAt(new Point(0.708f, 0.708f, 0.708f)).ToString());
 
         }
     }

@@ -13,64 +13,67 @@ namespace UnitTestRayTracer
         [Fact]
         public void CreateStripePattern()
         {
-            Color black = Color.Black;
-            Color white = Color.White;
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
 
             StripedPattern pattern = new StripedPattern(white, black);
 
-            Assert.True(white == pattern.c1);
-            Assert.True(black == pattern.c2);
+            Assert.True(white == pattern.p1);
+            Assert.True(black == pattern.p2);
         }
 
         [Fact]
         public void StripePatternConstantY()
         {
-            Color black = Color.Black;
-            Color white = Color.White;
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
 
             StripedPattern pattern = new StripedPattern(white, black);
 
-            Assert.True(white == pattern.PatternAt(new Point(0, 0, 0)));
-            Assert.True(white == pattern.PatternAt(new Point(0, 1, 0)));
-            Assert.True(white == pattern.PatternAt(new Point(0, 2, 0)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0, 1, 0)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0, 2, 0)));
 
         }
 
         [Fact]
         public void StripePatternConstantZ()
         {
-            Color black = Color.Black;
-            Color white = Color.White;
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
 
             StripedPattern pattern = new StripedPattern(white, black);
 
-            Assert.True(white == pattern.PatternAt(new Point(0, 0, 0)));
-            Assert.True(white == pattern.PatternAt(new Point(0, 0, 1)));
-            Assert.True(white == pattern.PatternAt(new Point(0, 0, 2)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 1)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 2)));
         }
 
         [Fact]
         public void StripePatternAlternatesX()
         {
-            Color black = Color.Black;
-            Color white = Color.White;
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
 
             StripedPattern pattern = new StripedPattern(white, black);
 
-            Assert.True(white == pattern.PatternAt(new Point(0, 0, 0)));
-            Assert.True(white == pattern.PatternAt(new Point(0.9f, 0, 0)));
-            Assert.True(black == pattern.PatternAt(new Point(1, 0, 0)));
-            Assert.True(black == pattern.PatternAt(new Point(-0.1f, 0, 0)));
-            Assert.True(black == pattern.PatternAt(new Point(-1, 0, 0)));
-            Assert.True(white == pattern.PatternAt(new Point(-1.1f, 0, 0)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(0.9f, 0, 0)));
+            Assert.True(Color.Black == pattern.PatternAt(new Point(1, 0, 0)));
+            Assert.True(Color.Black == pattern.PatternAt(new Point(-0.1f, 0, 0)));
+            Assert.True(Color.Black == pattern.PatternAt(new Point(-1, 0, 0)));
+            Assert.True(Color.White == pattern.PatternAt(new Point(-1.1f, 0, 0)));
         }
 
         [Fact]
         public void LightingWithPattern()
         {
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
+
             Sphere s = new Sphere();
 
-            StripedPattern pattern = new StripedPattern(Color.White, Color.Black);
+            StripedPattern pattern = new StripedPattern(white, black);
             Material material = new Material(pattern, ambient: 1.0f, diffuse: 0.0f, specular: 0.0f);
 
             Vector3 eyeV = new Vector3(0, 0, -1);
@@ -88,10 +91,13 @@ namespace UnitTestRayTracer
         [Fact]
         public void StripesObjectTransform()
         {
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
+
             Sphere s = new Sphere();
             s.Transform = Matrix4.ScaleMatrix(2, 2, 2);
 
-            StripedPattern pattern = new StripedPattern(Color.White, Color.Black);
+            StripedPattern pattern = new StripedPattern(white, black);
 
             Color result = pattern.PatternAtObject(s, new Point(1.5f, 0, 0));
 
@@ -102,9 +108,12 @@ namespace UnitTestRayTracer
         [Fact]
         public void StripesPatternTransform()
         {
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
+
             Sphere s = new Sphere();
 
-            StripedPattern pattern = new StripedPattern(Color.White, Color.Black);
+            StripedPattern pattern = new StripedPattern(white, black);
             pattern.Transform = Matrix4.ScaleMatrix(2, 2, 2);
 
             Color result = pattern.PatternAtObject(s, new Point(1.5f, 0, 0));
@@ -115,10 +124,13 @@ namespace UnitTestRayTracer
         [Fact]
         public void StripesObjectPatternTransform()
         {
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
+
             Sphere s = new Sphere();
             s.Transform = Matrix4.ScaleMatrix(2, 2, 2);
 
-            StripedPattern pattern = new StripedPattern(Color.White, Color.Black);
+            StripedPattern pattern = new StripedPattern(white, black);
             pattern.Transform = Matrix4.TranslateMatrix(0.5f, 0, 0);
 
             Color result = pattern.PatternAtObject(s, new Point(2.5f, 0, 0));
@@ -188,7 +200,7 @@ namespace UnitTestRayTracer
         [Fact]
         public void Gradient()
         {
-            GradientPattern pattern = new GradientPattern(Color.White, Color.Black);
+            GradientPattern pattern = new GradientPattern(SolidPattern.White, SolidPattern.Black);
 
             Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
             Assert.True(new Color(0.75f, 0.75f, 0.75f) == pattern.PatternAt(new Point(0.25f, 0, 0)));
@@ -199,7 +211,7 @@ namespace UnitTestRayTracer
         [Fact] 
         public void RingPattern()
         {
-            RingPattern pattern = new RingPattern(Color.White, Color.Black);
+            RingPattern pattern = new RingPattern(SolidPattern.White, SolidPattern.Black);
 
             Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
             Assert.True(Color.Black == pattern.PatternAt(new Point(1, 0, 0)));
@@ -211,7 +223,10 @@ namespace UnitTestRayTracer
         [Fact]
         public void CheckersRepeatX()
         {
-            CheckerPattern pattern = new CheckerPattern(Color.White, Color.Black); 
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
+
+            CheckerPattern pattern = new CheckerPattern(white, black); 
 
             Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
             Assert.True(Color.White == pattern.PatternAt(new Point(.99f, 0, 0)));
@@ -221,7 +236,10 @@ namespace UnitTestRayTracer
         [Fact]
         public void CheckersRepeatY()
         {
-            CheckerPattern pattern = new CheckerPattern(Color.White, Color.Black);
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
+
+            CheckerPattern pattern = new CheckerPattern(white, black);
 
             Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
             Assert.True(Color.White == pattern.PatternAt(new Point(0, .99f, 0)));
@@ -231,7 +249,10 @@ namespace UnitTestRayTracer
         [Fact]
         public void CheckersRepeatZ()
         {
-            CheckerPattern pattern = new CheckerPattern(Color.White, Color.Black);
+            Pattern black = new SolidPattern(Color.Black);
+            Pattern white = new SolidPattern(Color.White);
+
+            CheckerPattern pattern = new CheckerPattern(white, black);
 
             Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, 0)));
             Assert.True(Color.White == pattern.PatternAt(new Point(0, 0, .99f)));
