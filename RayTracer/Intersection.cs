@@ -99,6 +99,8 @@ namespace RayTracer
 
             comp.overPoint = comp.point + comp.normalV * Utilities.shadowPointEpsilon;
 
+            comp.reflectV = Vector3.Reflection(-r.direction, comp.normalV);
+
             return comp;
         }
 

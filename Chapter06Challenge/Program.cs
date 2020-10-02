@@ -321,10 +321,52 @@ namespace Chapter06Challenge
             Console.ReadKey();
         }
 
+        public static void Chapter11()
+        {
+            // Create objects
+            Plane floor = new Plane();
+            floor.material = new Material();
+            floor.material.Pattern = new CheckerPattern(SolidPattern.White, SolidPattern.White * .15f);
+            //floor.material.Reflective = 0.2f;
+            floor.material.Specular = 0.1f;
 
+            Plane backWall = new Plane();
+            backWall.Transform = Matrix4.TranslateMatrix(0, 0, 10) * Matrix4.RotateMatrix_X(Math.PI / 2);
+            backWall.material = new Material();
+            backWall.material.Pattern = new CheckerPattern(SolidPattern.White, SolidPattern.White * .15f);
+            //backWall.material.Reflective = 0.6f; ;
+            backWall.material.Specular = 0.1f;
+
+            Sphere s = new Sphere();
+            s.Transform = Matrix4.TranslateMatrix(0, 1, 0); 
+            s.material.mColor = Color.Red;
+            s.material.Reflective = 0.6f; ;
+
+            // Create scene
+            Scene scene = new Scene();
+            scene.Objects = new List<RayObject>() { floor, backWall, s };
+
+            // Create Camera
+            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 4);
+            cam.Transform = cam.ViewTransform(new Point(0, 2f, -8),
+                                              new Point(0, 1f, 0),
+                                              new Vector3(0, 1, 0));
+            Canvas image = cam.Render(scene); // Outputs image
+
+            // Save Canvas to ppm
+            Console.WriteLine("\nSaving PPM file");
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string fileName = "Chapter11_01";
+            string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
+            Save.PPM(fileDirectoryComplete, image);
+
+            Console.WriteLine("Done: Program complete.");
+            Console.ReadKey();
+
+        }
         static void Main(string[] args)
         {
-            Chapter08();
+            Chapter11();
         }
     }
 }

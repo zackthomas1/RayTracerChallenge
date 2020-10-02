@@ -12,7 +12,8 @@ namespace RayTracer
         float diffuse = 0.9f;
         float specular = 0.9f;
         float shininess = 200.0f;
-        Pattern pattern = null; 
+        Pattern pattern = null;
+        float reflective = 0.0f;
 
         // Get/Set methods
         public Color mColor
@@ -95,6 +96,12 @@ namespace RayTracer
             set { pattern = value; }
         }
 
+        public float Reflective
+        {
+            get { return reflective; }
+            set { reflective = value; }
+        }
+
         // Constructors
         /// <summary>
         /// Default Material settings constructor
@@ -106,6 +113,7 @@ namespace RayTracer
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shininess;
+            Reflective = reflective;
         }
 
         /// <summary>
@@ -120,26 +128,30 @@ namespace RayTracer
                         float ambient = 0.1f, 
                         float diffuse = 0.9f, 
                         float specular = 0.9f, 
-                        float shininess = 200.0f)
+                        float shininess = 200.0f, 
+                        float reflective = 0.0f)
         {
             this.color = color;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shininess;
+            Reflective = reflective;
         }
 
         public Material(Pattern pattern,
                         float ambient = 0.1f,
                         float diffuse = 0.9f,
                         float specular = 0.9f,
-                        float shininess = 200.0f)
+                        float shininess = 200.0f,
+                        float reflective = 0.0f)
         {
             this.pattern = pattern;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shininess;
+            Reflective = reflective;
         }
 
         // Class overloads
@@ -244,7 +256,7 @@ namespace RayTracer
             }
 
 
-            // find the directionto the light source 
+            // find the direction to the light source 
             Vector3 lightV = (light.Position - point).Normalized();
 
             // Compute the ambient contribution 
@@ -276,6 +288,7 @@ namespace RayTracer
                 Vector3 reflectV = Vector3.Reflection(-lightV, normalV);
                 float reflectDotEye = Tuple.Dot(reflectV, eyeV);
 
+                // if reflectio is away from eye
                 if (reflectDotEye <= 0)
                 {
                     specular = Color.Black;
@@ -296,7 +309,6 @@ namespace RayTracer
 
             // Add the three contributions together to get the final shading 
             return ambient + diffuse + specular;
-
 
         }
 

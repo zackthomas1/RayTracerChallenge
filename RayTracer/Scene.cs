@@ -114,20 +114,23 @@ namespace RayTracer
         /// </summary>
         /// <param name="comp"></param>
         /// <returns></returns>
-        public Color ShadeHit(Computation comp)
+        public Color ShadeHit(Computation comp, int remaining = 5)
         {
             //Material mat = comp.rayObject.material;
             Scene scene = this;
 
             Color totalColor = new Color(0,0,0);
 
+            // for scenes with multiple lights 
             foreach(Light light in lights)
             {
                 bool isInShadow = scene.IsShadowed(comp.overPoint, light);
                 Color hitColor = comp.rayObject.material.Lighting(comp.rayObject.material, comp.rayObject, light, 
                                                                   comp.overPoint, comp.eyeV, 
                                                                   comp.normalV, isInShadow);
-                totalColor += hitColor;
+
+                Color reflectedColor = this.ReflectedColor(comp, remaining);
+                totalColor += hitColor + reflectedColor;
             }
             
             return totalColor;
@@ -140,7 +143,7 @@ namespace RayTracer
         /// <param name="scene"></param>
         /// <param name="ray"></param>
         /// <returns></returns>
-        public Color ColorAt(Ray ray)
+        public Color ColorAt(Ray ray, int remaining = 5)
         {
             Color resultColor = Color.Black;
             Scene scene = this;
@@ -154,7 +157,7 @@ namespace RayTracer
             }
 
             Computation comp = new Computation(hit, ray);
-            resultColor = ShadeHit(comp);
+            resultColor = ShadeHit(comp, remaining);
 
             return resultColor;
         }
@@ -185,6 +188,23 @@ namespace RayTracer
                 return true;
             else
                 return false; 
+        }
+
+        public Color ReflectedColor(Computation comps, int remaining = 5)
+        {
+            if (Utilities.FloatEquality(comps.rayObject.material.Reflective, 0))
+            {
+                return Color.Black;
+            }
+            if ( remaining < 1)
+            {
+                return Color.Black;
+            }
+
+            Ray reflectiveRay = new Ray(comps.overPoint, comps.reflectV);
+            Color reflectedColor = ColorAt(reflectiveRay, remaining - 1);
+
+            return reflectedColor * comps.rayObject.material.Reflective;
         }
     
     }

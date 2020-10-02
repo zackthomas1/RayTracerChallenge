@@ -481,13 +481,83 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
-            RingPattern pattern = new RingPattern(SolidPattern.White, SolidPattern.Black);
+            //RingPattern pattern = new RingPattern(SolidPattern.White, SolidPattern.Black);
 
-            Console.WriteLine(pattern.PatternAt(new Point(0, 0, 0)).ToString());
-            Console.WriteLine(pattern.PatternAt(new Point(1, 0, 0)).ToString());
-            Console.WriteLine(pattern.PatternAt(new Point(0, 0, 1)).ToString());
-            Console.WriteLine(pattern.PatternAt(new Point(0.708f, 0.708f, 0.708f)).ToString());
+            //Console.WriteLine(pattern.PatternAt(new Point(0, 0, 0)).ToString());
+            //Console.WriteLine(pattern.PatternAt(new Point(1, 0, 0)).ToString());
+            //Console.WriteLine(pattern.PatternAt(new Point(0, 0, 1)).ToString());
+            //Console.WriteLine(pattern.PatternAt(new Point(0.708f, 0.708f, 0.708f)).ToString());
 
+            //----------------------------------------------------------------------------
+
+            //Plane p = new Plane();
+            //Ray r = new Ray(new Point(0, 1, -1), new Vector3(0, -(float)Math.Sqrt(2) / 2, (float)Math.Sqrt(2) / 2));
+            //Intersection i = new Intersection((float)Math.Sqrt(2), p);
+
+            //Computation comp = new Computation(i, r);
+            //Vector3 answer = new Vector3(0, (float)Math.Sqrt(2) / 2, (float)Math.Sqrt(2) / 2);
+
+            //Console.WriteLine(comp.reflectV.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Scene scene = new Scene();
+
+            //Plane p = new Plane();
+            //p.material.Reflective = 0.5f;
+            //p.Transform = Matrix4.TranslateMatrix(0, -1, 0);
+            //scene.AddObject(p);
+
+            //Ray r = new Ray(new Point(0, 0, -3), new Vector3(0, -(float)Math.Sqrt(2) / 2, (float)Math.Sqrt(2) / 2));
+            //Intersection i = new Intersection((float)Math.Sqrt(2), p);
+            //Computation comps = new Computation(i, r);
+
+            //Color result = scene.ReflectedColor(comps);
+            //Color answer = new Color(0.19073f, 0.23841f, 0.14304f);
+
+            //Console.WriteLine(result.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Scene scene = new Scene();
+            //Plane p = new Plane();
+            //p.material.Reflective = 0.5f;
+            //p.Transform = Matrix4.TranslateMatrix(0, -1, 0);
+            //scene.AddObject(p);
+            //Ray r = new Ray(new Point(0, 0, -3), new Vector3(0, -(float)Math.Sqrt(2) / 2, (float)Math.Sqrt(2) / 2));
+            //Intersection i = new Intersection((float)Math.Sqrt(2), p);
+
+            //Computation comps = new Computation(i, r);
+
+            //Color result = scene.ShadeHit(comps);
+            //Color answer = new Color(0.87677f, 0.92436f, 0.82918f);
+
+            //Console.WriteLine(result.ToString());
+
+            //----------------------------------------------------------------------------
+
+            Scene scene = new Scene();
+
+            scene.Lights = new List<Light>();
+            scene.Objects = new List<RayObject>();
+
+            scene.AddLight(new Light(Color.White, new Point(0, 0, 0)));
+
+            Plane lower = new Plane();
+            lower.material.Reflective = 1.0f;
+            lower.Transform = Matrix4.TranslateMatrix(0, -1, 0);
+
+            Plane upper = new Plane();
+            upper.material.Reflective = 1.0f;
+            upper.Transform = Matrix4.TranslateMatrix(0, 1, 0);
+
+            scene.AddObject(lower);
+            scene.AddObject(upper);
+
+            Ray r = new Ray(new Point(0, 0, 0), new Vector3(0, 1, 0));
+            Color result = scene.ColorAt(r);
+
+            Console.WriteLine(result.ToString());
         }
     }
 }
