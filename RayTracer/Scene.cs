@@ -12,6 +12,8 @@ namespace RayTracer
         List<Light> lights = new List<Light>();
         List<RayObject> objects = new List<RayObject>();
 
+        private const int reflectionBounces = 5;
+
         // Get/Set methods
         public List<Light> Lights
         {
@@ -114,26 +116,26 @@ namespace RayTracer
         /// </summary>
         /// <param name="comp"></param>
         /// <returns></returns>
-        public Color ShadeHit(Computation comp, int remaining = 5)
+        public Color ShadeHit(Computation comp, int remaining = reflectionBounces)
         {
             //Material mat = comp.rayObject.material;
             Scene scene = this;
 
-            Color totalColor = new Color(0,0,0);
+            Color surfaceColor = Color.Black;
 
             // for scenes with multiple lights 
-            foreach(Light light in lights)
+            foreach (Light light in lights)
             {
                 bool isInShadow = scene.IsShadowed(comp.overPoint, light);
-                Color hitColor = comp.rayObject.material.Lighting(comp.rayObject.material, comp.rayObject, light, 
+                surfaceColor = comp.rayObject.material.Lighting(comp.rayObject.material, comp.rayObject, light, 
                                                                   comp.overPoint, comp.eyeV, 
                                                                   comp.normalV, isInShadow);
-
-                Color reflectedColor = this.ReflectedColor(comp, remaining);
-                totalColor += hitColor + reflectedColor;
             }
-            
-            return totalColor;
+
+            Color reflectedColor = this.ReflectedColor(comp, remaining);
+            Color refractedColor = this.RefractedColor(comp, remaining);
+
+            return surfaceColor + reflectedColor + refractedColor;
         }
 
         /// <summary>
@@ -143,7 +145,7 @@ namespace RayTracer
         /// <param name="scene"></param>
         /// <param name="ray"></param>
         /// <returns></returns>
-        public Color ColorAt(Ray ray, int remaining = 5)
+        public Color ColorAt(Ray ray, int remaining = reflectionBounces)
         {
             Color resultColor = Color.Black;
             Scene scene = this;
@@ -190,13 +192,19 @@ namespace RayTracer
                 return false; 
         }
 
-        public Color ReflectedColor(Computation comps, int remaining = 5)
+        /// <summary>
+        /// Determines the reflection color of an object
+        /// </summary>
+        /// <param name="comps"></param>
+        /// <param name="remaining"></param>
+        /// <returns></returns>
+        public Color ReflectedColor(Computation comps, int remaining = reflectionBounces)
         {
             if (Utilities.FloatEquality(comps.rayObject.material.Reflective, 0))
             {
                 return Color.Black;
             }
-            if ( remaining < 1)
+            if ( remaining < 1) // Breaks recussion 
             {
                 return Color.Black;
             }
@@ -205,6 +213,36 @@ namespace RayTracer
             Color reflectedColor = ColorAt(reflectiveRay, remaining - 1);
 
             return reflectedColor * comps.rayObject.material.Reflective;
+        }
+
+        public Color RefractedColor(Computation comps, int remaining = reflectionBounces)
+        {
+            if(Utilities.FloatEquality(comps.rayObject.material.Transparency, 0) || remaining < 1)
+            {
+                return Color.Black;
+            }
+
+            // Checking for Total Internal Refractions
+            // Find the ratio of the first index of refraction to the second
+            float nRatio = comps.n1 / comps.n2;
+            float cosI = Vector3.Dot(comps.eyeV, comps.normalV); // cos_i is the same as the dot product of the two vectors
+            float sin2T = (nRatio * nRatio) * (1 - (cosI * cosI)); // Find sin(theta_t)^2 via trigonometric identity
+           
+            if (sin2T > 1) // if sin(theta_t) is create that 1 than there are total interal refractions
+            {
+                return Color.Black; 
+            }
+     
+            float cosT = (float)Math.Sqrt(1.0 - sin2T); // Find cos(theta_t) via trigonometric identity
+            // Compute the direction of the refacted ray 
+            Vector3 direction = comps.normalV * (nRatio * cosI - cosT) - comps.eyeV * nRatio;
+            Ray refractedRay = new Ray(comps.underPoint, direction); // Create refracted ray
+
+            //Find the color of the refracted ray, making sure to multiply by 
+            //the transparency value to account for any opacity
+            Color refractedColor = this.ColorAt(refractedRay, remaining - 1) * comps.rayObject.material.Transparency;
+
+            return refractedColor;
         }
     
     }

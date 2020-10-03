@@ -536,28 +536,126 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
+            //Scene scene = new Scene();
+
+            //scene.Lights = new List<Light>();
+            //scene.Objects = new List<RayObject>();
+
+            //scene.AddLight(new Light(Color.White, new Point(0, 0, 0)));
+
+            //Plane lower = new Plane();
+            //lower.material.Reflective = 1.0f;
+            //lower.Transform = Matrix4.TranslateMatrix(0, -1, 0);
+
+            //Plane upper = new Plane();
+            //upper.material.Reflective = 1.0f;
+            //upper.Transform = Matrix4.TranslateMatrix(0, 1, 0);
+
+            //scene.AddObject(lower);
+            //scene.AddObject(upper);
+
+            //Ray r = new Ray(new Point(0, 0, 0), new Vector3(0, 1, 0));
+            //Color result = scene.ColorAt(r);
+
+            //Console.WriteLine(result.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Sphere glassSphere01 = new Sphere();
+            //glassSphere01.material.Transparency = 1.0f;
+            //glassSphere01.material.RefractIndex = 1.5f;
+            //glassSphere01.Transform = Matrix4.ScaleMatrix(2, 2, 2);
+
+            //Sphere glassSphere02 = new Sphere();
+            //glassSphere02.material.Transparency = 1.0f;
+            //glassSphere02.material.RefractIndex = 2.0f;
+            //glassSphere02.Transform = Matrix4.TranslateMatrix(0, 0, -0.25f);
+
+            //Sphere glassSphere03 = new Sphere();
+            //glassSphere03.material.Transparency = 1.0f;
+            //glassSphere03.material.RefractIndex = 2.5f;
+            //glassSphere03.Transform = Matrix4.TranslateMatrix(0, 0, 0.25f);
+
+            //Ray r = new Ray(new Point(0, 0, -4), new Vector3(0, 0, 1));
+
+            //Intersection i01 = new Intersection(2, glassSphere01);
+            //Intersection i02 = new Intersection(2.75f, glassSphere02);
+            //Intersection i03 = new Intersection(3.25f, glassSphere03);
+            //Intersection i04 = new Intersection(4.75f, glassSphere02);
+            //Intersection i05 = new Intersection(5.25f, glassSphere03);
+            //Intersection i06 = new Intersection(6, glassSphere01);
+
+            //List<Intersection> xs = new List<Intersection>() { i01, i02, i03, i04, i05, i06 };
+
+            //Computation comps01 = new Computation(xs[0], r, xs);
+            //Computation comps02 = new Computation(xs[1], r, xs);
+            //Computation comps03 = new Computation(xs[2], r, xs);
+            //Computation comps04 = new Computation(xs[3], r, xs);
+            //Computation comps05 = new Computation(xs[4], r, xs);
+            //Computation comps06 = new Computation(xs[5], r, xs);
+
+            //Console.WriteLine(comps01.n1 + ", " + comps01.n2);
+            //Console.WriteLine(comps02.n1 + ", " + comps02.n2);
+            //Console.WriteLine(comps03.n1 + ", " + comps03.n2);
+            //Console.WriteLine(comps04.n1 + ", " + comps04.n2);
+            //Console.WriteLine(comps05.n1 + ", " + comps05.n2);
+            //Console.WriteLine(comps06.n1 + ", " + comps06.n2);
+
+            //----------------------------------------------------------------------------
+
+            //Scene scene = new Scene();
+
+            //RayObject a = scene.Objects[0];
+            //a.material.Ambient = 1.0f;
+            //a.material.Pattern = new TestPattern();
+
+            //RayObject b = scene.Objects[1];
+            //b.material.Transparency = 1.0f;
+            //b.material.RefractIndex = 1.5f;
+
+            //Ray r = new Ray(new Point(0, 0, 0.1f), new Vector3(0, 1, 0));
+
+            //Intersection i01 = new Intersection(-0.9899f, a);
+            //Intersection i02 = new Intersection(-0.4899f, b);
+            //Intersection i03 = new Intersection(0.4899f, b);
+            //Intersection i04 = new Intersection(0.9899f, a);
+
+            //List<Intersection> xs = new List<Intersection>() { i01, i02, i03, i04 };
+
+            //Computation comps = new Computation(xs[2], r, xs);
+
+            //Color result = scene.RefractedColor(comps, 5);
+            //Color answer = new Color(0, 0.99888f, 0.04725f);
+
+            //Console.WriteLine(result.ToString());
+
+            //----------------------------------------------------------------------------
+
             Scene scene = new Scene();
 
-            scene.Lights = new List<Light>();
-            scene.Objects = new List<RayObject>();
+            Plane floor = new Plane();
+            floor.Transform = Matrix4.TranslateMatrix(0, -1, 0);
+            floor.material.Transparency = 0.5f;
+            floor.material.RefractIndex = 1.5f;
 
-            scene.AddLight(new Light(Color.White, new Point(0, 0, 0)));
+            Sphere s = new Sphere();
+            s.material.mColor = new Color(1, 0, 0);
+            s.material.Ambient = 0.5f;
+            s.Transform = Matrix4.TranslateMatrix(0, -3.5f, -0.5f);
 
-            Plane lower = new Plane();
-            lower.material.Reflective = 1.0f;
-            lower.Transform = Matrix4.TranslateMatrix(0, -1, 0);
+            scene.AddObject(floor);
+            scene.AddObject(s);
 
-            Plane upper = new Plane();
-            upper.material.Reflective = 1.0f;
-            upper.Transform = Matrix4.TranslateMatrix(0, 1, 0);
+            Ray r = new Ray(new Point(0, 0, -3), new Vector3(0, (float)Math.Sqrt(2) / -2, (float)Math.Sqrt(2) / 2));
+            
+            Intersection i = new Intersection((float)Math.Sqrt(2), floor);
+            List<Intersection> xs = new List<Intersection>() { i };
 
-            scene.AddObject(lower);
-            scene.AddObject(upper);
+            Computation comps = new Computation(xs[0], r, xs);
 
-            Ray r = new Ray(new Point(0, 0, 0), new Vector3(0, 1, 0));
-            Color result = scene.ColorAt(r);
+            Color c = scene.ShadeHit(comps, 5);
 
-            Console.WriteLine(result.ToString());
+            Console.WriteLine(c.ToString()); 
         }
     }
 }

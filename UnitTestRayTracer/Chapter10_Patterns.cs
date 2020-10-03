@@ -74,7 +74,7 @@ namespace UnitTestRayTracer
             Sphere s = new Sphere();
 
             StripedPattern pattern = new StripedPattern(white, black);
-            Material material = new Material(pattern, ambient: 1.0f, diffuse: 0.0f, specular: 0.0f);
+            Material material = new Material(pattern: pattern, ambient: 1.0f, diffuse: 0.0f, specular: 0.0f);
 
             Vector3 eyeV = new Vector3(0, 0, -1);
             Vector3 normalV = new Vector3(0, 0, -1);

@@ -7,9 +7,10 @@ namespace RayTracer
     public class Utilities
     {
         // Instance Variables
-        public static float Epsilon = 0.0001f;
+        public static readonly float Epsilon = 0.0001f;
         public const double PI = Math.PI;
-        public static float shadowPointEpsilon = 0.0025f;
+        public static readonly float overPointEpsilon = 0.0025f;
+        public static readonly float underPointEpsilon = 0.0001f;
 
         // Methods
         /// <summary>

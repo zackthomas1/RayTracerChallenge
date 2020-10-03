@@ -298,6 +298,7 @@ namespace Chapter06Challenge
             List<Light> lights = new List<Light>() { l1, l2 };
             scene.Lights = lights;
 
+
             List<RayObject> sceneObjects = new List<RayObject>() { floor, backWall, wallRight, wallLeft, middle, middle02, middle03, right, left };
             scene.Objects = sceneObjects;
 
@@ -337,17 +338,25 @@ namespace Chapter06Challenge
             //backWall.material.Reflective = 0.6f; ;
             backWall.material.Specular = 0.1f;
 
-            Sphere s = new Sphere();
-            s.Transform = Matrix4.TranslateMatrix(0, 1, 0); 
-            s.material.mColor = Color.Red;
-            s.material.Reflective = 0.6f; ;
+            Sphere s01 = new Sphere();
+            s01.Transform = Matrix4.TranslateMatrix(1.5f, 1, 0);
+            s01.material.mColor = Color.Red;
+            s01.material.Reflective = 0.6f;
+            //s01.material.Specular = 0.0f;
+
+            Sphere s02 = new Sphere();
+            s02.Transform = Matrix4.TranslateMatrix(-1.5f, 1, -0.75f);
+            s02.material.mColor = Color.White * .15f;
+            s02.material.Reflective = 0.00f;
+            s02.material.Transparency = 1.0f;
+            s02.material.RefractIndex = RefractiveIndex.Glass;
 
             // Create scene
             Scene scene = new Scene();
-            scene.Objects = new List<RayObject>() { floor, backWall, s };
+            scene.Objects = new List<RayObject>() { floor, backWall, s01, s02 };
 
             // Create Camera
-            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 4);
+            Camera cam = new Camera(1920 / 4, 1080 / 4, (float)Math.PI / 4);
             cam.Transform = cam.ViewTransform(new Point(0, 2f, -8),
                                               new Point(0, 1f, 0),
                                               new Vector3(0, 1, 0));
@@ -356,7 +365,7 @@ namespace Chapter06Challenge
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter11_01";
+            string fileName = "Chapter11_06";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 

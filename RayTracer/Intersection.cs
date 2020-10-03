@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RayTracer
@@ -80,7 +81,7 @@ namespace RayTracer
         /// </summary>
         /// <param name="i"></param>
         /// <param name="r"></param>
-        public static Computation PrepareComputations(Intersection i,Ray r)
+        public static Computation PrepareComputations(Intersection i, Ray r, List<Intersection> xs = null)
         {
             Computation comp = new Computation();
             comp.t = i.t;
@@ -89,6 +90,8 @@ namespace RayTracer
             comp.eyeV = -r.direction;
             comp.normalV = comp.rayObject.GetNormal(comp.point);
 
+            // Checks if eye vector and normal are pointing in the same direction 
+            // if dot product is less than zero that point in the same direction
             if (Vector3.Dot(comp.eyeV, comp.normalV) < 0)
             {
                 comp.inside = true;
@@ -97,12 +100,62 @@ namespace RayTracer
             else
                 comp.inside = false;
 
-            comp.overPoint = comp.point + comp.normalV * Utilities.shadowPointEpsilon;
 
-            comp.reflectV = Vector3.Reflection(-r.direction, comp.normalV);
+            if (xs == null)
+                xs = new List<Intersection>() { i };
+
+            // Transparency Intersections algorithm
+            List<RayObject> containers = new List<RayObject>();
+            foreach (Intersection intersect in xs)
+            {
+                // n1
+                if (i == intersect)
+                {
+                    if (containers.Count == 0)
+                    {
+                        comp.n1 = 1.0f;
+                    }
+                    else
+                    {
+                        comp.n1 = containers.Last<RayObject>().material.RefractIndex;
+                    }
+                }
+
+                if (containers.Contains(intersect.rayObject))
+                {
+                    containers.Remove(intersect.rayObject);
+                    //Console.WriteLine("Object Removed: " + intersect.rayObject.ToString());
+                }
+                else
+                {
+                    containers.Add(intersect.rayObject);
+                    //Console.WriteLine("Object Added: " + intersect.rayObject.ToString());
+                }
+                //Console.WriteLine("List Lenght: " + containers.Count);
+
+                // n2
+                if (i == intersect)
+                {
+                    if (containers.Count == 0)
+                    {
+                        comp.n2 = 1.0f;
+                    }
+                    else
+                    {
+                        comp.n2 = containers[containers.Count - 1].material.RefractIndex;
+                    }
+                    break;
+                }
+                
+            }
+
+            comp.reflectV = Vector3.Reflection(r.direction, comp.normalV);
+            comp.overPoint = comp.point + comp.normalV * Utilities.overPointEpsilon;
+            comp.underPoint = comp.point - comp.normalV * Utilities.underPointEpsilon;
 
             return comp;
         }
+
 
 
     }

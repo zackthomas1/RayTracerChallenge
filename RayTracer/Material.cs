@@ -4,6 +4,17 @@ using System.Text;
 
 namespace RayTracer
 {
+
+    public class RefractiveIndex
+    {
+        public const float Vacuum = 1.0f;
+        public const float Air = 1.00029f;
+        public const float Water = 1.333f;
+        public const float Glass = 1.52f;
+        public const float Diamond = 2.417f;
+    }
+
+
     public class Material
     {
         //Instance Variables
@@ -14,6 +25,8 @@ namespace RayTracer
         float shininess = 200.0f;
         Pattern pattern = null;
         float reflective = 0.0f;
+        float transparency = 0.0f;
+        float refractiveIndex = RefractiveIndex.Vacuum;
 
         // Get/Set methods
         public Color mColor
@@ -102,18 +115,45 @@ namespace RayTracer
             set { reflective = value; }
         }
 
+        public float Transparency
+        {
+            get { return transparency; }
+            set
+            {
+                if (value < 0.0f)
+                {
+                    value = 0.0f;
+                }
+                if (value > 1.0f)
+                {
+                    value = 1.0f;
+                }
+
+                transparency = value;
+            }
+        }
+
+        public float RefractIndex
+        {
+            get { return refractiveIndex; }
+            set { refractiveIndex = value; }
+        }
+
         // Constructors
         /// <summary>
         /// Default Material settings constructor
         /// </summary>
         public Material()
         {
-            color = Color.White;
+            mColor = Color.White;
+            Pattern = null;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shininess;
             Reflective = reflective;
+            Transparency = 0.0f;
+            RefractIndex = RefractiveIndex.Air;
         }
 
         /// <summary>
@@ -125,18 +165,24 @@ namespace RayTracer
         /// <param name="specular"></param>
         /// <param name="shininess"></param>
         public Material(Color color,
-                        float ambient = 0.1f, 
-                        float diffuse = 0.9f, 
-                        float specular = 0.9f, 
-                        float shininess = 200.0f, 
-                        float reflective = 0.0f)
+                        float ambient = 0.1f,
+                        float diffuse = 0.9f,
+                        float specular = 0.9f,
+                        float shininess = 200.0f,
+                        float reflective = 0.0f,
+                        Pattern pattern = null,
+                        float transparency = 0.0f,
+                        float refactiveIndex = RefractiveIndex.Air)
         {
-            this.color = color;
+            mColor = color;
+            Pattern = pattern;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shininess;
             Reflective = reflective;
+            Transparency = transparency;
+            RefractIndex = refactiveIndex;
         }
 
         public Material(Pattern pattern,
@@ -144,24 +190,32 @@ namespace RayTracer
                         float diffuse = 0.9f,
                         float specular = 0.9f,
                         float shininess = 200.0f,
-                        float reflective = 0.0f)
+                        float reflective = 0.0f,
+                        float transparency = 0.0f,
+                        float refactiveIndex = RefractiveIndex.Air)
         {
-            this.pattern = pattern;
+            Pattern = pattern;
             Ambient = ambient;
             Diffuse = diffuse;
             Specular = specular;
             Shininess = shininess;
             Reflective = reflective;
+            Transparency = transparency;
+            RefractIndex = refactiveIndex;
         }
 
         // Class overloads
         public override string ToString()
         {
             return "Color -> " + color + "\n" +
+                   "Pattern -> " + pattern + "\n" +
                    "Ambient -> " + ambient + "\n" +
                    "Diffuse -> " + diffuse + "\n" +
                    "Specular -> " + specular + "\n" +
-                   "Shininess -> " + shininess;
+                   "Shininess -> " + shininess + "\n" +
+                   "Reflective -> " + reflective + "\n" +
+                   "Transparency -> " + transparency + "\n" +
+                   "RefractiveIndex -> " + refractiveIndex;
         }
 
         public override bool Equals(object obj)
@@ -172,11 +226,19 @@ namespace RayTracer
                    diffuse == material.diffuse &&
                    specular == material.specular &&
                    shininess == material.shininess &&
+                   EqualityComparer<Pattern>.Default.Equals(pattern, material.pattern) &&
+                   reflective == material.reflective &&
+                   transparency == material.transparency &&
+                   refractiveIndex == material.refractiveIndex &&
                    EqualityComparer<Color>.Default.Equals(mColor, material.mColor) &&
                    Ambient == material.Ambient &&
                    Diffuse == material.Diffuse &&
                    Specular == material.Specular &&
-                   Shininess == material.Shininess;
+                   Shininess == material.Shininess &&
+                   EqualityComparer<Pattern>.Default.Equals(Pattern, material.Pattern) &&
+                   Reflective == material.Reflective &&
+                   Transparency == material.Transparency &&
+                   RefractIndex == material.RefractIndex;
         }
 
         public override int GetHashCode()
@@ -187,37 +249,54 @@ namespace RayTracer
             hash.Add(diffuse);
             hash.Add(specular);
             hash.Add(shininess);
+            hash.Add(pattern);
+            hash.Add(reflective);
+            hash.Add(transparency);
+            hash.Add(refractiveIndex);
             hash.Add(mColor);
             hash.Add(Ambient);
             hash.Add(Diffuse);
             hash.Add(Specular);
             hash.Add(Shininess);
+            hash.Add(Pattern);
+            hash.Add(Reflective);
+            hash.Add(Transparency);
+            hash.Add(RefractIndex);
             return hash.ToHashCode();
         }
 
         public static bool operator ==(Material m1, Material m2)
         {
             if (m1.color == m2.color &&
+                m1.pattern == m2.pattern &&
                 m1.ambient == m2.ambient &&
                 m1.diffuse == m2.diffuse &&
                 m1.specular == m2.specular &&
-                m1.shininess == m2.shininess)
+                m1.shininess == m2.shininess &&
+                m1.reflective == m2.reflective &&
+                m1.transparency == m2.transparency &&
+                m1.refractiveIndex == m2.refractiveIndex)
             {
                 return true;
             }
             else
             {
-                return false; 
+                return false;
             }
         }
-        
+
         public static bool operator !=(Material m1, Material m2)
         {
             if (m1.color == m2.color &&
+                m1.pattern == m2.pattern &&
                 m1.ambient == m2.ambient &&
                 m1.diffuse == m2.diffuse &&
                 m1.specular == m2.specular &&
-                m1.shininess == m2.shininess)
+                m1.shininess == m2.shininess &&
+                m1.reflective == m2.reflective &&
+                m1.transparency == m2.transparency &&
+                m1.refractiveIndex == m2.refractiveIndex)
+
             {
                 return false;
             }
@@ -242,7 +321,7 @@ namespace RayTracer
             Color ambient = Color.White;
             Color diffuse = Color.White;
             Color specular = Color.White;
-            
+
             Color effect_color;
             if (pattern != null)
             {
@@ -288,7 +367,7 @@ namespace RayTracer
                 Vector3 reflectV = Vector3.Reflection(-lightV, normalV);
                 float reflectDotEye = Tuple.Dot(reflectV, eyeV);
 
-                // if reflectio is away from eye
+                // if reflection is away from eye
                 if (reflectDotEye <= 0)
                 {
                     specular = Color.Black;
@@ -311,7 +390,5 @@ namespace RayTracer
             return ambient + diffuse + specular;
 
         }
-
-
     }
 }
