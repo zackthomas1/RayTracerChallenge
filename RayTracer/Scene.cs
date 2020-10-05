@@ -65,8 +65,6 @@ namespace RayTracer
             Sphere unitSphere = new Sphere(m1, radius: 1.0f);
             Sphere halfUnitSphere = new Sphere(radius: 1.0f);
             halfUnitSphere.Transform = Matrix4.ScaleMatrix(0.5f, 0.5f, 0.5f);
-            
-            //Console.WriteLine(halfUnitSphere.TransformMatrix.ToString());
            
             objects.Add(unitSphere);
             objects.Add(halfUnitSphere);
@@ -103,6 +101,14 @@ namespace RayTracer
         }
 
         /// <summary>
+        /// Sets objects varible to an empty List<RayObject>()
+        /// </summary>
+        public void EmptyObjects()
+        {
+            this.objects = new List<RayObject>() { };
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="light"></param>
@@ -112,11 +118,19 @@ namespace RayTracer
         }
 
         /// <summary>
+        /// Sets lights varible to an empty List<Light>()
+        /// </summary>
+        public void EmptyLights()
+        {
+            this.lights = new List<Light>() { };
+        }
+
+        /// <summary>
         /// Finds color value at given intersection encapsulated in Computation class parameter
         /// </summary>
-        /// <param name="comp"></param>
+        /// <param name="comps"></param>
         /// <returns></returns>
-        public Color ShadeHit(Computation comp, int remaining = reflectionBounces)
+        public Color ShadeHit(Computation comps, int remaining = reflectionBounces)
         {
             //Material mat = comp.rayObject.material;
             Scene scene = this;
@@ -126,16 +140,25 @@ namespace RayTracer
             // for scenes with multiple lights 
             foreach (Light light in lights)
             {
-                bool isInShadow = scene.IsShadowed(comp.overPoint, light);
-                surfaceColor = comp.rayObject.material.Lighting(comp.rayObject.material, comp.rayObject, light, 
-                                                                  comp.overPoint, comp.eyeV, 
-                                                                  comp.normalV, isInShadow);
+                bool isInShadow = scene.IsShadowed(comps.overPoint, light);
+                surfaceColor = comps.rayObject.material.Lighting(comps.rayObject.material, comps.rayObject, 
+                                                                light, comps.overPoint, comps.eyeV, 
+                                                                comps.normalV, isInShadow);
             }
 
-            Color reflectedColor = this.ReflectedColor(comp, remaining);
-            Color refractedColor = this.RefractedColor(comp, remaining);
+            Color reflectedColor = this.ReflectedColor(comps, remaining);
+            Color refractedColor = this.RefractedColor(comps, remaining);
 
-            return surfaceColor + reflectedColor + refractedColor;
+            Material material = comps.rayObject.material; 
+
+            // Fresnel 
+            if ( material.Reflective > 0 && material.Transparency > 0)
+            {
+                float reflectance = comps.Schlick();
+                return surfaceColor + reflectedColor * reflectance + refractedColor * (1 - reflectance);  
+            }
+
+            return surfaceColor + reflectedColor + refractedColor * 2f;
         }
 
         /// <summary>
@@ -187,13 +210,17 @@ namespace RayTracer
             
             //Do we have a hit and is it within the distance to the light?
             if (hit != null && hit.t < distance)
-                return true;
+            {
+                 return true;
+            }
             else
-                return false; 
+            {
+                 return false;
+            }
         }
 
         /// <summary>
-        /// Determines the reflection color of an object
+        /// Determines reflected color
         /// </summary>
         /// <param name="comps"></param>
         /// <param name="remaining"></param>
@@ -215,6 +242,12 @@ namespace RayTracer
             return reflectedColor * comps.rayObject.material.Reflective;
         }
 
+        /// <summary>
+        /// Determines  refracted color
+        /// </summary>
+        /// <param name="comps"></param>
+        /// <param name="remaining"></param>
+        /// <returns></returns>
         public Color RefractedColor(Computation comps, int remaining = reflectionBounces)
         {
             if(Utilities.FloatEquality(comps.rayObject.material.Transparency, 0) || remaining < 1)
@@ -244,6 +277,8 @@ namespace RayTracer
 
             return refractedColor;
         }
-    
+
+
+
     }
 }

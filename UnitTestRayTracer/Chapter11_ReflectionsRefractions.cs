@@ -325,6 +325,111 @@ namespace UnitTestRayTracer
             Assert.True(answer == c);
         }
 
+        [Fact]
+        public void SchlickApproximationTotalInternalReflection()
+        // The Schlick approximation under total internal reflection
+        {
+            Scene s = new Scene();
+            s.EmptyObjects(); 
+
+            Sphere glassSphere = new Sphere();
+            glassSphere.material.Transparency = 1.0f;
+            glassSphere.material.RefractIndex = 1.5f;
+            s.AddObject(glassSphere); 
+
+            Ray r = new Ray(new Point(0, 0, (float)Math.Sqrt(2) / 2), new Vector3(0, 1, 0));
+
+            Intersection i01 = new Intersection((float)Math.Sqrt(2) / 2, glassSphere); 
+            Intersection i02 = new Intersection(-(float)Math.Sqrt(2) / 2, glassSphere);
+            List<Intersection> xs = new List<Intersection>() { i01, i02 };
+
+            Computation comps = new Computation(xs[1], r, xs);
+
+            float reflectance = comps.Schlick();
+
+            Assert.True(reflectance == 1.0f);
+        }
+
+        [Fact]
+        public void ReflectanceSmallWhenRayStrikesSurfaceatPerpendicularngle()
+        // The Schlick approximation with a perpendicular viewing angle
+        {
+            Scene s = new Scene();
+            s.EmptyObjects();
+
+            Sphere glassSphere = new Sphere();
+            glassSphere.material.Transparency = 1.0f;
+            glassSphere.material.RefractIndex = 1.5f;
+            s.AddObject(glassSphere);
+
+            Ray r = new Ray(new Point(0, 0, 0), new Vector3(0, 1, 0));
+
+            Intersection i01 = new Intersection(-1, glassSphere);
+            Intersection i02 = new Intersection(1, glassSphere);
+            List<Intersection> xs = new List<Intersection>() { i01, i02 };
+
+            Computation comps = new Computation(xs[1], r, xs);
+
+            float reflectance = comps.Schlick(); 
+        }
+
+        [Fact]
+        public void SchlickApproximateSmallAngleN2GreaterThanN2()
+        // The Schlick approximation with small angle and n2 > n1
+        {
+            Scene s = new Scene();
+            s.EmptyObjects();
+
+            Sphere glassSphere = new Sphere();
+            glassSphere.material.Transparency = 1.0f;
+            glassSphere.material.RefractIndex = 1.5f;
+            s.AddObject(glassSphere);
+
+            Ray r = new Ray(new Point(0, 0.99f, -2), new Vector3(0, 0, 1));
+
+            Intersection i01 = new Intersection(1.8589f, glassSphere);
+            List<Intersection> xs = new List<Intersection>() { i01 };
+
+            Computation comps = new Computation(xs[0], r, xs);
+
+            float reflectance = comps.Schlick();
+
+            Assert.True(Utilities.FloatEquality(reflectance, 0.48873f));
+        }
+
+        [Fact]
+        public void ShadeHitReflectiveTransparentMaterial()
+        {
+            Scene s = new Scene();
+
+            Ray r = new Ray(new Point(0,0,-3), new Vector3(0, -(float)Math.Sqrt(2)/2, (float)Math.Sqrt(2) / 2));
+
+            Plane p = new Plane();
+            p.Transform = Matrix4.TranslateMatrix(0, -1, 0);
+            p.material.Reflective = 0.5f;
+            p.material.Transparency = 0.5f;
+            p.material.RefractIndex = 1.5f;
+
+            s.AddObject(p);
+
+            Sphere ball = new Sphere();
+            ball.Transform = Matrix4.TranslateMatrix(0, -3.5f, -0.5f); 
+            ball.material.mColor = Color.Red;
+            ball.material.Ambient = 0.5f;
+
+            s.AddObject(ball);
+
+            Intersection i01 = new Intersection((float)Math.Sqrt(2), p);
+            List<Intersection> xs = new List<Intersection>() { i01 }; 
+
+            Computation comps = new Computation(xs[0], r, xs);
+
+            Color result = s.ShadeHit(comps, 5);
+            Color answer = new Color(0.93391f, 0.69643f, 0.69243f);
+
+            Assert.True(answer == result);
+        }
+
 
 
     }

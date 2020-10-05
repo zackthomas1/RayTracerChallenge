@@ -339,11 +339,11 @@ namespace RayTracer
             Vector3 lightV = (light.Position - point).Normalized();
 
             // Compute the ambient contribution 
-            ambient = effect_color * material.Ambient;
+            ambient = (effect_color) * material.Ambient;
 
             // If in shadow just return the ambient color skip diffuse and specular calculations.
-            if (inShadow)
-                return ambient;
+            //if (inShadow)
+            //    return ambient;
 
 
             // lighDotNormal represents the cosine of the angle between the
@@ -385,6 +385,9 @@ namespace RayTracer
             Console.WriteLine("Diffuse: " + diffuse.ToString());
             Console.WriteLine("Specular: " + specular.ToString());
             */
+
+            if (inShadow)
+                return ambient + ((diffuse + specular) * (material.transparency));
 
             // Add the three contributions together to get the final shading 
             return ambient + diffuse + specular;

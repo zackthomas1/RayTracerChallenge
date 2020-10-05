@@ -84,13 +84,9 @@ namespace RayTracer
                 if (i == intersect)
                 {
                     if (containers.Count == 0)
-                    {
                         this.n1 = 1.0f;
-                    }
                     else
-                    {
                         this.n1 = containers.Last<RayObject>().material.RefractIndex;
-                    }
                 }
 
                 if (containers.Contains(intersect.rayObject))
@@ -109,13 +105,9 @@ namespace RayTracer
                 if (i == intersect)
                 {
                     if (containers.Count == 0)
-                    {
                         this.n2 = 1.0f;
-                    }
                     else
-                    {
                         this.n2 = containers[containers.Count - 1].material.RefractIndex;
-                    }
                     break;
                 }
             }
@@ -215,7 +207,41 @@ namespace RayTracer
             }
         }
 
+        // Methods 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="comps"></param>
+        /// <returns></returns>
+        public float Schlick()
+        {
+            Computation comps = this;
+
+            float reflectance;
+            float sin2T = 0.0f;
+            // find cosine of the angle between eye and normal vectors
+            float cos = Vector3.Dot(comps.eyeV, comps.normalV);
+
+            // Total internal reflections can only occur if n1 > n2
+            if (comps.n1 > comps.n2)
+            {
+                float n = comps.n1 / comps.n2; // ration between refractive indexes of enter and exit points
+                sin2T = (n * n) * (1.0f - (cos * cos));
+                if (sin2T > 1.0f)
+                    return reflectance = 1.0f;
+
+                // Compute cosine of thetaT usig trig identity
+                float cosT = (float)Math.Sqrt(1 - sin2T);
+
+                //When n1 > n2, use cos(thetaT) instead
+                cos = cosT;
+            }
+
+            float r0 = (float)Math.Pow((comps.n1 - comps.n2) / (comps.n1 + comps.n2), 2);
+            return reflectance = r0 + (1 - r0) * (float)Math.Pow((1 - cos), 5);
+
+        }
 
     }
 }
