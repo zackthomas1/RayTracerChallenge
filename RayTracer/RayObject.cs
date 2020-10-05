@@ -71,7 +71,7 @@ namespace RayTracer
 
         public static bool operator ==(RayObject obj1, RayObject obj2)
         {
-            if(obj1.Position == obj2.Position && obj1.material == obj2.material)
+            if (obj1.Position == obj2.Position && obj1.material == obj2.material)
             {
                 return true;
             }
@@ -82,7 +82,7 @@ namespace RayTracer
         }
 
         public static bool operator !=(RayObject obj1, RayObject obj2)
-        {
+        {   
             if (obj1.Position == obj2.Position && obj1.material == obj2.material)
             {
                 return false;

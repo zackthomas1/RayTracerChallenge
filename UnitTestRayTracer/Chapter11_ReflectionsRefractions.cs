@@ -322,7 +322,7 @@ namespace UnitTestRayTracer
             Color c = scene.ShadeHit(comps, 5);
             Color answer = new Color(0.9363487f, 0.6863487f, 0.6863487f); // Answer doesn't match book exactly having small floating poitn difference
 
-            Assert.True(answer == c);
+            Assert.Equal(answer, c);
         }
 
         [Fact]

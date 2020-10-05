@@ -140,10 +140,10 @@ namespace RayTracer
             // for scenes with multiple lights 
             foreach (Light light in lights)
             {
-                bool isInShadow = scene.IsShadowed(comps.overPoint, light);
+                bool inShadow = scene.IsShadowed(comps.overPoint, light);
                 surfaceColor = comps.rayObject.material.Lighting(comps.rayObject.material, comps.rayObject, 
                                                                 light, comps.overPoint, comps.eyeV, 
-                                                                comps.normalV, isInShadow);
+                                                                comps.normalV, inShadow);
             }
 
             Color reflectedColor = this.ReflectedColor(comps, remaining);
@@ -158,7 +158,7 @@ namespace RayTracer
                 return surfaceColor + reflectedColor * reflectance + refractedColor * (1 - reflectance);  
             }
 
-            return surfaceColor + reflectedColor + refractedColor * 2f;
+            return surfaceColor + reflectedColor + refractedColor ;
         }
 
         /// <summary>
@@ -211,11 +211,11 @@ namespace RayTracer
             //Do we have a hit and is it within the distance to the light?
             if (hit != null && hit.t < distance)
             {
-                 return true;
+                return true;
             }
             else
             {
-                 return false;
+                return false;
             }
         }
 
