@@ -4,16 +4,16 @@ using System.Text;
 
 namespace RayTracer
 {
-    public class RadialGradient : Pattern
+    public class RadialGradientPattern : Pattern
     {
 
         // Constructors
-        public RadialGradient() : base()
+        public RadialGradientPattern() : base()
         {
 
         }
 
-        public RadialGradient(Pattern p1, Pattern p2) : base()
+        public RadialGradientPattern(Pattern p1, Pattern p2) : base()
         {
             this.p1 = p1;
             this.p2 = p2;

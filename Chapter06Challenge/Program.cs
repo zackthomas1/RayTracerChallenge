@@ -3,8 +3,8 @@ using RayTracer;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.VisualBasic;
-namespace Chapter06Challenge
+
+namespace ChapterChallenges
 {
 
     class Program
@@ -260,7 +260,7 @@ namespace Chapter06Challenge
             middle02.Transform = Matrix4.TranslateMatrix(1.5f, 1, 2.0f);
             middle02.material = new Material();
             middle02.material.mColor = new Color(0.1f, 1, 0.5f);
-            middle02.material.Pattern = new RadialGradient(SolidPattern.Purple, SolidPattern.Orange);
+            middle02.material.Pattern = new RadialGradientPattern(SolidPattern.Purple, SolidPattern.Orange);
             middle02.material.Pattern.Transform = Matrix4.RotateMatrix_Z((float)Math.PI/2)  * Matrix4.ScaleMatrix(0.25f, 0.25f, 0.25f);
             middle02.material.Diffuse = 0.7f;
             middle02.material.Specular = 0.3f;
