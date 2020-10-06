@@ -150,8 +150,8 @@ namespace RayTracer
             }
 
             comp.reflectV = Vector3.Reflection(r.direction, comp.normalV);
-            comp.overPoint = comp.point + comp.normalV * Utilities.overPointEpsilon;
-            comp.underPoint = comp.point - comp.normalV * Utilities.underPointEpsilon;
+            comp.overPoint = comp.point + comp.normalV * Utilities.OVER_POINT_EPSILON;
+            comp.underPoint = comp.point - comp.normalV * Utilities.UNDER_POINT_EPSILON;
 
             return comp;
         }

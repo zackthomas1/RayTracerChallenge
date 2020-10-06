@@ -316,7 +316,7 @@ namespace RayTracer
         /// <param name="eyeV"></param>
         /// <param name="normalV"></param>
         public Color Lighting(Material material, RayObject rayObject, Light light, Point point,
-                              Vector3 eyeV, Vector3 normalV, bool inShadow) // CONSIDER removing material from parameter list. Already getting data from self. Also CONSIDER moving RayObject call.
+                              Vector3 eyeV, Vector3 normalV, Tuple<bool, RayObject> inShadow) // CONSIDER removing material from parameter list. Already getting data from self. Also CONSIDER moving RayObject call.
         {
             Color ambient = Color.White;
             Color diffuse = Color.White;
@@ -341,7 +341,104 @@ namespace RayTracer
             // Compute the ambient contribution 
             ambient = effect_color * material.Ambient;
 
-            // If in shadow just return the ambient color skip diffuse and specular calculations.
+            // If in shadow just return the ambient color AND
+            // if object that the ray hits on the way to the light source is completely non-transparent 
+            // skip diffuse and specular calculations return ambient color.
+            if (inShadow.Item1 && (Utilities.FloatEquality(inShadow.Item2.material.transparency, 0.0f)))
+                return ambient;
+
+            // lighDotNormal represents the cosine of the angle between the
+            // light vector and the normal vector. A negative number means the 
+            // light is on the other side of the surface. 
+            float lighDotNormal = Vector3.Dot(lightV, normalV);
+
+            if (lighDotNormal < 0)
+            {
+                diffuse = Color.Black;
+                specular = Color.Black;
+            }
+            else
+            {
+                // Compute the diffuse contribution
+                diffuse = effect_color * material.Diffuse * lighDotNormal;
+
+                // reflectDotEye represents the cosine of the angle between the 
+                // reflection vector and the eye vector. A negative number means the
+                // light reflects away from the eye. 
+                Vector3 reflectV = Vector3.Reflection(-lightV, normalV);
+                float reflectDotEye = Tuple.Dot(reflectV, eyeV);
+
+                // if reflection is away from eye
+                if (reflectDotEye <= 0)
+                {
+                    specular = Color.Black;
+                }
+                else
+                {
+                    // compute the specular contribution 
+                    float factor = (float)Math.Pow(reflectDotEye, material.Shininess);
+                    specular = light.Insensity * material.Specular * factor;
+                }
+            }
+
+            /*
+            Console.WriteLine("Ambient: " + ambient.ToString());
+            Console.WriteLine("Diffuse: " + diffuse.ToString());
+            Console.WriteLine("Specular: " + specular.ToString());
+            */
+
+            // Checks to see if the point is in shadow AND If the object has transparency
+            if (inShadow.Item1 && !(Utilities.FloatEquality(inShadow.Item2.material.transparency, 0.0f)))
+            {
+                return ambient + ((diffuse + specular) * (inShadow.Item2.material.transparency * .95f));
+            }
+     
+            // Add the three contributions together to get the final shading 
+            return ambient + diffuse + specular;
+        }
+
+        /// <summary>
+        /// Old Lighting method. Uses bool type for determining if in shadow.
+        /// Doesn't adjust shadow darkness based on transparency of object blocking light
+        /// Legacy method. Will Remove eventually. 
+        /// </summary>
+        /// <param name="material"></param>
+        /// <param name="rayObject"></param>
+        /// <param name="light"></param>
+        /// <param name="point"></param>
+        /// <param name="eyeV"></param>
+        /// <param name="normalV"></param>
+        /// <param name="inShadow"></param>
+        /// <returns></returns>
+        public Color Lighting(Material material, RayObject rayObject, Light light, Point point,
+                             Vector3 eyeV, Vector3 normalV, bool inShadow) // LEGACY // CONSIDER removing material from parameter list. Already getting data from self. Also CONSIDER moving RayObject call.
+        {
+            Color ambient = Color.White;
+            Color diffuse = Color.White;
+            Color specular = Color.White;
+
+            Color effect_color;
+            if (pattern != null)
+            {
+                // Combines surface pattern color with light's color/intensity if a pattern exist
+                effect_color = pattern.PatternAtObject(rayObject, point) * light.Insensity;
+            }
+            else
+            {
+                // Combines surface color with light's color/intensity
+                effect_color = material.mColor * light.Insensity;
+            }
+
+
+            // find the direction to the light source 
+            Vector3 lightV = (light.Position - point).Normalized();
+
+            // Compute the ambient contribution 
+            ambient = effect_color * material.Ambient;
+
+            // If in shadow just return the ambient color AND
+            // if object that the ray hits on the way to the light source is completely non-transparent 
+            // skip diffuse and specular calculations return ambient color.
             if (inShadow)
                 return ambient;
 
@@ -385,12 +482,9 @@ namespace RayTracer
             Console.WriteLine("Specular: " + specular.ToString());
             */
 
-            //if (inShadow)
-            //    return ambient + ((diffuse + specular) * (material.transparency));
-
             // Add the three contributions together to get the final shading 
             return ambient + diffuse + specular;
-
         }
+
     }
 }

@@ -110,7 +110,19 @@ namespace RayTracer
         /// </summary>
         /// <param name="worldPoint"></param>
         /// <returns></returns>
-        public abstract Vector3 GetNormal(Point worldPoint);
+        public abstract Vector3 CalculateLocalNormal(Point objectPoint);
+
+        public Vector3 GetNormal(Point worldPoint)
+        {
+            Point objectPoint = this.Transform.Invert() * worldPoint;
+            Vector3 objectNormal = CalculateLocalNormal(objectPoint);
+            Vector3 worldNormal = this.Transform.Invert().Transpose() * objectNormal;
+            worldNormal.w = 0;
+
+            worldNormal.Normalize();
+
+            return worldNormal;
+        }
 
         /// <summary>
         /// Takes the input ray applies RayObjects tranformMatrix. 

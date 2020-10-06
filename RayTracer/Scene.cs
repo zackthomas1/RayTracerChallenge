@@ -140,7 +140,7 @@ namespace RayTracer
             // for scenes with multiple lights 
             foreach (Light light in lights)
             {
-                bool inShadow = scene.IsShadowed(comps.overPoint, light);
+                Tuple<bool, RayObject> inShadow = scene.IsShadowedObjectInfo(comps.overPoint, light);
                 surfaceColor = comps.rayObject.material.Lighting(comps.rayObject.material, comps.rayObject, 
                                                                 light, comps.overPoint, comps.eyeV, 
                                                                 comps.normalV, inShadow);
@@ -177,9 +177,7 @@ namespace RayTracer
             
             Intersection hit = Intersection.Hit(intersections);
             if (hit == null)
-            {
                 return resultColor;
-            }
 
             Computation comp = new Computation(hit, ray);
             resultColor = ShadeHit(comp, remaining);
@@ -190,11 +188,12 @@ namespace RayTracer
         //Consider moving to light class
         /// <summary>
         /// Determines if a point is in shadow
+        /// Returns true-false and object in ray-path between intersection and light
         /// </summary>
         /// <param name="light"></param>
         /// <param name="point"></param>
         /// <returns></returns>
-        public bool IsShadowed(Point point, Light light)
+        public Tuple<bool,RayObject> IsShadowedObjectInfo(Point point, Light light)
         {
             // this needs to work for every light in the scene
             Scene scene = this;
@@ -207,16 +206,40 @@ namespace RayTracer
 
             List<Intersection> intersects = scene.Intersections(ray);
             Intersection hit = Intersection.Hit(intersects);
-            
+
             //Do we have a hit and is it within the distance to the light?
             if (hit != null && hit.t < distance)
-            {
-                return true;
-            }
+                return new Tuple<bool, RayObject>(true, hit.rayObject);
             else
-            {
+                return new Tuple<bool, RayObject>(false, null);
+        }
+
+        /// <summary>
+        /// Determines if a point is in shadow
+        /// Legacy. Will Remove. Doesn't pass object blocking light. 
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="light"></param>
+        /// <returns></returns>
+        public bool IsShadowed(Point point, Light light) // LEGACY
+        {
+            // this needs to work for every light in the scene
+            Scene scene = this;
+
+            Vector3 pointToLight = light.Position - point;
+            float distance = pointToLight.Magnitude();
+            Vector3 direction = pointToLight.Normalized();
+
+            Ray ray = new Ray(point, direction);
+
+            List<Intersection> intersects = scene.Intersections(ray);
+            Intersection hit = Intersection.Hit(intersects);
+
+            //Do we have a hit and is it within the distance to the light?
+            if (hit != null && hit.t < distance)
+                return true;
+            else
                 return false;
-            }
         }
 
         /// <summary>
@@ -228,13 +251,9 @@ namespace RayTracer
         public Color ReflectedColor(Computation comps, int remaining = reflectionBounces)
         {
             if (Utilities.FloatEquality(comps.rayObject.material.Reflective, 0))
-            {
                 return Color.Black;
-            }
             if ( remaining < 1) // Breaks recussion 
-            {
                 return Color.Black;
-            }
 
             Ray reflectiveRay = new Ray(comps.overPoint, comps.reflectV);
             Color reflectedColor = ColorAt(reflectiveRay, remaining - 1);
@@ -251,9 +270,7 @@ namespace RayTracer
         public Color RefractedColor(Computation comps, int remaining = reflectionBounces)
         {
             if(Utilities.FloatEquality(comps.rayObject.material.Transparency, 0) || remaining < 1)
-            {
                 return Color.Black;
-            }
 
             // Checking for Total Internal Refractions
             // Find the ratio of the first index of refraction to the second
@@ -262,9 +279,7 @@ namespace RayTracer
             float sin2T = (nRatio * nRatio) * (1 - (cosI * cosI)); // Find sin(theta_t)^2 via trigonometric identity
            
             if (sin2T > 1) // if sin(theta_t) is create that 1 than there are total interal refractions
-            {
                 return Color.Black; 
-            }
      
             float cosT = (float)Math.Sqrt(1.0 - sin2T); // Find cos(theta_t) via trigonometric identity
             // Compute the direction of the refacted ray 

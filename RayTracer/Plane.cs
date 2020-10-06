@@ -35,7 +35,7 @@ namespace RayTracer
             // if the ray direction vector has NO slope in the y
             // it will either never intersect the plane or intersect it infinite times.
             // In either case return nothing(null)
-            if (Math.Abs(transRay.direction.y) < Utilities.Epsilon)
+            if (Math.Abs(transRay.direction.y) < Utilities.EPSILON)
                 return null;
 
 
@@ -47,15 +47,13 @@ namespace RayTracer
             return result;
         }
 
-        public override Vector3 GetNormal(Point worldPoint)
+        public override Vector3 CalculateLocalNormal(Point objectPoint)
         {
             Vector3 objectNormal = new Vector3(0, 1, 0);
-            Vector3 worldNormal = this.Transform.Invert().Transpose() * objectNormal;
-            worldNormal.w = 0;
+            objectNormal.w = 0;
+            objectNormal.Normalize();
 
-            worldNormal.Normalize();
-
-            return worldNormal;
+            return objectNormal;
         }
 
     }

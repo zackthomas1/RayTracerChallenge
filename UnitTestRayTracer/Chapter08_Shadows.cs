@@ -110,7 +110,7 @@ namespace UnitTestRayTracer
             Intersection i = new Intersection(5, s);
             Computation comps = new Computation(i, r);
 
-            Assert.True(comps.overPoint.z < -Utilities.Epsilon / 2);
+            Assert.True(comps.overPoint.z < -Utilities.EPSILON / 2);
             Assert.True(comps.point.z > comps.overPoint.z);
 
         }

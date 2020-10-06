@@ -113,8 +113,8 @@ namespace RayTracer
             }
            
             this.reflectV = Vector3.Reflection(r.direction, this.normalV);
-            this.overPoint = point + normalV * Utilities.overPointEpsilon;
-            this.underPoint = point - normalV * Utilities.underPointEpsilon; 
+            this.overPoint = point + normalV * Utilities.OVER_POINT_EPSILON;
+            this.underPoint = point - normalV * Utilities.UNDER_POINT_EPSILON; 
         }
 
         // override methods 

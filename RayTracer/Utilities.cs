@@ -7,11 +7,11 @@ namespace RayTracer
     public class Utilities
     {
         // Instance Variables
-        public static readonly float Epsilon = 0.0001f;
+        public static readonly float EPSILON = 0.0001f;
         public const double PI = Math.PI;
-        public static readonly float overPointEpsilon = 0.0025f;
-        public static readonly float underPointEpsilon = 0.0001f;
-
+        public static readonly float OVER_POINT_EPSILON = 0.0025f;
+        public static readonly float UNDER_POINT_EPSILON = 0.0001f;
+        public static readonly float INFINITY = (float)1e10;
         // Methods
         /// <summary>
         /// Determines if the value of two floats are with in a given tolerence 
@@ -22,7 +22,7 @@ namespace RayTracer
         /// <returns></returns>
         public static bool FloatEquality(double a, double b)
         {
-            if (Math.Abs(a - b) < Epsilon)
+            if (Math.Abs(a - b) < EPSILON)
                 return true;
             else
                 return false;

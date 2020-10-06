@@ -4,6 +4,7 @@ using RayTracer;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.IO;
+
 namespace UnitTestRayTracer
 {
     public class Chapter11_ReflectionsRefractions
@@ -218,7 +219,7 @@ namespace UnitTestRayTracer
 
             Computation comps = new Computation(i, r);
 
-            Assert.True(comps.underPoint.z > Utilities.underPointEpsilon / 2);
+            Assert.True(comps.underPoint.z > Utilities.UNDER_POINT_EPSILON / 2);
             Assert.True(comps.point.z < comps.underPoint.z);
         }
 
@@ -320,9 +321,11 @@ namespace UnitTestRayTracer
             Computation comps = new Computation(xs[0], r, xs);
 
             Color c = scene.ShadeHit(comps, 5);
-            Color answer = new Color(0.9363487f, 0.6863487f, 0.6863487f); // Answer doesn't match book exactly having small floating poitn difference
+            //Color answer = new Color(0.9363487f, 0.6863487f, 0.6863487f); // Original answer // Answer doesn't match book exactly having small floating poitn difference
+            Color answer = new Color(1.11592f, 0.68634f, 0.68634f); // Updated answer. Transparent objects cast lighter shadows. Change in Lighting method
 
-            Assert.Equal(answer, c);
+
+            Assert.True(answer == c);
         }
 
         [Fact]
@@ -425,7 +428,8 @@ namespace UnitTestRayTracer
             Computation comps = new Computation(xs[0], r, xs);
 
             Color result = s.ShadeHit(comps, 5);
-            Color answer = new Color(0.93391f, 0.69643f, 0.69243f);
+            //Color answer = new Color(0.93391f, 0.69643f, 0.69243f); // Original Answer
+            Color answer = new Color(1.10588f, 0.69637f, 0.69236f); // updated answer. Transparent objects cast lighter shadows. Change in Lighting method
 
             Assert.True(answer == result);
         }

@@ -122,16 +122,14 @@ namespace RayTracer
         /// </summary>
         /// <param name="worldPoint"></param>
         /// <returns></returns>
-        public override Vector3 GetNormal(Point worldPoint)
+        public override Vector3 CalculateLocalNormal(Point objectPoint)
         {
-            Point objectPoint = this.Transform.Invert() * worldPoint;
+
             Vector3 objectNormal = objectPoint - new Point(0, 0, 0);
-            Vector3 worldNormal = this.Transform.Invert().Transpose() * objectNormal;
-            worldNormal.w = 0;
+            objectNormal.w = 0;
+            objectNormal.Normalize();
 
-            worldNormal.Normalize();
-
-            return worldNormal;
+            return objectNormal;
         }
 
     }
