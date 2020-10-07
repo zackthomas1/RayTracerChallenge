@@ -37,6 +37,7 @@ namespace RayTracer
         public RayObject()
         {
             id = currentID++;
+            this.Position = new Point(0, 0, 0);
             material = new Material();
         }
 
@@ -102,7 +103,7 @@ namespace RayTracer
         /// </summary>
         /// <param name="ray"></param>
         /// <returns></returns>
-        public abstract List<Intersection> Intersect(Ray ray);
+        public abstract List<Intersection> LocalIntersects(Ray objectTransformRay);
 
         /// <summary>
         /// Given a position in world-coordinates finds the normal 
@@ -110,12 +111,18 @@ namespace RayTracer
         /// </summary>
         /// <param name="worldPoint"></param>
         /// <returns></returns>
-        public abstract Vector3 CalculateLocalNormal(Point objectPoint);
+        public abstract Vector3 LocalNormal(Point objectPoint);
 
+        public List<Intersection> GetIntersects(Ray worldRay)
+        {
+            Ray objSpaceRay = RayToObjectSpace(worldRay); // Takes the input ray and applies all object transfomations.
+            //objSpaceRay.direction.Normalize();
+            return LocalIntersects(objSpaceRay); 
+        }
         public Vector3 GetNormal(Point worldPoint)
         {
             Point objectPoint = this.Transform.Invert() * worldPoint;
-            Vector3 objectNormal = CalculateLocalNormal(objectPoint);
+            Vector3 objectNormal = LocalNormal(objectPoint);
             Vector3 worldNormal = this.Transform.Invert().Transpose() * objectNormal;
             worldNormal.w = 0;
 

@@ -11,7 +11,7 @@ namespace RayTracer
         public const double PI = Math.PI;
         public static readonly float OVER_POINT_EPSILON = 0.0025f;
         public static readonly float UNDER_POINT_EPSILON = 0.0001f;
-        public static readonly float INFINITY = (float)1e10;
+        public const float INFINITY = float.PositiveInfinity;
         // Methods
         /// <summary>
         /// Determines if the value of two floats are with in a given tolerence 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using RayTracer.RayObjects;
 
 namespace RayTracer
 {
@@ -118,51 +119,193 @@ namespace RayTracer
 
             //Console.WriteLine(result.ToString());
 
-            Cube cube = new Cube();
+            //Cube cube = new Cube();
 
-            System.Tuple<Point, Vector3>[] RayTupleList = new Tuple<Point, Vector3>[]
-            {
-                System.Tuple.Create(new Point(5, 0.5f, 0), new Vector3(-1, 0, 0)), // +x
-                System.Tuple.Create(new Point(-5, 0.5f, 0), new Vector3(1, 0, 0)), // -x
-                System.Tuple.Create(new Point(0.5f, 5f, 0), new Vector3(0, -1, 0)), // +y
-                System.Tuple.Create(new Point(0.5f, -5f, 0), new Vector3(0, 1, 0)), // -y
-                System.Tuple.Create(new Point(0.5f, 0, 5), new Vector3(0, 0, -1)), // +z
-                System.Tuple.Create(new Point(0.5f, 0, -5), new Vector3(0, 0, 1)),  // -z
-                System.Tuple.Create(new Point(0, 0.5f, 0), new Vector3(0, 0, 1))  // inside
-            };
+            //----------------------------------------------------------------------------
 
-            System.Tuple<float, float>[] answers = new Tuple<float, float>[]
-            {
-                System.Tuple.Create(4f, 6f), // +x
-                System.Tuple.Create(4f, 6f), // -x
-                System.Tuple.Create(4f, 6f), // +y
-                System.Tuple.Create(4f, 6f), // -y
-                System.Tuple.Create(4f, 6f), // +z
-                System.Tuple.Create(4f, 6f), // -z
-                System.Tuple.Create(-1f,1f)  // inside
-            };
+            //System.Tuple<Point, Vector3>[] RayTupleList = new Tuple<Point, Vector3>[]
+            //{
+            //    System.Tuple.Create(new Point(5, 0.5f, 0), new Vector3(-1, 0, 0)), // +x
+            //    System.Tuple.Create(new Point(-5, 0.5f, 0), new Vector3(1, 0, 0)), // -x
+            //    System.Tuple.Create(new Point(0.5f, 5f, 0), new Vector3(0, -1, 0)), // +y
+            //    System.Tuple.Create(new Point(0.5f, -5f, 0), new Vector3(0, 1, 0)), // -y
+            //    System.Tuple.Create(new Point(0.5f, 0, 5), new Vector3(0, 0, -1)), // +z
+            //    System.Tuple.Create(new Point(0.5f, 0, -5), new Vector3(0, 0, 1)),  // -z
+            //    System.Tuple.Create(new Point(0, 0.5f, 0), new Vector3(0, 0, 1))  // inside
+            //};
 
-            Ray r00 = new Ray(RayTupleList[0].Item1, RayTupleList[0].Item2);
-            Ray r01 = new Ray(RayTupleList[1].Item1, RayTupleList[1].Item2);
-            Ray r02 = new Ray(RayTupleList[2].Item1, RayTupleList[2].Item2);
-            Ray r03 = new Ray(RayTupleList[3].Item1, RayTupleList[3].Item2);
-            Ray r04 = new Ray(RayTupleList[4].Item1, RayTupleList[4].Item2);
-            Ray r05 = new Ray(RayTupleList[5].Item1, RayTupleList[5].Item2);
-            Ray r06 = new Ray(RayTupleList[6].Item1, RayTupleList[6].Item2);
+            //System.Tuple<float, float>[] answers = new Tuple<float, float>[]
+            //{
+            //    System.Tuple.Create(4f, 6f), // +x
+            //    System.Tuple.Create(4f, 6f), // -x
+            //    System.Tuple.Create(4f, 6f), // +y
+            //    System.Tuple.Create(4f, 6f), // -y
+            //    System.Tuple.Create(4f, 6f), // +z
+            //    System.Tuple.Create(4f, 6f), // -z
+            //    System.Tuple.Create(-1f,1f)  // inside
+            //};
 
-            List<Intersection> xs00 = cube.Intersect(r00);
-            List<Intersection> xs01 = cube.Intersect(r01);
-            List<Intersection> xs02 = cube.Intersect(r02);
-            List<Intersection> xs03 = cube.Intersect(r03);
-            List<Intersection> xs04 = cube.Intersect(r04);
-            List<Intersection> xs05 = cube.Intersect(r05);
-            List<Intersection> xs06 = cube.Intersect(r06);
+            //Ray r00 = new Ray(RayTupleList[0].Item1, RayTupleList[0].Item2);
+            //Ray r01 = new Ray(RayTupleList[1].Item1, RayTupleList[1].Item2);
+            //Ray r02 = new Ray(RayTupleList[2].Item1, RayTupleList[2].Item2);
+            //Ray r03 = new Ray(RayTupleList[3].Item1, RayTupleList[3].Item2);
+            //Ray r04 = new Ray(RayTupleList[4].Item1, RayTupleList[4].Item2);
+            //Ray r05 = new Ray(RayTupleList[5].Item1, RayTupleList[5].Item2);
+            //Ray r06 = new Ray(RayTupleList[6].Item1, RayTupleList[6].Item2);
 
-            Console.WriteLine(xs00[0].t);
-            Console.WriteLine(xs00[1].t);
+            //List<Intersection> xs00 = cube.LocalIntersects(r00);
+            //List<Intersection> xs01 = cube.LocalIntersects(r01);
+            //List<Intersection> xs02 = cube.LocalIntersects(r02);
+            //List<Intersection> xs03 = cube.LocalIntersects(r03);
+            //List<Intersection> xs04 = cube.LocalIntersects(r04);
+            //List<Intersection> xs05 = cube.LocalIntersects(r05);
+            //List<Intersection> xs06 = cube.LocalIntersects(r06);
 
+            //Console.WriteLine(xs00[0].t);
+            //Console.WriteLine(xs00[1].t);
 
+            //----------------------------------------------------------------------------
 
+            //Cylinder cyl = new Cylinder();
+
+            //Vector3 d01 = new Vector3(0, 1, 0).Normalize();
+            //Vector3 d02 = new Vector3(0, 1, 0).Normalize();
+            //Vector3 d03 = new Vector3(1, 1, 1).Normalize();
+
+            //Point org01 = new Point(1, 0, 0);
+            //Point org02 = new Point(0, 1, 0);
+            //Point org03 = new Point(0, 0, -5);
+
+            //Ray r01 = new Ray(org01, d01);
+            //Ray r02 = new Ray(org02, d02);
+            //Ray r03 = new Ray(org03, d03);
+
+            //List<Intersection> xs01 = cyl.LocalIntersects(r01);
+            //List<Intersection> xs02 = cyl.LocalIntersects(r02);
+            //List<Intersection> xs03 = cyl.LocalIntersects(r03);
+
+            //Console.WriteLine(xs01.Count.ToString());
+            //Console.WriteLine(xs02.Count.ToString());
+            //Console.WriteLine(xs03.Count.ToString());
+
+            //----------------------------------------------------------------------------
+
+            //Cylinder cyl = new Cylinder();
+            //cyl.MaxHeight = float.PositiveInfinity;
+            //cyl.MinHeight = float.NegativeInfinity;
+
+            //Point org01 = new Point(1f, 0, -5);
+            //Point org02 = new Point(0, 0, -5);
+            //Point org03 = new Point(0.5f, 0, -5);
+
+            //Vector3 d01 = new Vector3(0, 0, 1).Normalize();
+            //Vector3 d02 = new Vector3(0, 0, 1).Normalize();
+            //Vector3 d03 = new Vector3(0.1f, 1, 1).Normalize();
+
+            //Ray r01 = new Ray(org01, d01);
+            //Ray r02 = new Ray(org02, d02);
+            //Ray r03 = new Ray(org03, d03);
+
+            //List<Intersection> xs01 = cyl.LocalIntersects(r01);
+            //List<Intersection> xs02 = cyl.LocalIntersects(r02);
+            //List<Intersection> xs03 = cyl.LocalIntersects(r03);
+
+            //Console.WriteLine();
+
+            //Console.WriteLine("List Length: " + xs01.Count);
+            //Console.WriteLine("List Length: " + xs02.Count);
+            //Console.WriteLine("List Length: " + xs03.Count);
+
+            //Console.WriteLine();
+
+            //Console.WriteLine("t01: " + xs01[0].t);
+            //Console.WriteLine("t01: " + xs02[0].t);
+            //Console.WriteLine("t01: " + xs03[0].t);
+
+            //Console.WriteLine();
+
+            //Console.WriteLine("t02: " + xs01[1].t);
+            //Console.WriteLine("t02: " + xs02[1].t);
+            //Console.WriteLine("t02: " + xs03[1].t);
+
+            //----------------------------------------------------------------------------
+
+            Cylinder cyl = new Cylinder();
+
+            cyl.MinHeight = 1.0f;
+            cyl.MaxHeight = 2.0f;
+            cyl.Closed = true;
+
+            Point org01 = new Point(0, 3, 0);
+            Point org02 = new Point(0, 3, -2);
+            Point org03 = new Point(0, 4, -2);
+            Point org04 = new Point(0, 0, -2);
+            Point org05 = new Point(0, -1, -2);
+
+            Vector3 d01 = new Vector3(0, -1, 0).Normalize();
+            Vector3 d02 = new Vector3(0, -1, 2).Normalize();
+            Vector3 d03 = new Vector3(0, -1, 1).Normalize();
+            Vector3 d04 = new Vector3(0, 1, 2).Normalize();
+            Vector3 d05 = new Vector3(0, 1, 1).Normalize();
+
+            Ray r01 = new Ray(org01, d01);
+            Ray r02 = new Ray(org02, d02);
+            Ray r03 = new Ray(org03, d03);
+            Ray r04 = new Ray(org04, d04);
+            Ray r05 = new Ray(org05, d05);
+
+            List<Intersection> xs01 = cyl.LocalIntersects(r01);
+            List<Intersection> xs02 = cyl.LocalIntersects(r02);
+            List<Intersection> xs03 = cyl.LocalIntersects(r03);
+            List<Intersection> xs04 = cyl.LocalIntersects(r04);
+            List<Intersection> xs05 = cyl.LocalIntersects(r05);
+
+            Console.WriteLine("List Length: " + xs01.Count);
+            Console.WriteLine("List Length: " + xs02.Count);
+            Console.WriteLine("List Length: " + xs03.Count);
+            Console.WriteLine("List Length: " + xs04.Count);
+            Console.WriteLine("List Length: " + xs05.Count);
+
+            //----------------------------------------------------------------------------
+
+            //Cylinder cyl = new Cylinder();
+            //cyl.MinHeight = 1.0f;
+            //cyl.MaxHeight = 2.0f;
+
+            //Point org01 = new Point(0, 1.5f, 0);
+            //Point org02 = new Point(0, 3, -5);
+            //Point org03 = new Point(0, 0, -5);
+            //Point org04 = new Point(0, 2, -5);
+            //Point org05 = new Point(0, 1, -5);
+            //Point org06 = new Point(0, 1.5f, -2);
+
+            //Vector3 d01 = new Vector3(0.1f, 1, 0).Normalize();
+            //Vector3 d02 = new Vector3(0, 0, 1).Normalize();
+            //Vector3 d03 = new Vector3(0, 0, 1).Normalize();
+            //Vector3 d04 = new Vector3(0, 0, 1).Normalize();
+            //Vector3 d05 = new Vector3(0, 0, 1).Normalize();
+            //Vector3 d06 = new Vector3(0, 0, 1).Normalize();
+
+            //Ray r01 = new Ray(org01, d01);
+            //Ray r02 = new Ray(org02, d02);
+            //Ray r03 = new Ray(org03, d03);
+            //Ray r04 = new Ray(org04, d04);
+            //Ray r05 = new Ray(org05, d05);
+            //Ray r06 = new Ray(org06, d06);
+
+            //List<Intersection> xs01 = cyl.LocalIntersects(r01);
+            //List<Intersection> xs02 = cyl.LocalIntersects(r02);
+            //List<Intersection> xs03 = cyl.LocalIntersects(r03);
+            //List<Intersection> xs04 = cyl.LocalIntersects(r04);
+            //List<Intersection> xs05 = cyl.LocalIntersects(r05);
+            //List<Intersection> xs06 = cyl.LocalIntersects(r06);
+
+            //Console.WriteLine(xs01.Count);
+            //Console.WriteLine(xs02.Count);
+            //Console.WriteLine(xs03.Count);
+            //Console.WriteLine(xs04.Count);
+            //Console.WriteLine(xs05.Count);
+            //Console.WriteLine(xs06.Count);
 
         }
     }

@@ -23,7 +23,7 @@ namespace RayTracer
         // Class overloads
         public override string ToString()
         {
-            return "Intersect Object: " + rayObject.ID + " t: " + t.ToString();       
+            return "Object Hit: " + rayObject.ID + "\tt-value: " + t.ToString();       
         }
 
         // Methods

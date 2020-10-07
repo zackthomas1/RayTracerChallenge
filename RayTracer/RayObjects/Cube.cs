@@ -23,38 +23,36 @@ namespace RayTracer
 
         // Methods
 
-        public override List<Intersection> Intersect(Ray ray)
+        public override List<Intersection> LocalIntersects(Ray objSpaceRay)
         {
-            Ray transRay = RayToObjectSpace(ray);
-            List<Intersection> xs;
+            List<Intersection> intersections = new List<Intersection>();
 
-            float x_tMin = CheckAxis(transRay.origin.x, transRay.direction.x)[0];
-            float x_tMax = CheckAxis(transRay.origin.x, transRay.direction.x)[1];
+            float x_tMin = CheckAxis(objSpaceRay.origin.x, objSpaceRay.direction.x)[0];
+            float x_tMax = CheckAxis(objSpaceRay.origin.x, objSpaceRay.direction.x)[1];
 
-            float y_tMin = CheckAxis(transRay.origin.y, transRay.direction.y)[0];
-            float y_tMax = CheckAxis(transRay.origin.y, transRay.direction.y)[1];
+            float y_tMin = CheckAxis(objSpaceRay.origin.y, objSpaceRay.direction.y)[0];
+            float y_tMax = CheckAxis(objSpaceRay.origin.y, objSpaceRay.direction.y)[1];
 
-            float z_tMin = CheckAxis(transRay.origin.z, transRay.direction.z)[0];
-            float z_tMax = CheckAxis(transRay.origin.z, transRay.direction.z)[1];
+            float z_tMin = CheckAxis(objSpaceRay.origin.z, objSpaceRay.direction.z)[0];
+            float z_tMax = CheckAxis(objSpaceRay.origin.z, objSpaceRay.direction.z)[1];
 
             float tMin = Math.Max(x_tMin, Math.Max(y_tMin, z_tMin));
             float tMax = Math.Min(x_tMax, Math.Min(y_tMax, z_tMax));
 
             if (tMin > tMax)
             {
-                xs = new List<Intersection>() { };
-                return xs;
+                return intersections;
             }
 
             Intersection i01 = new Intersection(tMin, this);
             Intersection i02 = new Intersection(tMax, this);
-            xs = new List<Intersection>() { i01, i02 };
+            intersections = new List<Intersection>() { i01, i02 };
 
-            return xs;
+            return intersections;
 
         }
 
-        public override Vector3 CalculateLocalNormal(Point objectPoint)
+        public override Vector3 LocalNormal(Point objectPoint)
         {
             double maxC = Math.Max(Math.Abs(objectPoint.x), Math.Max(Math.Abs(objectPoint.y), Math.Abs(objectPoint.z))); 
 

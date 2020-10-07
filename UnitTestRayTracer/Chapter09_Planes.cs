@@ -56,7 +56,7 @@ namespace UnitTestRayTracer
             Plane p = new Plane();
             Ray r = new Ray(new Point(0, 10, 0), new Vector3(0, 0, 1));
 
-            List<Intersection> xs = p.Intersect(r);
+            List<Intersection> xs = p.LocalIntersects(r);
 
             Assert.Null(xs); 
         }
@@ -67,7 +67,7 @@ namespace UnitTestRayTracer
             Plane p = new Plane();
             Ray r = new Ray(new Point(0, 0, 0), new Vector3(0, 0, 1));
 
-            List<Intersection> xs = p.Intersect(r);
+            List<Intersection> xs = p.LocalIntersects(r);
 
             Assert.Null(xs);
         }
@@ -78,7 +78,7 @@ namespace UnitTestRayTracer
             Plane p = new Plane();
             Ray r = new Ray(new Point(0, 1, 0), new Vector3(0, -1, 0));
 
-            List<Intersection> xs = p.Intersect(r);
+            List<Intersection> xs = p.LocalIntersects(r);
 
             Assert.Single(xs);
             Assert.True(1 == xs[0].t);
@@ -91,7 +91,7 @@ namespace UnitTestRayTracer
             Plane p = new Plane();
             Ray r = new Ray(new Point(0, -1, 0), new Vector3(0, 1, 0));
 
-            List<Intersection> xs = p.Intersect(r);
+            List<Intersection> xs = p.LocalIntersects(r);
 
             Assert.Single(xs);
             Assert.True(1 == xs[0].t);

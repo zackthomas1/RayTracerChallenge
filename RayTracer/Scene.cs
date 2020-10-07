@@ -83,7 +83,7 @@ namespace RayTracer
 
             foreach (RayObject obj in objects)
             {
-                List<Intersection> objIntersects = obj.Intersect(ray);
+                List<Intersection> objIntersects = obj.GetIntersects(ray);
                 if (objIntersects != null)
                     result.AddRange(objIntersects);
             }

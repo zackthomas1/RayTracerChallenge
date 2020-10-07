@@ -19,13 +19,11 @@ namespace RayTracer
         // Constructors
         public Sphere(float radius = 1.0f) : base()
         {
-            this.Position = new Point(0,0,0);
             this.radius = radius;
         }
 
         public Sphere(Material material, float radius = 1.0f) : base()
         {
-            this.Position = new Point(0, 0, 0);
             this.radius = radius;
             this.material = material;
         }
@@ -84,14 +82,9 @@ namespace RayTracer
         /// </summary>
         /// <param name="ray"></param>
         /// <returns></returns>
-        public override List<Intersection> Intersect(Ray ray)
+        public override List<Intersection> LocalIntersects(Ray transRay)
         {
-
-            List<Intersection> intersectionPoints = new List<Intersection>();
-
-            // Takes the input ray and applies all object transfomations.
-            Ray transRay = RayToObjectSpace(ray); 
-            //Ray transRay = ray.ApplyObjectTransform(this); // alt method
+            List<Intersection> intersections = new List<Intersection>();
 
             // The vector from the sphere's center, to the ray origin.
             Vector3 sphereToRay = transRay.origin - this.Position; // Sphere centered at the origin (0, 0, 0).
@@ -104,16 +97,16 @@ namespace RayTracer
 
             if (discriminant < 0)
             {
-                return intersectionPoints;
+                return intersections;
             }
 
             double t1 = (-b - Math.Sqrt(discriminant)) / (2 * a);
             double t2 = (-b + Math.Sqrt(discriminant)) / (2 * a);
 
-            intersectionPoints.Add(new Intersection((float)t1, this));
-            intersectionPoints.Add(new Intersection((float)t2, this));
+            intersections.Add(new Intersection((float)t1, this));
+            intersections.Add(new Intersection((float)t2, this));
 
-            return intersectionPoints;
+            return intersections;
         }
 
         /// <summary>
@@ -122,7 +115,7 @@ namespace RayTracer
         /// </summary>
         /// <param name="worldPoint"></param>
         /// <returns></returns>
-        public override Vector3 CalculateLocalNormal(Point objectPoint)
+        public override Vector3 LocalNormal(Point objectPoint)
         {
 
             Vector3 objectNormal = objectPoint - new Point(0, 0, 0);

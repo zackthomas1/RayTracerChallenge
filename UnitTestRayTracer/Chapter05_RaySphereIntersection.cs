@@ -41,7 +41,7 @@ namespace UnitTestRayTracer
             Ray ray01 = new Ray(new Point(0, 0, -5), new Vector3(0, 0, 1));
             Sphere sphere = new Sphere();
 
-            List<Intersection> intersecionPoints = sphere.Intersect(ray01);
+            List<Intersection> intersecionPoints = sphere.LocalIntersects(ray01);
 
             Assert.Equal(2, intersecionPoints.Count);
             Assert.Equal(4.0, intersecionPoints[0].t);
@@ -55,7 +55,7 @@ namespace UnitTestRayTracer
             Ray ray01 = new Ray(new Point(0, 1, -5), new Vector3(0, 0, 1));
             Sphere sphere = new Sphere();
 
-            List<Intersection> intersecionPoints = sphere.Intersect(ray01);
+            List<Intersection> intersecionPoints = sphere.LocalIntersects(ray01);
 
             Assert.Equal(2, intersecionPoints.Count);
             Assert.Equal(5.0, intersecionPoints[0].t);
@@ -68,7 +68,7 @@ namespace UnitTestRayTracer
             Ray ray01 = new Ray(new Point(0, 2, -5), new Vector3(0, 0, 1));
             Sphere sphere = new Sphere();
 
-            List<Intersection> intersecionPoints = sphere.Intersect(ray01);
+            List<Intersection> intersecionPoints = sphere.LocalIntersects(ray01);
 
             Assert.Empty(intersecionPoints);
         }
@@ -79,7 +79,7 @@ namespace UnitTestRayTracer
             Ray ray01 = new Ray(new Point(0, 0, 0), new Vector3(0, 0, 1));
             Sphere sphere = new Sphere();
 
-            List<Intersection> intersecionPoints = sphere.Intersect(ray01);
+            List<Intersection> intersecionPoints = sphere.LocalIntersects(ray01);
 
             Assert.Equal(2, intersecionPoints.Count);
             Assert.Equal(-1.0, intersecionPoints[0].t);
@@ -92,7 +92,7 @@ namespace UnitTestRayTracer
             Ray ray01 = new Ray(new Point(0, 0, 5), new Vector3(0, 0, 1));
             Sphere sphere = new Sphere();
 
-            List<Intersection> intersecionPoints = sphere.Intersect(ray01);
+            List<Intersection> intersecionPoints = sphere.LocalIntersects(ray01);
 
             Assert.Equal(2, intersecionPoints.Count);
             Assert.Equal(-6.0, intersecionPoints[0].t);
@@ -221,8 +221,8 @@ namespace UnitTestRayTracer
             s.Transform = Matrix4.ScaleMatrix(2, 2, 2);
 
             //Ray scaleRay = ray.ApplyObjectTransform(s); //Updated Intersect method to apply object tranformation to ray within method
-
-            List<Intersection> xs = s.Intersect(ray);
+            Ray transRay = ray * s.Transform.Invert();
+            List<Intersection> xs = s.LocalIntersects(transRay);
 
             Assert.Equal(2, xs.Count);
             Assert.Equal(3.0f, xs[0].t);
@@ -238,7 +238,7 @@ namespace UnitTestRayTracer
 
             Ray transformRay = ray.ApplyObjectTransform(s);
 
-            List<Intersection> xs = s.Intersect(transformRay);
+            List<Intersection> xs = s.LocalIntersects(transformRay);
             
             Assert.Empty(xs);
 

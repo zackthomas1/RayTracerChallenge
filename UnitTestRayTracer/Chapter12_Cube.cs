@@ -35,13 +35,13 @@ namespace UnitTestRayTracer
             Ray r05 = new Ray(RayTupleList[5].Item1, RayTupleList[5].Item2);
             Ray r06 = new Ray(RayTupleList[6].Item1, RayTupleList[6].Item2);
 
-            List<Intersection> xs00 = cube.Intersect(r00);
-            List<Intersection> xs01 = cube.Intersect(r01);
-            List<Intersection> xs02 = cube.Intersect(r02);
-            List<Intersection> xs03 = cube.Intersect(r03);
-            List<Intersection> xs04 = cube.Intersect(r04);
-            List<Intersection> xs05 = cube.Intersect(r05);
-            List<Intersection> xs06 = cube.Intersect(r06);
+            List<Intersection> xs00 = cube.LocalIntersects(r00);
+            List<Intersection> xs01 = cube.LocalIntersects(r01);
+            List<Intersection> xs02 = cube.LocalIntersects(r02);
+            List<Intersection> xs03 = cube.LocalIntersects(r03);
+            List<Intersection> xs04 = cube.LocalIntersects(r04);
+            List<Intersection> xs05 = cube.LocalIntersects(r05);
+            List<Intersection> xs06 = cube.LocalIntersects(r06);
 
             Assert.Equal(4, xs00[0].t); // +x
             Assert.Equal(6, xs00[1].t);
@@ -89,12 +89,12 @@ namespace UnitTestRayTracer
             Ray r04 = new Ray(RayTupleList[4].Item1, RayTupleList[4].Item2);
             Ray r05 = new Ray(RayTupleList[5].Item1, RayTupleList[5].Item2);
 
-            List<Intersection> xs00 = cube.Intersect(r00);
-            List<Intersection> xs01 = cube.Intersect(r01);
-            List<Intersection> xs02 = cube.Intersect(r02);
-            List<Intersection> xs03 = cube.Intersect(r03);
-            List<Intersection> xs04 = cube.Intersect(r04);
-            List<Intersection> xs05 = cube.Intersect(r05);
+            List<Intersection> xs00 = cube.LocalIntersects(r00);
+            List<Intersection> xs01 = cube.LocalIntersects(r01);
+            List<Intersection> xs02 = cube.LocalIntersects(r02);
+            List<Intersection> xs03 = cube.LocalIntersects(r03);
+            List<Intersection> xs04 = cube.LocalIntersects(r04);
+            List<Intersection> xs05 = cube.LocalIntersects(r05);
 
             Assert.Empty(xs00);
             Assert.Empty(xs01);
@@ -127,14 +127,14 @@ namespace UnitTestRayTracer
                                                 new Vector3(1,0,0),
                                                 new Vector3(-1,0,0)};
 
-            Vector3 n00 = c.CalculateLocalNormal(points[0]);
-            Vector3 n01 = c.CalculateLocalNormal(points[1]);
-            Vector3 n02 = c.CalculateLocalNormal(points[2]);
-            Vector3 n03 = c.CalculateLocalNormal(points[3]);
-            Vector3 n04 = c.CalculateLocalNormal(points[4]);
-            Vector3 n05 = c.CalculateLocalNormal(points[5]);
-            Vector3 n06 = c.CalculateLocalNormal(points[6]);
-            Vector3 n07 = c.CalculateLocalNormal(points[7]);
+            Vector3 n00 = c.LocalNormal(points[0]);
+            Vector3 n01 = c.LocalNormal(points[1]);
+            Vector3 n02 = c.LocalNormal(points[2]);
+            Vector3 n03 = c.LocalNormal(points[3]);
+            Vector3 n04 = c.LocalNormal(points[4]);
+            Vector3 n05 = c.LocalNormal(points[5]);
+            Vector3 n06 = c.LocalNormal(points[6]);
+            Vector3 n07 = c.LocalNormal(points[7]);
 
             Assert.True(n00 == directions[0]);
             Assert.True(n01 == directions[1]);
