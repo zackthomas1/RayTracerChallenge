@@ -141,9 +141,10 @@ namespace RayTracer
             foreach (Light light in lights)
             {
                 Tuple<bool, RayObject> inShadow = scene.IsShadowedObjectInfo(comps.overPoint, light);
-                surfaceColor = comps.rayObject.material.Lighting(comps.rayObject.material, comps.rayObject, 
+                surfaceColor += comps.rayObject.material.Lighting(comps.rayObject.material, comps.rayObject, 
                                                                 light, comps.overPoint, comps.eyeV, 
                                                                 comps.normalV, inShadow);
+
             }
 
             Color reflectedColor = this.ReflectedColor(comps, remaining);

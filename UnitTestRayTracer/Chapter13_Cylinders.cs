@@ -194,7 +194,131 @@ namespace UnitTestRayTracer
             Assert.Equal(2, xs05.Count); // Corner Case
         }
 
+        [Fact]
+        public void EndCapNormals()
+        {
+            Cylinder cyl = new Cylinder();
+            cyl.MinHeight = 1.0f;
+            cyl.MaxHeight = 2.0f;
+            cyl.Closed = true;
 
+            Point p01 = new Point(0, 1, 0);
+            Point p02 = new Point(0.5f, 1, 0);
+            Point p03 = new Point(0, 1, 0.5f);
+            Point p04 = new Point(0, 2, 0);
+            Point p05 = new Point(0.5f, 2, 0);
+            Point p06 = new Point(0, 2, 0.5f);
+
+            Vector3 norm01 = new Vector3(0, -1, 0);
+            Vector3 norm02 = new Vector3(0, -1, 0);
+            Vector3 norm03 = new Vector3(0, -1, 0);
+            Vector3 norm04 = new Vector3(0, 1, 0);
+            Vector3 norm05 = new Vector3(0, 1, 0);
+            Vector3 norm06 = new Vector3(0, 1, 0);
+
+            Assert.True(cyl.LocalNormal(p01) == norm01);
+            Assert.True(cyl.LocalNormal(p02) == norm02);
+            Assert.True(cyl.LocalNormal(p03) == norm03);
+            Assert.True(cyl.LocalNormal(p04) == norm04);
+            Assert.True(cyl.LocalNormal(p05) == norm05);
+            Assert.True(cyl.LocalNormal(p06) == norm06);
+        }
+
+        [Fact]
+        public void IntersectCone()
+        {
+            Cone cone = new Cone();
+
+            Point org01 = new Point(0, 0, -5);
+            Point org02 = new Point(0, 0, -5);
+            Point org03 = new Point(1, 1, -5);
+
+            Vector3 d01 = new Vector3(0, 0, 1).Normalize();
+            Vector3 d02 = new Vector3(1, 1, 1).Normalize();
+            Vector3 d03 = new Vector3(-0.5f, -1, 1).Normalize();
+
+            Ray r01 = new Ray(org01, d01);
+            Ray r02 = new Ray(org02, d02);
+            Ray r03 = new Ray(org03, d03);
+
+            List<Intersection> xs01 = cone.LocalIntersects(r01);
+            List<Intersection> xs02 = cone.LocalIntersects(r02);
+            List<Intersection> xs03 = cone.LocalIntersects(r03);
+
+            Assert.True(xs01[0].t == 5);
+            Assert.True(Utilities.FloatEquality(xs02[0].t, 8.66025f));
+            Assert.True(Utilities.FloatEquality(xs03[0].t, 4.55006f)); ;
+
+            Assert.True(xs01[1].t == 5);
+            Assert.True(Utilities.FloatEquality(xs02[1].t, 8.66025f));
+            Assert.True(Utilities.FloatEquality(xs03[1].t, 49.44994f));
+
+        }
+
+        [Fact]
+        public void RayParallelToSide()
+        {
+            Cone cone = new Cone();
+            Vector3 d01 = new Vector3(0, 1, 1).Normalize();
+            Ray r01 = new Ray(new Point(0, 0, -1), d01);
+
+            List<Intersection> xs = cone.LocalIntersects(r01);
+
+            Assert.True(xs.Count == 1);
+            Assert.True(Utilities.FloatEquality(xs[0].t, 0.35355f));
+        }
+
+        [Fact]
+        public void IntersectEndCaps()
+        {
+            Cone cone = new Cone();
+
+            cone.MinHeight = -0.5f;
+            cone.MaxHeight = 0.5f;
+            cone.Closed = true;
+
+            Point org01 = new Point(0, 0, -5);
+            Point org02 = new Point(0, 0, -0.25f);
+            Point org03 = new Point(0, 0, -0.25f);
+
+            Vector3 d01 = new Vector3(0, 1, 0).Normalize();
+            Vector3 d02 = new Vector3(0, 1, 1).Normalize();
+            Vector3 d03 = new Vector3(0, 1, 0).Normalize();
+
+            Ray r01 = new Ray(org01, d01);
+            Ray r02 = new Ray(org02, d02);
+            Ray r03 = new Ray(org03, d03);
+
+            List<Intersection> xs01 = cone.LocalIntersects(r01);
+            List<Intersection> xs02 = cone.LocalIntersects(r02);
+            List<Intersection> xs03 = cone.LocalIntersects(r03);
+
+            Assert.True(xs01.Count == 0);
+            Assert.True(xs02.Count == 2);
+            Assert.True(xs03.Count == 4);
+        }
+
+        [Fact]
+        public void NormalVectorCone()
+        {
+            Cone cone = new Cone();
+
+            Point p01 = new Point(0, 0, 0);
+            Point p02 = new Point(1, 1, 1);
+            Point p03 = new Point(-1, -1, 0);
+
+            Vector3 n01 = cone.LocalNormal(p01);
+            Vector3 n02 = cone.LocalNormal(p02);
+            Vector3 n03 = cone.LocalNormal(p03);
+
+            Vector3 ans01 = new Vector3(0, 0, 0);
+            Vector3 ans02 = new Vector3(1, -(float)Math.Sqrt(2), 1);
+            Vector3 ans03 = new Vector3(-1, 1, 0);
+
+            Assert.True(n01 == ans01);
+            Assert.True(n02 == ans02);
+            Assert.True(n03 == ans03);
+        }
 
     }
 }

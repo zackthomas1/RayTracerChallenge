@@ -103,7 +103,7 @@ namespace RayTracer
         /// </summary>
         /// <param name="ray"></param>
         /// <returns></returns>
-        public abstract List<Intersection> LocalIntersects(Ray objectTransformRay);
+        public abstract List<Intersection> LocalIntersects(Ray objSpaceRay);
 
         /// <summary>
         /// Given a position in world-coordinates finds the normal 

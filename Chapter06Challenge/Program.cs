@@ -218,7 +218,8 @@ namespace ChapterChallenges
             Console.ReadKey();
         }
 
-        public static void Chapter08()
+        // Patterns
+        public static void Chapter10()
         {
 
             Plane floor = new Plane();
@@ -304,7 +305,7 @@ namespace ChapterChallenges
             scene.Objects = sceneObjects;
 
             // Create Camera
-            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 4);
+            Camera cam = new Camera(1920 / 4, 1080 / 4, (float)Math.PI / 4);
             cam.Transform = cam.ViewTransform(new Point(0, 2f, -8),
                                               new Point(0, 1f, 0),
                                               new Vector3(0, 1, 0));
@@ -315,7 +316,7 @@ namespace ChapterChallenges
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter10Challenge_06";
+            string fileName = "Chapter10Challenge_07";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 
@@ -323,6 +324,7 @@ namespace ChapterChallenges
             Console.ReadKey();
         }
 
+        // reflections/refractions
         public static void Chapter11()
         {
             // Create objects
@@ -366,10 +368,14 @@ namespace ChapterChallenges
 
             // Create scene
             Scene scene = new Scene();
+            scene.Lights[0].Insensity = scene.Lights[0].Insensity * 0.5f;
+            Light l02 = new Light(((Color.White * .9f) + (Color.Orange * .1f) *.5f), new Point(10, 10, -10));
+            scene.AddLight(l02);
+
             scene.Objects = new List<RayObject>() { floor, backWall, s01, s02, s03 };
 
             // Create Camera
-            Camera cam = new Camera(1920 / 2, 1080 / 2, (float)Math.PI / 4);
+            Camera cam = new Camera(1920 / 4, 1080 / 4, (float)Math.PI / 4);
             cam.Transform = cam.ViewTransform(new Point(0, 2f, -8),
                                               new Point(0, 1f, 0),
                                               new Vector3(0, 1, 0));
@@ -378,7 +384,7 @@ namespace ChapterChallenges
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter11_07";
+            string fileName = "Chapter11_08";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 
@@ -387,6 +393,7 @@ namespace ChapterChallenges
 
         }
 
+        // Cube
         public static void Chapter12()
         {
             // Create objects
@@ -451,8 +458,17 @@ namespace ChapterChallenges
 
         }
 
+        // Cylinder
         public static void Chapter13()
         {
+            // Create scene
+            Scene scene = new Scene();
+
+            // Create Lights 
+            scene.Lights[0].Insensity = scene.Lights[0].Insensity * 0.5f;
+            Light l02 = new Light(((Color.White * .9f) + (Color.Orange * .1f) * 0.5f), new Point(10, 10, -10));
+            scene.AddLight(l02);
+
             // Create objects
             Plane floor = new Plane();
             floor.material = new Material();
@@ -468,37 +484,57 @@ namespace ChapterChallenges
             backWall.material.Specular = 0.1f;
 
             Cube cube01 = new Cube();
-            cube01.Transform = Matrix4.TranslateMatrix(1.5f, 1, 0) * Matrix4.RotateMatrix_Y(Math.PI / 4);
+            cube01.Transform = Matrix4.TranslateMatrix(4f, 1, 0);
             cube01.material.mColor = Color.Red;
             cube01.material.Transparency = 0.0f;
             cube01.material.Reflective = 0.4f;
             //s01.material.Specular = 0.0f;
 
+            Cone cone01 = new Cone();
+            cone01.Transform = Matrix4.TranslateMatrix(-4f, 2.0f, -0.5f) * Matrix4.RotateMatrix_X(-(Math.PI/2) * .25f)* Matrix4.ScaleMatrix(1.5f, 1.5f, 1.5f);
+            cone01.material.mColor = Color.Blue;
+            cone01.MaxHeight = 0.0f;
+            cone01.MinHeight = -1.0f;
+            cone01.material.Transparency = 0.0f;
+            cone01.material.Reflective = 0.05f;
+            cone01.material.Specular = 0.8f;
+
+            Sphere s03 = new Sphere();
+            s03.Transform = Matrix4.TranslateMatrix(0.5f, 2, -3f) * Matrix4.ScaleMatrix(1f, 1f, 1f);
+            s03.material.mColor = Color.White * .15f;
+            s03.material.Specular = 1f;
+            s03.material.Shininess = 300f;
+            s03.material.Reflective = 1f;
+            s03.material.Transparency = .95f;
+            s03.material.RefractIndex = RefractiveIndex.Glass;
+
             Cylinder cyl01 = new Cylinder();
             cyl01.MaxHeight = 3f;
-            cyl01.Transform = Matrix4.TranslateMatrix(-1.5f, 0.5f, -0.75f) * Matrix4.ScaleMatrix(.5f, .5f, .5f);
-            cyl01.material.mColor = Color.White * .15f;
-            cyl01.material.Specular = 1f;
+            cyl01.MinHeight = 0f;
+            cyl01.Closed = true;
+            cyl01.Transform = Matrix4.TranslateMatrix(-2f, 0f, 2);
+            Console.WriteLine(cyl01.Transform.ToString());
+            Console.WriteLine(cyl01.Transform.Determinate());
+            cyl01.material.mColor = Color.Orange;
+            cyl01.material.Specular = .2f;
             cyl01.material.Shininess = 300f;
-            cyl01.material.Reflective = 1f;
-            cyl01.material.Transparency = .95f;
-            cyl01.material.RefractIndex = RefractiveIndex.Glass;
+            cyl01.material.Reflective = .95f;
+            //cyl01.material.Transparency = .95f;
+            //cyl01.material.RefractIndex = RefractiveIndex.Glass;
 
-            // Create scene
-            Scene scene = new Scene();
-            scene.Objects = new List<RayObject>() { floor, backWall, cube01, cyl01 };
+            scene.Objects = new List<RayObject>() { floor, backWall, cube01, cone01, s03, cyl01 };
 
             // Create Camera
-            Camera cam = new Camera(1920 / 4, 1080 / 4, (float)Math.PI / 4);
-            cam.Transform = cam.ViewTransform(new Point(0, 2f, -8),
-                                              new Point(0, 1f, 0),
+            Camera cam = new Camera(1920 / 6, 1080 / 6, (float)Math.PI / 4);
+            cam.Transform = cam.ViewTransform(new Point(-.5f, 2f, -15.5f),
+                                              new Point(-.5f, 1f, 0),
                                               new Vector3(0, 1, 0));
             Canvas image = cam.Render(scene); // Outputs image
 
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
             string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter13_03";
+            string fileName = "Chapter13_08";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);
 

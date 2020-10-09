@@ -230,47 +230,48 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
-            Cylinder cyl = new Cylinder();
+            //Cylinder cyl = new Cylinder();
 
-            cyl.MinHeight = 1.0f;
-            cyl.MaxHeight = 2.0f;
-            cyl.Closed = true;
+            //cyl.MinHeight = 1.0f;
+            //cyl.MaxHeight = 2.0f;
+            //cyl.Closed = true;
 
-            Point org01 = new Point(0, 3, 0);
-            Point org02 = new Point(0, 3, -2);
-            Point org03 = new Point(0, 4, -2);
-            Point org04 = new Point(0, 0, -2);
-            Point org05 = new Point(0, -1, -2);
+            //Point org01 = new Point(0, 3, 0);
+            //Point org02 = new Point(0, 3, -2);
+            //Point org03 = new Point(0, 4, -2);
+            //Point org04 = new Point(0, 0, -2);
+            //Point org05 = new Point(0, -1, -2);
 
-            Vector3 d01 = new Vector3(0, -1, 0).Normalize();
-            Vector3 d02 = new Vector3(0, -1, 2).Normalize();
-            Vector3 d03 = new Vector3(0, -1, 1).Normalize();
-            Vector3 d04 = new Vector3(0, 1, 2).Normalize();
-            Vector3 d05 = new Vector3(0, 1, 1).Normalize();
+            //Vector3 d01 = new Vector3(0, -1, 0).Normalize();
+            //Vector3 d02 = new Vector3(0, -1, 2).Normalize();
+            //Vector3 d03 = new Vector3(0, -1, 1).Normalize();
+            //Vector3 d04 = new Vector3(0, 1, 2).Normalize();
+            //Vector3 d05 = new Vector3(0, 1, 1).Normalize();
 
-            Ray r01 = new Ray(org01, d01);
-            Ray r02 = new Ray(org02, d02);
-            Ray r03 = new Ray(org03, d03);
-            Ray r04 = new Ray(org04, d04);
-            Ray r05 = new Ray(org05, d05);
+            //Ray r01 = new Ray(org01, d01);
+            //Ray r02 = new Ray(org02, d02);
+            //Ray r03 = new Ray(org03, d03);
+            //Ray r04 = new Ray(org04, d04);
+            //Ray r05 = new Ray(org05, d05);
 
-            List<Intersection> xs01 = cyl.LocalIntersects(r01);
-            List<Intersection> xs02 = cyl.LocalIntersects(r02);
-            List<Intersection> xs03 = cyl.LocalIntersects(r03);
-            List<Intersection> xs04 = cyl.LocalIntersects(r04);
-            List<Intersection> xs05 = cyl.LocalIntersects(r05);
+            //List<Intersection> xs01 = cyl.LocalIntersects(r01);
+            //List<Intersection> xs02 = cyl.LocalIntersects(r02);
+            //List<Intersection> xs03 = cyl.LocalIntersects(r03);
+            //List<Intersection> xs04 = cyl.LocalIntersects(r04);
+            //List<Intersection> xs05 = cyl.LocalIntersects(r05);
 
-            Console.WriteLine("List Length: " + xs01.Count);
-            Console.WriteLine("List Length: " + xs02.Count);
-            Console.WriteLine("List Length: " + xs03.Count);
-            Console.WriteLine("List Length: " + xs04.Count);
-            Console.WriteLine("List Length: " + xs05.Count);
+            //Console.WriteLine("List Length: " + xs01.Count);
+            //Console.WriteLine("List Length: " + xs02.Count);
+            //Console.WriteLine("List Length: " + xs03.Count);
+            //Console.WriteLine("List Length: " + xs04.Count);
+            //Console.WriteLine("List Length: " + xs05.Count);
 
             //----------------------------------------------------------------------------
 
             //Cylinder cyl = new Cylinder();
             //cyl.MinHeight = 1.0f;
             //cyl.MaxHeight = 2.0f;
+            //cyl.Closed = true;
 
             //Point org01 = new Point(0, 1.5f, 0);
             //Point org02 = new Point(0, 3, -5);
@@ -307,6 +308,101 @@ namespace RayTracer
             //Console.WriteLine(xs05.Count);
             //Console.WriteLine(xs06.Count);
 
+            //----------------------------------------------------------------------------
+
+            Cone cone = new Cone();
+
+            Point org01 = new Point(0, 0, -5);
+            Point org02 = new Point(0, 0, -5);
+            Point org03 = new Point(1, 1, -5);
+
+            Vector3 d01 = new Vector3(0, 0, 1).Normalize();
+            Vector3 d02 = new Vector3(1, 1, 1).Normalize();
+            Console.WriteLine(d02.ToString());
+            Vector3 d03 = new Vector3(-0.5f, -1, 1).Normalize();
+
+            Ray r01 = new Ray(org01, d01);
+            Ray r02 = new Ray(org02, d02);
+            Ray r03 = new Ray(org03, d03);
+
+            List<Intersection> xs01 = cone.LocalIntersects(r01);
+            List<Intersection> xs02 = cone.LocalIntersects(r02);
+            List<Intersection> xs03 = cone.LocalIntersects(r03);
+
+            Console.WriteLine(xs01.Count);
+            Console.WriteLine(xs02.Count);
+            Console.WriteLine(xs03.Count);
+
+            Console.WriteLine();
+
+            Console.WriteLine(xs01[0].t); // 5
+            Console.WriteLine(xs02[0].t); // 8.66025f
+            Console.WriteLine(xs03[0].t); // 4.55006f
+
+            Console.WriteLine();
+
+            Console.WriteLine(xs01[1].t); // 5
+            Console.WriteLine(xs02[1].t); // 8.66025f
+            Console.WriteLine(xs03[1].t); // 49.44994f
+
+            //----------------------------------------------------------------------------
+
+            //Cone cone = new Cone();
+            //Vector3 d01 = new Vector3(0, 1, 1).Normalize();
+            //Ray r01 = new Ray(new Point(0, 0, -1), d01);
+
+            //List<Intersection> xs = cone.LocalIntersects(r01);
+
+            //Console.WriteLine(xs.Count);
+            //Console.WriteLine(xs[0].t); // 0.35355f
+
+            //----------------------------------------------------------------------------
+
+            //Cone cone = new Cone();
+
+            //cone.MinHeight = -0.5f;
+            //cone.MaxHeight = 0.5f;
+            //cone.Closed = true;
+
+            //Point org01 = new Point(0, 0, -5);
+            //Point org02 = new Point(0, 0, -0.25f);
+            //Point org03 = new Point(0, 0, -0.25f);
+
+            //Vector3 d01 = new Vector3(0, 1, 0).Normalize();
+            //Vector3 d02 = new Vector3(0, 1, 1).Normalize();
+            //Vector3 d03 = new Vector3(0, 1, 0).Normalize();
+
+            //Ray r01 = new Ray(org01, d01);
+            //Ray r02 = new Ray(org02, d02);
+            //Ray r03 = new Ray(org03, d03);
+
+            //List<Intersection> xs01 = cone.LocalIntersects(r01);
+            //List<Intersection> xs02 = cone.LocalIntersects(r02);
+            //List<Intersection> xs03 = cone.LocalIntersects(r03);
+
+            //Console.WriteLine(xs01.Count); // 0
+            //Console.WriteLine(xs02.Count); // 2
+            //Console.WriteLine(xs03.Count); // 4
+
+            //----------------------------------------------------------------------------
+
+            //Cone cone = new Cone();
+
+            //Point p01 = new Point(0, 0, 0);
+            //Point p02 = new Point(1, 1, 1);
+            //Point p03 = new Point(-1, -1, 0);
+
+            //Vector3 n01 = cone.LocalNormal(p01);
+            //Vector3 n02 = cone.LocalNormal(p02);
+            //Vector3 n03 = cone.LocalNormal(p03);
+
+            //Vector3 ans01 = new Vector3(0, 0, 0);
+            //Vector3 ans02 = new Vector3(1, (float)Math.Sqrt(2), 1);
+            //Vector3 ans03 = new Vector3(-1, -1, 0);
+
+            //Console.WriteLine(n01.ToString());
+            //Console.WriteLine(n02.ToString());
+            //Console.WriteLine(n03.ToString());
         }
     }
 }
