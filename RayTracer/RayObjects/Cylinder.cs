@@ -88,11 +88,12 @@ namespace RayTracer.RayObjects
                 t01 = temp_t01;
             }
 
-            //WriteLine();
+            //Console.WriteLine();
             // Checks that the intersection points are between the min and max height
             float y00 = objSpaceRay.origin.y + t00 * objSpaceRay.direction.y;
             //Console.WriteLine("y00: " + y00);
-            if (minHeight < Math.Round(y00,4) && Math.Round(y00, 4) < maxHeight)
+            if ((minHeight < Math.Round(y00,4) || Utilities.FloatEquality(minHeight, y00) == true)
+                && (Math.Round(y00, 4) < maxHeight || Utilities.FloatEquality(minHeight, y00) == true))
             {
                 //Console.WriteLine("\tt00: " + t00);
                 intersections.Add(new Intersection(t00, this));
@@ -100,7 +101,8 @@ namespace RayTracer.RayObjects
 
             float y01 = objSpaceRay.origin.y + t01 * objSpaceRay.direction.y;
             //Console.WriteLine("y01: " + y01);
-            if (minHeight < Math.Round(y01, 4) && Math.Round(y01, 4) < maxHeight)
+            if ((minHeight < Math.Round(y01, 4) || Utilities.FloatEquality(minHeight,y01) == true)
+                && (Math.Round(y01, 4) < maxHeight || Utilities.FloatEquality(maxHeight, y01) == true))
             {
                 //Console.WriteLine("\tt01: " + t01);
                 intersections.Add(new Intersection(t01, this));

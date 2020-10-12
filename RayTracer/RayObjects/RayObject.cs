@@ -16,6 +16,10 @@ namespace RayTracer
         Point position;
         public Material material;
 
+        // Implement method for user turning on and off cast
+        //bool castShadow;
+        //bool recieveShadow;
+
         // Get/Set methods
         public int ID
         {

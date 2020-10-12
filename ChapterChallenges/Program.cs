@@ -533,7 +533,7 @@ namespace ChapterChallenges
 
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
-            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders__";
             string fileName = "Chapter13_08";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, image);

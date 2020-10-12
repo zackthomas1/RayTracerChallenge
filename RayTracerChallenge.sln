@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTestRayTracer", "UnitTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RayTracer", "RayTracer\RayTracer.csproj", "{43CABADC-B5F5-4667-B7A2-7E6537EE9B4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChapterChallenges", "Chapter06Challenge\ChapterChallenges.csproj", "{4B16ECB6-8430-49F2-BCE2-E7EAAEDD4AE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChapterChallenges", "ChapterChallenges\ChapterChallenges.csproj", "{5F48160B-DB56-4516-92D0-D4BF97AB72DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{43CABADC-B5F5-4667-B7A2-7E6537EE9B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43CABADC-B5F5-4667-B7A2-7E6537EE9B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43CABADC-B5F5-4667-B7A2-7E6537EE9B4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B16ECB6-8430-49F2-BCE2-E7EAAEDD4AE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B16ECB6-8430-49F2-BCE2-E7EAAEDD4AE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B16ECB6-8430-49F2-BCE2-E7EAAEDD4AE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B16ECB6-8430-49F2-BCE2-E7EAAEDD4AE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F48160B-DB56-4516-92D0-D4BF97AB72DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F48160B-DB56-4516-92D0-D4BF97AB72DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F48160B-DB56-4516-92D0-D4BF97AB72DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F48160B-DB56-4516-92D0-D4BF97AB72DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

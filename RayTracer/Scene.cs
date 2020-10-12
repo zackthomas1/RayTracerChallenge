@@ -189,7 +189,8 @@ namespace RayTracer
         //Consider moving to light class
         /// <summary>
         /// Determines if a point is in shadow
-        /// Returns true-false and object in ray-path between intersection and light
+        /// Returns true-false and object in ray-path between intersection and light 
+        /// aka isShadowed()
         /// </summary>
         /// <param name="light"></param>
         /// <param name="point"></param>

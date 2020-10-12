@@ -1,10 +1,13 @@
 ﻿using System;
-using RayTracer; 
+using RayTracer;
+using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using System.IO;
+using RayTracer.RayObjects;
 
-
-namespace ClockChallenge
+namespace ChapterChallenges
 {
-    class Program
+    public static class ClockChallenge
     {
         static void DrawSquare(int x, int y, Canvas canvas)
         {
@@ -12,14 +15,15 @@ namespace ClockChallenge
             {
                 for (int column = y - 20; column < y + 20; column++)
                 {
-                    canvas.SetPixelColor(row, column, Color.Blue); 
+                    canvas.SetPixelColor(row, column, Color.Blue);
                 }
             }
 
         }
-        static void Main(string[] args)
+
+        public static void Clock()
         {
-            Canvas canvas = new Canvas(900,900);
+            Canvas canvas = new Canvas(900, 900);
             int centerWidth = canvas.width / 2;
             int centerHeight = canvas.height / 2;
 
@@ -29,9 +33,9 @@ namespace ClockChallenge
             Point TwelvePosition = new Point(0, 1, 0); // Plan to rotate around the x axis 
 
 
-            DrawSquare(centerWidth,centerHeight, canvas); // Draw center
+            DrawSquare(centerWidth, centerHeight, canvas); // Draw center
 
-            for (int iter = 0;  iter < 12; iter++)
+            for (int iter = 0; iter < 12; iter++)
             {
                 Point positionUpdate = TwelvePosition * Matrix4.RotateMatrix_X(iter * Math.PI / 6);
                 Console.WriteLine(positionUpdate.ToString());

@@ -1,13 +1,14 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using RayTracer;
+using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using System.IO;
+using RayTracer.RayObjects;
 
-namespace ProjectileChallenge
+namespace ChapterChallenges
 {
-    class Program
+    public static class ProjectileChallenge
     {
-
         static Point projectilePosition = new Point(3, 3, 0);
         static Vector3 projectileVelocity = new Vector3(1f, 1.8f, 0f);
 
@@ -56,17 +57,17 @@ namespace ProjectileChallenge
             return projectilePosition;
         }
 
-        static void Main(string[] args)
+        static void Projectile()
         {
             Canvas canvas = new Canvas(900, 550);
 
-            
+
             while (projectilePosition.y > 0 && projectilePosition.x < canvas.width)
             {
                 Console.WriteLine($"x:{(int)projectilePosition.x} y:{(int)projectilePosition.y}");
 
                 // Checks if projectile is within a valid range to be drawn
-                if ((int)projectilePosition.y - 2 > 0 && (int)projectilePosition.y + 2 < canvas.height && (int)projectilePosition.x - 2 > 0 && (int)projectilePosition.x + 2< canvas.width)
+                if ((int)projectilePosition.y - 2 > 0 && (int)projectilePosition.y + 2 < canvas.height && (int)projectilePosition.x - 2 > 0 && (int)projectilePosition.x + 2 < canvas.width)
                 {
                     drawCross((int)projectilePosition.x, canvas.height - (int)projectilePosition.y, canvas, Color.Red);
                     //canvas.SetPixelColor((int)projectilePosition.x, canvas.height - (int)projectilePosition.y, Color.Red());
@@ -77,9 +78,9 @@ namespace ProjectileChallenge
             }
 
             // End State Message
-            if(projectilePosition.y < 0)
+            if (projectilePosition.y < 0)
                 Console.WriteLine("\nY-position less than zero.");
-            else if(projectilePosition.x > canvas.width)
+            else if (projectilePosition.x > canvas.width)
                 Console.WriteLine("\nX-position out of bounds.");
 
             // Save Canvas to ppm
@@ -92,5 +93,6 @@ namespace ProjectileChallenge
             Console.WriteLine("Done: Program complete.");
             Console.ReadKey();
         }
+
     }
 }
