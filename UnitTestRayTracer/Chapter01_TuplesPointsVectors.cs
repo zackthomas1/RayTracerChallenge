@@ -464,7 +464,7 @@ namespace UnitTestRayTracer
             Vector3 v1 = new Vector3(1, 2, 3);
             Point p2 = new Point(2, 3, 4);
 
-            float dotResult = RayTracer.Tuple.Dot(v1, p2);
+            float dotResult = RayTracer.Vector3.Dot(v1, p2);
             float answer = 20;
 
             Assert.Equal(answer, dotResult);

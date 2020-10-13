@@ -289,7 +289,7 @@ namespace UnitTestRayTracer
         public void PPMHeader()
         {
             Canvas canvas = new Canvas(15, 10);
-            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders__";
             string fileName = "PPMHeader_Test_01.ppm";
 
             string fileDirectoryComplete = filePath + "\\" + fileName;
@@ -312,7 +312,7 @@ namespace UnitTestRayTracer
         public void PPMBody()
         {
             Canvas canvas = new Canvas(5, 5);
-            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders__";
             string fileName = "PPMBody_Test_01.ppm";
 
             string fileDirectoryComplete = filePath + "\\" + fileName;
@@ -336,7 +336,7 @@ namespace UnitTestRayTracer
         public void PPMFooter()
         {
             Canvas canvas = new Canvas(15, 10);
-            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders__";
             string fileName = "PPMFooter_Test_01.ppm";
 
             string fileDirectoryComplete = filePath + "\\" + fileName;

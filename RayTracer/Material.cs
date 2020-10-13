@@ -366,7 +366,7 @@ namespace RayTracer
                 // reflection vector and the eye vector. A negative number means the
                 // light reflects away from the eye. 
                 Vector3 reflectV = Vector3.Reflection(-lightV, normalV);
-                float reflectDotEye = Tuple.Dot(reflectV, eyeV);
+                float reflectDotEye = Vector3.Dot(reflectV, eyeV);
 
                 // if reflection is away from eye
                 if (reflectDotEye <= 0)
@@ -461,7 +461,7 @@ namespace RayTracer
                 // reflection vector and the eye vector. A negative number means the
                 // light reflects away from the eye. 
                 Vector3 reflectV = Vector3.Reflection(-lightV, normalV);
-                float reflectDotEye = Tuple.Dot(reflectV, eyeV);
+                float reflectDotEye = Vector3.Dot(reflectV, eyeV);
 
                 // if reflection is away from eye
                 if (reflectDotEye <= 0)

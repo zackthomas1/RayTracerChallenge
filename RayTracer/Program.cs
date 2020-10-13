@@ -230,41 +230,41 @@ namespace RayTracer
 
             //----------------------------------------------------------------------------
 
-            Cylinder cyl = new Cylinder();
+            //Cylinder cyl = new Cylinder();
 
-            cyl.MinHeight = 1.0f;
-            cyl.MaxHeight = 2.0f;
-            cyl.Closed = true;
+            //cyl.MinHeight = 1.0f;
+            //cyl.MaxHeight = 2.0f;
+            //cyl.Closed = true;
 
-            Point org01 = new Point(0, 3, 0);
-            Point org02 = new Point(0, 3, -2);
-            Point org03 = new Point(0, 4, -2);
-            Point org04 = new Point(0, 0, -2);
-            Point org05 = new Point(0, -1, -2);
+            //Point org01 = new Point(0, 3, 0);
+            //Point org02 = new Point(0, 3, -2);
+            //Point org03 = new Point(0, 4, -2);
+            //Point org04 = new Point(0, 0, -2);
+            //Point org05 = new Point(0, -1, -2);
 
-            Vector3 d01 = new Vector3(0, -1, 0).Normalize();
-            Vector3 d02 = new Vector3(0, -1, 2).Normalize();
-            Vector3 d03 = new Vector3(0, -1, 1).Normalize();
-            Vector3 d04 = new Vector3(0, 1, 2).Normalize();
-            Vector3 d05 = new Vector3(0, 1, 1).Normalize();
+            //Vector3 d01 = new Vector3(0, -1, 0).Normalize();
+            //Vector3 d02 = new Vector3(0, -1, 2).Normalize();
+            //Vector3 d03 = new Vector3(0, -1, 1).Normalize();
+            //Vector3 d04 = new Vector3(0, 1, 2).Normalize();
+            //Vector3 d05 = new Vector3(0, 1, 1).Normalize();
 
-            Ray r01 = new Ray(org01, d01);
-            Ray r02 = new Ray(org02, d02);
-            Ray r03 = new Ray(org03, d03);
-            Ray r04 = new Ray(org04, d04);
-            Ray r05 = new Ray(org05, d05);
+            //Ray r01 = new Ray(org01, d01);
+            //Ray r02 = new Ray(org02, d02);
+            //Ray r03 = new Ray(org03, d03);
+            //Ray r04 = new Ray(org04, d04);
+            //Ray r05 = new Ray(org05, d05);
 
-            //List<Intersection> xs01 = cyl.LocalIntersects(r01);
-            //List<Intersection> xs02 = cyl.LocalIntersects(r02);
-            List<Intersection> xs03 = cyl.LocalIntersects(r03);
-            //List<Intersection> xs04 = cyl.LocalIntersects(r04);
-            List<Intersection> xs05 = cyl.LocalIntersects(r05);
+            ////List<Intersection> xs01 = cyl.LocalIntersects(r01);
+            ////List<Intersection> xs02 = cyl.LocalIntersects(r02);
+            //List<Intersection> xs03 = cyl.LocalIntersects(r03);
+            ////List<Intersection> xs04 = cyl.LocalIntersects(r04);
+            //List<Intersection> xs05 = cyl.LocalIntersects(r05);
 
-            //Console.WriteLine("List Length: " + xs01.Count);
-            //Console.WriteLine("List Length: " + xs02.Count);
-            Console.WriteLine("List Length: " + xs03.Count);
-            //Console.WriteLine("List Length: " + xs04.Count);
-            Console.WriteLine("List Length: " + xs05.Count);
+            ////Console.WriteLine("List Length: " + xs01.Count);
+            ////Console.WriteLine("List Length: " + xs02.Count);
+            //Console.WriteLine("List Length: " + xs03.Count);
+            ////Console.WriteLine("List Length: " + xs04.Count);
+            //Console.WriteLine("List Length: " + xs05.Count);
 
             //----------------------------------------------------------------------------
 
@@ -403,6 +403,16 @@ namespace RayTracer
             //Console.WriteLine(n01.ToString());
             //Console.WriteLine(n02.ToString());
             //Console.WriteLine(n03.ToString());
+
+            //----------------------------------------------------------------------------
+
+            Group g = new Group();
+            Sphere s = new Sphere();
+            g.AddChild(s);
+
+            Console.WriteLine(g.childern.Count);
+
+
         }
     }
 }

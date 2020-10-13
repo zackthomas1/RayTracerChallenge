@@ -20,6 +20,8 @@ namespace RayTracer
         //bool castShadow;
         //bool recieveShadow;
 
+        public Group parent = null;
+
         // Get/Set methods
         public int ID
         {

@@ -23,6 +23,44 @@ namespace RayTracer
 
         // Methods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        private float[] CheckAxis(float origin, float direction)
+        {
+            float tMinNumerator = (-1 - origin);
+            float tMaxNumerator = (1 - origin);
+
+            float tMin;
+            float tMax;
+
+            if ((float)Math.Abs(direction) >= Utilities.EPSILON)
+            {
+                tMin = tMinNumerator / direction;
+                tMax = tMaxNumerator / direction;
+            }
+            else
+            {
+                tMin = tMinNumerator * float.PositiveInfinity;
+                tMax = tMaxNumerator * float.PositiveInfinity; ;
+            }
+
+            if (tMin > tMax)
+            {
+                float tempTMin = tMax;
+                float tempTMax = tMin;
+
+                tMin = tempTMin;
+                tMax = tempTMax;
+            }
+
+            float[] result = new float[] { tMin, tMax };
+            return result;
+        }
+
         public override List<Intersection> LocalIntersects(Ray objSpaceRay)
         {
             List<Intersection> intersections = new List<Intersection>();
@@ -65,42 +103,5 @@ namespace RayTracer
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="direction"></param>
-        /// <returns></returns>
-        private float[] CheckAxis(float origin, float direction)
-        {
-            float tMinNumerator = (-1 - origin);
-            float tMaxNumerator = (1 - origin);
-
-            float tMin;
-            float tMax;
-
-            if ((float)Math.Abs(direction) >= Utilities.EPSILON)
-            {
-                tMin = tMinNumerator / direction;
-                tMax = tMaxNumerator / direction;
-            }
-            else
-            {
-                tMin = tMinNumerator * Utilities.INFINITY;
-                tMax = tMaxNumerator * Utilities.INFINITY;
-            }
-
-            if(tMin > tMax)
-            {
-                float tempTMin = tMax;
-                float tempTMax = tMin;
-
-                tMin = tempTMin;
-                tMax = tempTMax;        
-            }
-
-            float[] result = new float[] { tMin, tMax };
-            return result;
-        }
     }
 }

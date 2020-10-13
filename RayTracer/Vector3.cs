@@ -198,5 +198,29 @@ namespace RayTracer
             return result;
         }
 
+        // Methods
+        /// <summary>
+        /// Returns the dot product of two vector as a float.
+        /// </summary>
+        /// <param name="t2"></param>
+        /// <returns></returns>
+        public float Dot(Tuple t2)
+        {
+            float product = (this.x * t2.x) + (this.y * t2.y) + (this.z * t2.z) + (this.w * t2.w);
+            return product;
+        }
+
+        /// <summary>
+        /// Returns the dot product of two vector as a float.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <returns></returns>
+        public static float Dot(Tuple t1, Tuple t2)
+        {
+            float product = (t1.x * t2.x) + (t1.y * t2.y) + (t1.z * t2.z) + (t1.w * t2.w);
+            return product;
+        }
+
     }
 }

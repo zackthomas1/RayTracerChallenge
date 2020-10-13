@@ -89,9 +89,9 @@ namespace RayTracer
             // The vector from the sphere's center, to the ray origin.
             Vector3 sphereToRay = transRay.origin - this.Position; // Sphere centered at the origin (0, 0, 0).
 
-            double a = Tuple.Dot(transRay.direction, transRay.direction);
-            double b = 2 * Tuple.Dot(transRay.direction, sphereToRay);
-            double c = Tuple.Dot(sphereToRay, sphereToRay) - 1.0f;
+            double a = Vector3.Dot(transRay.direction, transRay.direction);
+            double b = 2 * Vector3.Dot(transRay.direction, sphereToRay);
+            double c = Vector3.Dot(sphereToRay, sphereToRay) - 1.0f;
 
             double discriminant = (b * b) - 4 * a * c;     
 
