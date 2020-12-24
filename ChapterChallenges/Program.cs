@@ -92,7 +92,7 @@ namespace ChapterChallenges
             // Create Sphere in scene
             Material m1 = new Material(Color.SetColor(1, 0.2f, 1), specular: 50);
             Sphere sphere = new Sphere(m1);
-            sphere.Position = new Point(0.5f, -0.25f, 0);
+            sphere.Position = new Point(0, 0, 0);
 
             // Add light source
             Point lightPosition = new Point(30, 10, -10);
@@ -124,10 +124,10 @@ namespace ChapterChallenges
                         Vector3 eyeV = -r.direction;
 
                         Color phongColor = sphere.material.Lighting(hit.rayObject.material, hit.rayObject, light, point, eyeV, normal, new Tuple<bool, RayObject>(false, null));
-                        if (Math.Abs(xs[0].t - xs[1].t) < .5f)
-                        {
-                            phongColor = phongColor * new Color(0.1f, 2.5f, 0.1f);
-                        }
+                        //if (Math.Abs(xs[0].t - xs[1].t) < .5f)
+                        //{
+                        //    phongColor = phongColor * new Color(0.1f, 2.5f, 0.1f);
+                        //}
 
                         Console.WriteLine("Color: " + phongColor.ToString());
                         canvas.SetPixelColor(x, y, phongColor);
@@ -138,8 +138,8 @@ namespace ChapterChallenges
 
             // Save Canvas to ppm
             Console.WriteLine("\nSaving PPM file");
-            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders";
-            string fileName = "Chapter06Challenge_05";
+            string filePath = "C:\\Dev\\C#\\PracticePrograms\\RayTracerChallenge\\__renders__";
+            string fileName = "Chapter06Challenge_03";
             string fileDirectoryComplete = filePath + "\\" + fileName + ".ppm";
             Save.PPM(fileDirectoryComplete, canvas);
 
@@ -368,7 +368,7 @@ namespace ChapterChallenges
 
             // Create scene
             Scene scene = new Scene();
-            scene.Lights[0].Insensity = scene.Lights[0].Insensity * 0.5f;
+            scene.Lights[0].Intensity = scene.Lights[0].Intensity * 0.5f;
             Light l02 = new Light(((Color.White * .9f) + (Color.Orange * .1f) *.5f), new Point(10, 10, -10));
             scene.AddLight(l02);
 
@@ -465,7 +465,7 @@ namespace ChapterChallenges
             Scene scene = new Scene();
 
             // Create Lights 
-            scene.Lights[0].Insensity = scene.Lights[0].Insensity * 0.5f;
+            scene.Lights[0].Intensity = scene.Lights[0].Intensity * 0.5f;
             Light l02 = new Light(((Color.White * .9f) + (Color.Orange * .1f) * 0.5f), new Point(10, 10, -10));
             scene.AddLight(l02);
 
@@ -545,7 +545,7 @@ namespace ChapterChallenges
 
         static void Main(string[] args)
         {
-            Chapter13();
+            Chapter06();
         }
     }
 }

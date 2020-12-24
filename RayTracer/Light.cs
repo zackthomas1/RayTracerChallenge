@@ -13,7 +13,7 @@ namespace RayTracer
         Point position;
 
         // Get/Set methods
-        public Color Insensity
+        public Color Intensity
         {
             get { return intensity; }
             set { intensity = value; }
@@ -56,7 +56,7 @@ namespace RayTracer
         public override string ToString()
         {
             return "Light " + id.ToString() + ": "+ "\n" +
-                    "    " + "Insensity -> " + Insensity.ToString() + "\n" +
+                    "    " + "Insensity -> " + Intensity.ToString() + "\n" +
                     "    " + "Position -> " + Position.ToString() + "\n";
         }
 

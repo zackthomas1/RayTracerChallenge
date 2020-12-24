@@ -326,12 +326,12 @@ namespace RayTracer
             if (pattern != null)
             {
                 // Combines surface pattern color with light's color/intensity if a pattern exist
-                effect_color = pattern.PatternAtObject(rayObject, point) * light.Insensity;
+                effect_color = pattern.PatternAtObject(rayObject, point) * light.Intensity;
             }
             else
             {
                 // Combines surface color with light's color/intensity
-                effect_color = material.mColor * light.Insensity;
+                effect_color = material.mColor * light.Intensity;
             }
 
 
@@ -377,7 +377,7 @@ namespace RayTracer
                 {
                     // compute the specular contribution 
                     float factor = (float)Math.Pow(reflectDotEye, material.Shininess);
-                    specular = light.Insensity * material.Specular * factor;
+                    specular = light.Intensity * material.Specular * factor;
                 }
             }
 
@@ -421,12 +421,12 @@ namespace RayTracer
             if (pattern != null)
             {
                 // Combines surface pattern color with light's color/intensity if a pattern exist
-                effect_color = pattern.PatternAtObject(rayObject, point) * light.Insensity;
+                effect_color = pattern.PatternAtObject(rayObject, point) * light.Intensity;
             }
             else
             {
                 // Combines surface color with light's color/intensity
-                effect_color = material.mColor * light.Insensity;
+                effect_color = material.mColor * light.Intensity;
             }
 
 
@@ -472,7 +472,7 @@ namespace RayTracer
                 {
                     // compute the specular contribution 
                     float factor = (float)Math.Pow(reflectDotEye, material.Shininess);
-                    specular = light.Insensity * material.Specular * factor;
+                    specular = light.Intensity * material.Specular * factor;
                 }
             }
 
